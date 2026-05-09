@@ -1,19 +1,29 @@
 name: Deploy Day1 Slides to GitHub Pages
 
+# Workflow nay build ung dung React/Vite trong folder Day1 va deploy len GitHub Pages.
+# De workflow deploy duoc, vao repository Settings -> Pages -> Source -> GitHub Actions.
+
 on:
+  # Tu dong chay khi push vao main va chi khi co thay doi lien quan den Day1/workflow nay.
   push:
     branches:
       - main
     paths:
       - "Day1/**"
       - ".github/workflows/day1-pages.yml"
+  # Cho phep bam Run workflow thu cong tren tab Actions.
   workflow_dispatch:
 
+# Quyen toi thieu cho GitHub Pages deployment:
+# - contents: doc source code de build
+# - pages: ghi deployment moi len GitHub Pages
+# - id-token: xac thuc deployment bang OIDC
 permissions:
   contents: read
   pages: write
   id-token: write
 
+# Neu push nhieu commit lien tiep, chi giu lan deploy moi nhat de tranh deploy cu ghi de deploy moi.
 concurrency:
   group: github-pages
   cancel-in-progress: true
@@ -24,12 +34,15 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
+        # Tat ca lenh run trong job nay duoc chay ben trong folder Day1.
         working-directory: Day1
     steps:
       - name: Checkout
+        # Lay source code cua repository ve runner.
         uses: actions/checkout@v4
 
       - name: Setup Node.js
+        # Cai Node.js va bat cache npm dua tren Day1/package-lock.json.
         uses: actions/setup-node@v4
         with:
           node-version: 22
@@ -37,20 +50,25 @@ jobs:
           cache-dependency-path: Day1/package-lock.json
 
       - name: Install dependencies
+        # npm ci dung cho CI vi cai dependency dung theo package-lock.json.
         run: npm ci
 
       - name: Run tests
+        # Chay test noi dung slide va navigation truoc khi cho phep deploy.
         run: npm test
 
   deploy:
     name: Build and deploy GitHub Pages
+    # Chi deploy khi job test pass.
     needs: test
     runs-on: ubuntu-latest
     environment:
+      # Environment mac dinh cua GitHub Pages; url duoc lay tu output cua buoc deploy.
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     defaults:
       run:
+        # Build app React/Vite nam trong folder Day1.
         working-directory: Day1
     steps:
       - name: Checkout
@@ -67,18 +85,22 @@ jobs:
         run: npm ci
 
       - name: Build
+        # GITHUB_PAGES=true khien vite.config.js dung base path /CI-CD/ cho GitHub Pages.
         run: npm run build
         env:
           GITHUB_PAGES: "true"
 
       - name: Configure Pages
+        # Thiet lap metadata va cau hinh Pages cho artifact deploy.
         uses: actions/configure-pages@v5
 
       - name: Upload Pages artifact
+        # Dong goi folder Day1/dist thanh Pages artifact de buoc deploy co the publish.
         uses: actions/upload-pages-artifact@v3
         with:
           path: Day1/dist
 
       - name: Deploy to GitHub Pages
+        # Publish artifact len GitHub Pages va tra ve URL trong steps.deployment.outputs.page_url.
         id: deployment
         uses: actions/deploy-pages@v4
