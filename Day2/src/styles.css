@@ -192,6 +192,10 @@ h1 {
   gap: 0.86rem;
 }
 
+.detailsSingle {
+  grid-template-columns: 1fr;
+}
+
 .details article {
   display: grid;
   grid-template-columns: auto 1fr;

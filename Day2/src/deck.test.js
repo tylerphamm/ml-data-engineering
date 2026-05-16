@@ -79,6 +79,14 @@ test("deck omits VM comparison, wrap-up, and visible main idea blocks", () => {
   assert.doesNotMatch(main, /Main idea|keyMessage/);
 });
 
+test("cover hides duplicate eyebrow", () => {
+  const main = fs.readFileSync(path.resolve("src/main.jsx"), "utf8");
+
+  assert.equal(slides[0].title, "Docker cơ bản cho người mới");
+  assert.equal(slides[0].hideEyebrow, true);
+  assert.match(main, /hideEyebrow/);
+});
+
 test("public Day2 text avoids old session wording", () => {
   const oldTerm = "work" + "shop";
   const oldTermPattern = new RegExp(`\\b${oldTerm}\\b`, "i");
@@ -113,11 +121,15 @@ test("deck links to the full stack Compose example app", () => {
 
 test("deck includes Docker installation guidance for Windows and Linux", () => {
   const combined = slides.map(textOf).join(" ");
+  const windowsSlide = slides.find((slide) => slide.title === "Cài Docker trên Windows");
+  const windowsNote = windowsSlide.details.find((detail) => detail.label === "Lưu ý");
 
   assert.match(combined, /Cài Docker trên Windows/);
   assert.match(combined, /Docker Desktop/);
   assert.match(combined, /WSL 2/);
   assert.match(combined, /trước khi sử dụng/);
+  assert.equal(windowsNote.text, "Cần mở Docker Desktop trước khi sử dụng để start engine.");
+  assert.doesNotMatch(windowsNote.text, /WSL 2|virtualization|trước khi cài/i);
   assert.match(combined, /Docker Engine on Linux/);
   assert.match(combined, /phần lõi chạy container/);
   assert.match(combined, /Chọn đúng bản Linux/);
@@ -137,6 +149,8 @@ test("deck uses plain Vietnamese instead of the runtime term", () => {
 test("container concept slide explains the idea in non-technical language", () => {
   const containerSlide = slides.find((slide) => slide.title === "Container là gì");
   const containerText = textOf(containerSlide);
+  const main = fs.readFileSync(path.resolve("src/main.jsx"), "utf8");
+  const styles = fs.readFileSync(path.resolve("src/styles.css"), "utf8");
 
   assert.match(containerText, /gói chạy app/);
   assert.match(containerText, /những thứ cần thiết để app chạy/);
@@ -144,8 +158,21 @@ test("container concept slide explains the idea in non-technical language", () =
   assert.equal(containerSlide.hideKeyMessage, true);
   assert.equal(containerSlide.details.length, 1);
   assert.match(containerText, /Tóm tắt/);
+  assert.match(main, /detailsSingle/);
+  assert.match(styles, /\.detailsSingle\s*{[^}]*grid-template-columns:\s*1fr/s);
   assert.doesNotMatch(containerText, /Ví dụ đời sống|hộp cơm|hộp đồ nghề|phép màu/i);
   assert.doesNotMatch(containerText, /kernel|process|filesystem|network/i);
+});
+
+test("demo slides remove introductory detail cards where requested", () => {
+  const startDemo = slides.find((slide) => slide.title === "Bật stack demo bằng Compose");
+  const apiDemo = slides.find((slide) => slide.title === "Gọi API và tạo order");
+  const combined = [textOf(startDemo), textOf(apiDemo)].join(" ");
+
+  assert.equal(startDemo.body, "");
+  assert.deepEqual(startDemo.details, []);
+  assert.deepEqual(apiDemo.details, []);
+  assert.doesNotMatch(combined, /Từ repo này|Quan sát|Ghi nhớ|Endpoint \/health|Gọi \/api\/stats/);
 });
 
 test("early concept slides are rewritten for the requested presentation flow", () => {
@@ -315,7 +342,8 @@ test("each slide carries metadata for the modern Docker theme", () => {
     assert.ok(slide.tone.length > 2, `${slide.title} should define a tone`);
     assert.ok(slide.keyMessage.length > 20, `${slide.title} should define a key message`);
     assert.ok(slide.points.length >= 3 && slide.points.length <= 5, `${slide.title} should define concise points`);
-    const minimumDetails = slide.title === "Container là gì" ? 1 : 2;
+    const detailOptionalTitles = new Set(["Bật stack demo bằng Compose", "Gọi API và tạo order"]);
+    const minimumDetails = detailOptionalTitles.has(slide.title) ? 0 : slide.title === "Container là gì" ? 1 : 2;
     assert.ok(slide.details.length >= minimumDetails, `${slide.title} should define supporting details`);
   }
 });

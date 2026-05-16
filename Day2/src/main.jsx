@@ -47,6 +47,8 @@ function iconFor(label, fallback = Box) {
 }
 
 function Eyebrow({ slide }) {
+  if (slide.hideEyebrow) return null;
+
   return (
     <div className="eyebrow">
       <span>{slide.section}</span>
@@ -56,8 +58,10 @@ function Eyebrow({ slide }) {
 }
 
 function Details({ details }) {
+  if (!details?.length) return null;
+
   return (
-    <div className="details">
+    <div className={`details ${details.length === 1 ? "detailsSingle" : ""}`}>
       {details.map((detail, index) => {
         const Icon = iconFor(detail.label, index % 2 === 0 ? Box : Layers);
 

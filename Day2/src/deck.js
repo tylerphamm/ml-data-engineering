@@ -1,11 +1,12 @@
 const slideDefinitions = [
   {
-    section: "Docker 101",
-    kicker: "Docker 101",
+    section: "Khóa học",
+    kicker: "Tổng quan",
     title: "Docker cơ bản cho người mới",
     body: "",
     keyMessage: "Docker là nền tảng đóng gói ứng dụng và môi trường chạy thành một đơn vị triển khai nhất quán.",
     hideKeyMessage: true,
+    hideEyebrow: true,
     points: ["Container", "Image", "Dockerfile", "Run app"],
     details: [
       { label: "Mục tiêu", text: "Hiểu Docker giải quyết vấn đề gì và tự chạy được container đầu tiên." },
@@ -70,7 +71,7 @@ const slideDefinitions = [
     points: ["WSL 2", "Docker Desktop", "Start app", "Verify"],
     details: [
       { label: "Official docs", text: "https://docs.docker.com/desktop/setup/install/windows-install/" },
-      { label: "Lưu ý", text: "Kiểm tra WSL 2 và virtualization trước khi cài, sau khi cài cần mở Docker Desktop trước khi sử dụng." },
+      { label: "Lưu ý", text: "Cần mở Docker Desktop trước khi sử dụng để start engine." },
     ],
     commands: [
       { label: "Docs", code: "https://docs.docker.com/desktop/setup/install/windows-install/", result: "Download Docker Desktop Installer.exe" },
@@ -185,13 +186,10 @@ const slideDefinitions = [
     section: "Demo",
     kicker: "Example app",
     title: "Bật stack demo bằng Compose",
-    body: "Từ repo này, mình dùng ngay Day2/example-app để bật API, Postgres, Redis, Prometheus và Grafana bằng Docker Compose.",
+    body: "",
     keyMessage: "Một lệnh Compose có thể build image, tạo network, tạo container và khởi động nhiều service phụ thuộc nhau.",
     points: ["Open folder", "Build", "Start", "Check"],
-    details: [
-      { label: "Quan sát", text: "Compose đọc docker-compose.yaml, build service api, kéo image Postgres/Redis/Prometheus/Grafana và tạo network chung." },
-      { label: "Ghi nhớ", text: "Chạy nền bằng -d để vừa trình chiếu slide vừa mở browser hoặc chạy curl kiểm tra." },
-    ],
+    details: [],
     commands: [
       { label: "Start stack", code: "cd Day2/example-app\ndocker compose up --build -d", result: "API, Postgres, Redis, Prometheus và Grafana chạy nền" },
       { label: "Check services", code: "cd Day2/example-app\ndocker compose ps", result: "Các service chính ở trạng thái running hoặc healthy" },
@@ -207,10 +205,7 @@ const slideDefinitions = [
     body: "Sau khi stack chạy, mình dùng endpoint của example app để kiểm tra health, tạo dữ liệu mới và thấy Redis cache hoạt động qua stats.",
     keyMessage: "Demo API cho thấy container không chạy một mình: request đi qua API, ghi vào Postgres và dùng Redis để cache thống kê.",
     points: ["Health", "Create order", "Stats", "Cache"],
-    details: [
-      { label: "Health", text: "Endpoint /health xác nhận API kết nối được database và Redis." },
-      { label: "Stats", text: "Gọi /api/stats sau khi tạo order để thấy thống kê được tính từ Postgres rồi cache lại trong Redis." },
-    ],
+    details: [],
     commands: [
       { label: "Health", code: "cd Day2/example-app\ncurl.exe http://localhost:3000/health", result: "JSON status ok, database ok, redis ok" },
       { label: "Create order", code: "cd Day2/example-app\ncurl.exe -X POST http://localhost:3000/api/orders -H \"Content-Type: application/json\" -d \"{\\\"customer\\\":\\\"Demo team\\\",\\\"item\\\":\\\"Docker lab\\\",\\\"quantity\\\":2}\"", result: "API trả về order mới với status created" },
