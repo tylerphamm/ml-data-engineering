@@ -7,8 +7,6 @@ import {
   Cloud,
   Compass,
   Flag,
-  Gauge,
-  Layers,
   ListChecks,
   Lock,
   PackageOpen,
@@ -16,7 +14,6 @@ import {
   Server,
   ShieldAlert,
   Sparkles,
-  Target,
   Users,
   Workflow,
 } from "lucide-react";
@@ -30,7 +27,6 @@ import {
   generalNotes,
   grading,
   groups,
-  meta,
   pipelineStages,
   sections,
   timeline,
@@ -38,7 +34,6 @@ import {
 import "./styles.css";
 
 const sectionIcons = {
-  overview: Compass,
   cicd: Workflow,
   cloud: Cloud,
   group: Users,
@@ -61,32 +56,6 @@ function Eyebrow({ kicker, title }) {
       </div>
       <h2>{title}</h2>
     </header>
-  );
-}
-
-function Overview() {
-  return (
-    <section className="block" id="tong-quan">
-      <Eyebrow kicker="Tổng quan · Bối cảnh" title={meta.title} />
-      <p className="lead">{meta.intro}</p>
-      <div className="overviewGrid">
-        <article>
-          <Target aria-hidden="true" />
-          <h3>Đích đến</h3>
-          <p>Mỗi nhóm xuất xưởng được 3 tính năng mới hoạt động trên cloud được cấp, mọi commit đi qua CI/CD đúng quy trình.</p>
-        </article>
-        <article>
-          <Layers aria-hidden="true" />
-          <h3>4 đề tài</h3>
-          <p>Phân loại cảm xúc, biển số xe và parking, hand gesture, và fashion visual search.</p>
-        </article>
-        <article>
-          <Gauge aria-hidden="true" />
-          <h3>Khắt khe về thiết kế</h3>
-          <p>Ràng buộc latency, privacy, throughput và threat model bắt buộc nằm ngay trong đề bài — phải bảo vệ được.</p>
-        </article>
-      </div>
-    </section>
   );
 }
 
@@ -279,7 +248,6 @@ function Submission() {
 }
 
 function renderSection(section) {
-  if (section.kind === "overview") return <Overview key={section.id} />;
   if (section.kind === "cicd") return <CiCd key={section.id} />;
   if (section.kind === "cloud") return <CloudSection key={section.id} />;
   if (section.kind === "submission") return <Submission key={section.id} />;
@@ -296,8 +264,8 @@ function Sidebar({ activeId, onSelect }) {
       <div className="brand">
         <Sparkles aria-hidden="true" />
         <div>
-          <strong>Bài Tập Về Nhà</strong>
-          <span>CI/CD Auto Deploy</span>
+          <strong>CI/CD &amp; Docker</strong>
+          <span>Assignment</span>
         </div>
       </div>
       <ul>
@@ -370,16 +338,11 @@ function App() {
       <Sidebar activeId={activeId} onSelect={handleSelect} />
       <main className="content">
         <header className="pageHeader">
-          <span className="pageEyebrow">CI/CD + Docker cho ML/Data</span>
-          <h1>Bài Tập Về Nhà - CI/CD Auto Deploy</h1>
-          <p>
-            Đề bài gồm 4 đề tài. Mỗi nhóm chọn 1 đề tài, bổ sung 3 tính năng mới và thiết kế CI/CD pipeline tự động deploy
-            lên cloud được cấp.
-          </p>
+          <h1>CI/CD and Docker Assignment</h1>
         </header>
         {sections.map((section) => renderSection(section))}
         <footer className="pageFooter">
-          <span>Bài Tập Về Nhà · CI/CD Auto Deploy</span>
+          <span>CI/CD and Docker Assignment</span>
         </footer>
       </main>
     </div>

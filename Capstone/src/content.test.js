@@ -71,9 +71,8 @@ test("cloud, grading and timeline metadata are populated", () => {
   assert.equal(totalWeight, 100, "grading rubric must sum to 100%");
 });
 
-test("sidebar sections include overview, ci/cd, cloud, every group, and submission", () => {
+test("sidebar sections include ci/cd, cloud, every group, and submission", () => {
   const kinds = sections.map((section) => section.kind);
-  assert.ok(kinds.includes("overview"));
   assert.ok(kinds.includes("cicd"));
   assert.ok(kinds.includes("cloud"));
   assert.ok(kinds.includes("submission"));

@@ -290,7 +290,6 @@ export const generalNotes = [
 ];
 
 export const sections = [
-  { id: "tong-quan", label: "Tổng quan", kind: "overview" },
   { id: "ci-cd", label: "CI/CD chung", kind: "cicd" },
   { id: "cloud", label: "Cloud được cấp", kind: "cloud" },
   ...groups.map((group) => ({ id: group.id, label: `Nhóm ${group.number}`, kind: "group", groupId: group.id })),
