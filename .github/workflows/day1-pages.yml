@@ -1,5 +1,6 @@
 name: Deploy Slide Decks to GitHub Pages
 
+# Re-trigger marker: run on 2026-05-23 (previous run flaked on runner availability).
 # Workflow nay build cac slide deck trong repo va deploy len GitHub Pages.
 # De workflow deploy duoc, vao repository Settings -> Pages -> Source -> GitHub Actions.
 #
