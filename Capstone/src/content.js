@@ -15,9 +15,9 @@ export const pipelineStages = [
     requirement: [
       "Python: dùng pytest cho module xử lý chính.",
       "JavaScript / TypeScript: dùng Jest cho module xử lý chính.",
-      "Có tối thiểu 5 test cho phần xử lý quan trọng nhất; pipeline fail ngay nếu có 1 test fail.",
+      "Có tối thiểu 5 test cho phần xử lý quan trọng nhất; pipeline báo lỗi ngay nếu có 1 test không pass.",
     ],
-    failFast: "có test fail",
+    failFast: "có test không pass",
   },
   {
     stage: "Build image",
@@ -27,14 +27,14 @@ export const pipelineStages = [
       "Đặt tên image rõ ràng theo dạng <tên-app>:<tag> (ví dụ 'emotion-api:latest').",
       "Không copy file .env hoặc password vào image.",
     ],
-    failFast: "lệnh docker build trả exit code khác 0",
+    failFast: "lệnh docker build báo lỗi",
   },
   {
     stage: "Security scan",
     phase: "Packaging",
     requirement: [
       "Dùng Trivy, chạy lệnh 'trivy image <tên-image>' và in output ra log CI.",
-      "Chỉ chặn pipeline khi có CVE mức CRITICAL; HIGH chỉ cảnh báo.",
+      "Chỉ dừng pipeline khi có CVE mức CRITICAL; HIGH chỉ cảnh báo.",
     ],
     failFast: "có CVE CRITICAL",
   },
@@ -44,16 +44,16 @@ export const pipelineStages = [
     requirement: [
       "Push image lên Docker Hub.",
       "Dùng tag 'latest' là đủ; ai muốn thêm tag git-sha thì làm bonus.",
-      "Login bằng secret lấy từ CI, không hard-code username và password.",
+      "Đăng nhập bằng secret lấy từ CI, không ghi cứng username và password trong code.",
     ],
-    failFast: "login fail hoặc push fail",
+    failFast: "đăng nhập hoặc push không thành công",
   },
   {
     stage: "Integration test",
     phase: "Deployment",
     requirement: [
       "Dùng docker compose để chạy app cùng database và cache giả lập.",
-      "Gọi 1-2 endpoint chính bằng curl, assert trả status 200.",
+      "Gọi 1-2 endpoint chính bằng curl, kiểm tra trả về status 200.",
       "Chạy 'docker compose down' để dọn container sau khi xong.",
     ],
     failFast: "endpoint không trả status 200",
@@ -64,7 +64,7 @@ export const pipelineStages = [
     requirement: [
       "SSH vào EC2 staging, pull image mới từ registry.",
       "Chạy 'docker compose up -d' để khởi động.",
-      "Mở URL staging trong browser, thấy app load được là pass.",
+      "Mở URL staging trong browser, thấy app hiển thị bình thường là pass.",
     ],
     failFast: "không truy cập được URL staging",
   },
@@ -72,10 +72,10 @@ export const pipelineStages = [
     stage: "Manual gate",
     phase: "Deployment",
     requirement: [
-      "Pipeline dừng chờ approve qua GitHub Environment (Required reviewers).",
-      "Tối thiểu 1 reviewer khác committer bấm approve thì pipeline mới chạy tiếp.",
+      "Pipeline tạm dừng và chờ duyệt qua GitHub Environment (Required reviewers).",
+      "Tối thiểu 1 reviewer khác người commit bấm duyệt thì pipeline mới chạy tiếp.",
     ],
-    failFast: "không ai approve",
+    failFast: "không có ai bấm duyệt",
   },
   {
     stage: "Deploy prod",
@@ -83,7 +83,7 @@ export const pipelineStages = [
     requirement: [
       "SSH vào EC2 prod, pull image rồi chạy 'docker compose up -d'.",
       "Có script 'rollback.sh' đổi tag image về bản trước rồi 'docker compose up -d' lại.",
-      "Gọi 1 endpoint sau khi up xong để xác nhận app còn sống.",
+      "Gọi 1 endpoint sau khi up xong để xác nhận app chạy bình thường.",
     ],
     failFast: "endpoint prod không trả status 200 sau deploy",
   },
@@ -91,8 +91,8 @@ export const pipelineStages = [
     stage: "Notify",
     phase: "Notify",
     requirement: [
-      "Dùng Discord webhook để gửi message khi deploy xong hoặc fail.",
-      "Message ghi rõ: tên môi trường, commit-sha, link tới run của CI.",
+      "Dùng Discord webhook để gửi tin nhắn khi deploy xong hoặc khi có lỗi.",
+      "Tin nhắn ghi rõ: tên môi trường, commit-sha, link tới run của CI.",
     ],
     failFast: "—",
   },
