@@ -36,9 +36,10 @@ test("hand gesture group exists and exposes three features", () => {
   assert.equal(handGesture.features.length, 3);
 });
 
-test("ci/cd pipeline covers the required ten stages", () => {
+test("ci/cd pipeline covers the required core stages", () => {
   const labels = pipelineStages.map((stage) => stage.stage).join("|");
-  assert.equal(pipelineStages.length, 10);
+  assert.equal(pipelineStages.length, 9);
+  assert.ok(!/notify/i.test(labels), "Notify stage should be removed for now");
   for (const expected of [
     "Lint",
     "Unit test",
@@ -49,7 +50,6 @@ test("ci/cd pipeline covers the required ten stages", () => {
     "Deploy staging",
     "Manual gate",
     "Deploy prod",
-    "Notify",
   ]) {
     assert.match(labels, new RegExp(expected, "i"));
   }

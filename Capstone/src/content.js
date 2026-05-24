@@ -87,15 +87,6 @@ export const pipelineStages = [
     ],
     failFast: "endpoint prod không trả status 200 sau deploy",
   },
-  {
-    stage: "Notify",
-    phase: "Notify",
-    requirement: [
-      "Dùng Discord webhook để gửi tin nhắn khi deploy xong hoặc khi có lỗi.",
-      "Tin nhắn ghi rõ: tên môi trường, commit-sha, link tới run của CI.",
-    ],
-    failFast: "—",
-  },
 ];
 
 export const deliverables = [
