@@ -73,7 +73,6 @@ export const pipelineStages = [
     phase: "Deployment",
     requirement: [
       "Pipeline tạm dừng và chờ duyệt qua GitHub Environment (Required reviewers).",
-      "Người commit có thể tự duyệt; chỉ cần có 1 lượt duyệt là pipeline chạy tiếp.",
     ],
     failFast: "không có ai bấm duyệt",
   },
