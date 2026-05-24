@@ -95,7 +95,7 @@ function CiCd() {
       </div>
       <h3 className="subHeading">
         <PackageOpen aria-hidden="true" />
-        Bắt buộc nộp kèm code
+        Yêu cầu đầu ra
       </h3>
       <ul className="checkList">
         {deliverables.map((item) => (
