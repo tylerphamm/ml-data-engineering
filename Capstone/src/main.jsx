@@ -113,7 +113,7 @@ function GroupBlock({ group }) {
   const assignees = group.assignees ?? [];
   return (
     <section className="block groupBlock" id={group.id} data-tone={group.tone}>
-      <Eyebrow kicker={`Đề tài · Nhóm ${group.number}`} title={group.name} />
+      <Eyebrow kicker="Đề tài" title={group.name} />
       <p className="lead">
         <strong>Mô tả:</strong> {group.summary}
       </p>
