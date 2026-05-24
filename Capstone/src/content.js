@@ -23,7 +23,7 @@ export const pipelineStages = [
     stage: "Build image",
     phase: "Packaging",
     requirement: [
-      "Dùng multi-stage Dockerfile để tách build deps khỏi runtime.",
+      "Build image bằng Dockerfile đặt ở root repo, base image nhỏ gọn (alpine/slim/distroless).",
       "Image final ≤ 800 MB; chạy bằng user non-root.",
       "Không nhúng secret hoặc .env; build args public-only.",
     ],
