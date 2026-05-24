@@ -45,7 +45,7 @@ function Eyebrow({ kicker, title }) {
 function CiCd() {
   return (
     <section className="block" id="ci-cd">
-      <Eyebrow kicker="CI/CD chung · Pipeline" title="CI/CD pipeline cho cả 4 nhóm" />
+      <Eyebrow kicker="CI/CD · Pipeline" title="CI/CD pipeline" />
       <p className="lead">
         Pipeline được trigger trên mỗi <code>push</code> vào branch <code>main</code> của repo nhóm. Chọn GitHub Actions hoặc Jenkins
         — chọn 1 và bảo vệ được lựa chọn.
