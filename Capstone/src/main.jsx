@@ -65,6 +65,7 @@ function CiCd() {
             {pipelineStages.map((row, index) => {
               const previousPhase = index > 0 ? pipelineStages[index - 1].phase : null;
               const isPhaseStart = row.phase !== previousPhase;
+              const lines = Array.isArray(row.requirement) ? row.requirement : [row.requirement];
               return (
                 <tr key={row.stage} className={isPhaseStart ? "phaseStart" : undefined}>
                   <td className="stepCell">{String(index + 1).padStart(2, "0")}</td>
@@ -74,7 +75,17 @@ function CiCd() {
                       {isPhaseStart ? <span className="phaseTag">{row.phase}</span> : null}
                     </div>
                   </td>
-                  <td>{row.requirement}</td>
+                  <td>
+                    {lines.length === 1 ? (
+                      lines[0]
+                    ) : (
+                      <ul className="requirementList">
+                        {lines.map((line) => (
+                          <li key={line}>{line}</li>
+                        ))}
+                      </ul>
+                    )}
+                  </td>
                   <td>{row.failFast}</td>
                 </tr>
               );

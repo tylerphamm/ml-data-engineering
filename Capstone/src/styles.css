@@ -424,6 +424,23 @@ svg {
   border-radius: 999px;
 }
 
+.requirementList {
+  margin: 0;
+  padding-left: 1.05rem;
+  display: grid;
+  gap: 0.35rem;
+  list-style: disc;
+}
+
+.requirementList li {
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.requirementList li::marker {
+  color: var(--accent);
+}
+
 /* ---------------- Check list & resource grid ---------------- */
 
 .checkList {
