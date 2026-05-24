@@ -99,7 +99,7 @@ export const groups = [
     name: "Driver Drowsiness Detector",
     short: "Drowsiness",
     tone: "violet",
-    assignees: ["Tùng", "Châu", "Linh"],
+    assignees: [],
     summary:
       "Xây dựng hệ thống phát hiện tài xế buồn ngủ qua webcam. Tính các chỉ số EAR và MAR để xác định trạng thái buồn ngủ. Có backend HTTP và frontend web hiển thị cảnh báo realtime.",
     features: [
@@ -140,7 +140,7 @@ export const groups = [
     name: "Receipt OCR + Expense Tracker",
     short: "Receipts",
     tone: "amber",
-    assignees: ["Đạt", "Lan", "Tú"],
+    assignees: [],
     summary:
       "Xây dựng hệ thống quản lý chi tiêu cá nhân bằng cách upload ảnh hoá đơn. Dùng OCR pretrained để trích thông tin. Có backend HTTP và frontend web cho user xem lịch sử và thống kê.",
     features: [
@@ -182,7 +182,7 @@ export const groups = [
     name: "Gesture DJ Mixer",
     short: "DJ mixer",
     tone: "crimson",
-    assignees: ["Diệu", "Sơn", "Duy Khánh"],
+    assignees: [],
     summary:
       "Xây dựng hệ thống mixer nhạc điều khiển bằng cử chỉ tay qua webcam, dùng MediaPipe Hands pretrained để track keypoint. Có backend xử lý gesture realtime và frontend Web Audio API phát mix nhạc theo cử chỉ.",
     features: [
