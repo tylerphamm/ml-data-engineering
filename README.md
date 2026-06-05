@@ -8,6 +8,7 @@ Course materials for a two-day session on CI/CD, Docker, and Jenkins applied to 
 |------|------------|
 | `Day1/` | Slide deck — *CI/CD for ML & Data Systems* |
 | `Day2/` | Slide deck — *Docker for Beginners* |
+| `Day3/` | Slide deck — *Databases for Beginners* |
 | `Capstone/` | Capstone assignment site — 4 HIT-PYTHON-2026 groups, 3 new features each + shared CI/CD requirement |
 | `Day2/example-app/` | Full-stack demo app (Node + Express + Postgres + Redis + Prometheus + Grafana) used in the Day 2 lesson |
 | `exercise/jenkins_tutorial/` | Hands-on Jenkins pipeline for deploying a house-price prediction model |
@@ -15,10 +16,10 @@ Course materials for a two-day session on CI/CD, Docker, and Jenkins applied to 
 
 ## Running a slide deck or the Exercise site
 
-All three sites share the same scripts.
+All sites share the same scripts.
 
 ```bash
-cd Day1   # or: cd Day2 / cd Capstone
+cd Day1   # or: cd Day2 / cd Day3 / cd Capstone
 npm install
 npm run dev      # start dev server at http://127.0.0.1:5173
 npm run build    # production build
@@ -29,6 +30,7 @@ Published URLs (auto-deployed from `main`):
 
 - Day 1 slide deck: <https://0121ient.github.io/ml-data-engineering/Day1/>
 - Day 2 slide deck: <https://0121ient.github.io/ml-data-engineering/Day2/>
+- Day 3 slide deck: <https://0121ient.github.io/ml-data-engineering/Day3/>
 - Capstone exercise site: <https://0121ient.github.io/ml-data-engineering/Capstone/>
 
 ## Running the Docker demo app (Day 2)
