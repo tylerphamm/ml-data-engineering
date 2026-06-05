@@ -104,6 +104,7 @@ const slideDefinitions = [
       { label: "Khóa chính", text: "Cột định danh duy nhất mỗi bản ghi và không trùng lặp, ví dụ MaSV trong bảng SinhVien." },
       { label: "Khóa ngoại", text: "Cột trỏ tới khóa chính của bảng khác để tạo quan hệ, ví dụ DiemThi có MaSV trỏ về SinhVien." },
       { label: "Index", text: "Cấu trúc giúp tìm kiếm nhanh, giống mục lục cuối sách, tra mục lục để nhảy đến đúng trang thay vì đọc từng trang." },
+      { label: "Quan hệ", text: "Liên kết giữa các bảng nhờ khóa chính và khóa ngoại, ví dụ một sinh viên có nhiều điểm thi là quan hệ một nhiều." },
     ],
     layout: "flow",
     tone: "violet",

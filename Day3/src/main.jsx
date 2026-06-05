@@ -52,6 +52,7 @@ const iconMap = {
   NoSQL: Boxes,
   OLAP: Activity,
   OLTP: Database,
+  "Quan hệ": Network,
   Query: Search,
   Replication: Copy,
   Schema: Columns3,
