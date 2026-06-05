@@ -111,19 +111,19 @@ const slideDefinitions = [
   },
   {
     section: "Concept",
-    kicker: "Giao dịch tin cậy",
+    kicker: "Giao dịch trong database",
     title: "ACID của một giao dịch",
     body:
-      "Giao dịch là một nhóm thao tác được coi là một đơn vị tất cả hoặc không gì cả, ví dụ chuyển tiền phải trừ tài khoản A và cộng tài khoản B cùng thành công hoặc cùng thất bại.",
+      "Trong database, giao dịch là một nhóm câu lệnh SQL được coi là một đơn vị tất cả hoặc không gì cả. Ví dụ chuyển tiền trong app ngân hàng chạy hai lệnh UPDATE trên bảng tài khoản là trừ tiền tài khoản A và cộng tiền tài khoản B, cả hai phải cùng thành công hoặc cùng được hủy bỏ.",
     keyMessage:
-      "ACID gồm Atomicity, Consistency, Isolation và Durability, giúp giao dịch đáng tin cậy ngay cả khi hệ thống gặp sự cố.",
+      "ACID là bốn tính chất của giao dịch trong database, gồm Atomicity, Consistency, Isolation và Durability, giúp dữ liệu vẫn đúng ngay cả khi hệ thống gặp sự cố.",
     hideKeyMessage: true,
     points: ["Atomicity", "Consistency", "Isolation", "Durability"],
     details: [
-      { label: "Atomicity", text: "Tính nguyên tử, tất cả thao tác cùng thành công hoặc hoàn tác toàn bộ." },
-      { label: "Consistency", text: "Tính nhất quán, chỉ dữ liệu hợp lệ tuân theo ràng buộc mới được ghi vào." },
-      { label: "Isolation", text: "Tính cô lập, các giao dịch chạy đồng thời không ảnh hưởng lẫn nhau." },
-      { label: "Durability", text: "Tính bền vững, khi đã commit thì dữ liệu tồn tại lâu dài dù hệ thống có sập." },
+      { label: "Atomicity", text: "Tính nguyên tử, mọi câu lệnh trong giao dịch cùng thành công hoặc cùng hoàn tác, không có nửa vời." },
+      { label: "Consistency", text: "Tính nhất quán, chỉ dữ liệu hợp lệ tuân theo ràng buộc của bảng mới được ghi vào." },
+      { label: "Isolation", text: "Tính cô lập, nhiều giao dịch chạy đồng thời trên cùng database không làm sai lệch dữ liệu của nhau." },
+      { label: "Durability", text: "Tính bền vững, khi giao dịch đã commit thì dữ liệu được lưu lâu dài dù database có sập." },
     ],
     layout: "flow",
     tone: "db",
@@ -202,6 +202,31 @@ const slideDefinitions = [
     tone: "orange",
   },
   {
+    section: "Comparison",
+    kicker: "Bảng so sánh",
+    title: "OLTP và OLAP chi tiết",
+    body:
+      "Đặt cạnh nhau từng tiêu chí để thấy rõ hai loại workload phục vụ mục đích khác nhau và được thiết kế khác nhau.",
+    keyMessage:
+      "OLTP tối ưu cho ghi và đọc nhanh từng bản ghi, OLAP tối ưu cho đọc và tổng hợp khối lượng dữ liệu lớn.",
+    hideKeyMessage: true,
+    points: ["Mục đích", "Lưu trữ", "Người dùng", "Ví dụ hệ"],
+    table: {
+      columns: ["Tiêu chí", "OLTP", "OLAP"],
+      rows: [
+        ["Mục đích", "Xử lý giao dịch hằng ngày", "Phân tích để ra quyết định"],
+        ["Thao tác chính", "Thêm sửa xóa từng bản ghi nhỏ", "Đọc và tổng hợp khối lượng lớn"],
+        ["Kiểu truy vấn", "Đơn giản, lặp lại, rất nhanh", "Phức tạp, quét nhiều dữ liệu"],
+        ["Cách lưu trữ", "Theo hàng", "Theo cột"],
+        ["Tính chất dữ liệu", "Hiện tại, chi tiết, thay đổi liên tục", "Lịch sử, tổng hợp, ít thay đổi"],
+        ["Người dùng", "Nhân viên và ứng dụng tuyến đầu", "Nhà phân tích và khoa học dữ liệu"],
+        ["Ví dụ hệ", "MySQL, PostgreSQL, Oracle", "Snowflake, BigQuery, Redshift"],
+      ],
+    },
+    layout: "table",
+    tone: "orange",
+  },
+  {
     section: "Concept",
     kicker: "Khả năng mở rộng",
     title: "Scaling, sharding và replication",
@@ -259,7 +284,7 @@ const slideDefinitions = [
       { label: "Mở database", code: "sqlite3 truong.db", result: "Tạo hoặc mở file truong.db và vào shell SQLite." },
       {
         label: "Tạo bảng",
-        code: "CREATE TABLE SinhVien (\n  MaSV TEXT PRIMARY KEY,\n  Ten TEXT,\n  Tuoi INTEGER\n);",
+        code: "CREATE TABLE SinhVien (MaSV TEXT PRIMARY KEY, Ten TEXT, Tuoi INTEGER);",
         result: "Tạo bảng SinhVien với khóa chính MaSV.",
       },
       { label: "Thêm dữ liệu", code: "INSERT INTO SinhVien VALUES ('SV01', 'An', 20);", result: "Thêm một bản ghi vào bảng SinhVien." },

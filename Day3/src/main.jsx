@@ -327,6 +327,38 @@ function CommandSlide({ slide }) {
   );
 }
 
+function CompareTable({ table }) {
+  return (
+    <div className="compareTable" style={{ "--rows": table.rows.length + 1 }}>
+      <div className="compareRow compareHead">
+        {table.columns.map((column) => (
+          <span key={column}>{column}</span>
+        ))}
+      </div>
+      {table.rows.map((row) => (
+        <div className="compareRow" key={row[0]}>
+          {row.map((cell, index) => (
+            <span key={index}>{cell}</span>
+          ))}
+        </div>
+      ))}
+    </div>
+  );
+}
+
+function TableSlide({ slide }) {
+  return (
+    <section className="slide slideTable" data-tone={slide.tone}>
+      <div className="tableIntro">
+        <Eyebrow slide={slide} />
+        <h1>{slide.title}</h1>
+        {slide.body ? <p className="body">{slide.body}</p> : null}
+      </div>
+      <CompareTable table={slide.table} />
+    </section>
+  );
+}
+
 function ClosingSlide({ slide }) {
   return (
     <section className="slide slideClosing" data-tone={slide.tone}>
@@ -357,6 +389,7 @@ function Slide({ slide }) {
   if (slide.layout === "flow") return <FlowSlide slide={slide} />;
   if (slide.layout === "comparison") return <ComparisonSlide slide={slide} />;
   if (slide.layout === "command") return <CommandSlide slide={slide} />;
+  if (slide.layout === "table") return <TableSlide slide={slide} />;
   if (slide.layout === "closing") return <ClosingSlide slide={slide} />;
   return <ConceptSlide slide={slide} />;
 }

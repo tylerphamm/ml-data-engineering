@@ -111,6 +111,25 @@ test("deck compares SQL versus NoSQL and OLTP versus OLAP", () => {
   }
 });
 
+test("deck includes a detailed OLTP versus OLAP comparison table", () => {
+  const tableSlide = slides.find((slide) => slide.layout === "table");
+
+  assert.ok(tableSlide, "deck should include a table layout slide");
+  assert.match(tableSlide.title, /OLTP và OLAP/);
+  assert.deepEqual(tableSlide.table.columns, ["Tiêu chí", "OLTP", "OLAP"]);
+  assert.ok(tableSlide.table.rows.length >= 6, "table should compare many criteria");
+
+  for (const row of tableSlide.table.rows) {
+    assert.equal(row.length, 3, "each row needs a criterion plus OLTP and OLAP values");
+    assert.ok(row.every((cell) => cell.length > 0));
+  }
+
+  const criteria = tableSlide.table.rows.map((row) => row[0]);
+  assert.ok(criteria.includes("Cách lưu trữ"));
+  assert.ok(criteria.includes("Người dùng"));
+  assert.ok(criteria.includes("Ví dụ hệ"));
+});
+
 test("deck explains scaling, sharding and replication", () => {
   const scaleSlide = slides.find((slide) => /Scaling/.test(slide.title));
 
