@@ -110,25 +110,6 @@ const slideDefinitions = [
     tone: "violet",
   },
   {
-    section: "Concept",
-    kicker: "Giao dịch trong database",
-    title: "ACID của một giao dịch",
-    body:
-      "Trong database, giao dịch là một nhóm câu lệnh SQL được coi là một đơn vị tất cả hoặc không gì cả. Ví dụ chuyển tiền trong app ngân hàng chạy hai lệnh UPDATE trên bảng tài khoản là trừ tiền tài khoản A và cộng tiền tài khoản B, cả hai phải cùng thành công hoặc cùng được hủy bỏ.",
-    keyMessage:
-      "ACID là bốn tính chất của giao dịch trong database, gồm Atomicity, Consistency, Isolation và Durability, giúp dữ liệu vẫn đúng ngay cả khi hệ thống gặp sự cố.",
-    hideKeyMessage: true,
-    points: ["Atomicity", "Consistency", "Isolation", "Durability"],
-    details: [
-      { label: "Atomicity", text: "Tính nguyên tử, mọi câu lệnh trong giao dịch cùng thành công hoặc cùng hoàn tác, không có nửa vời." },
-      { label: "Consistency", text: "Tính nhất quán, chỉ dữ liệu hợp lệ tuân theo ràng buộc của bảng mới được ghi vào." },
-      { label: "Isolation", text: "Tính cô lập, nhiều giao dịch chạy đồng thời trên cùng database không làm sai lệch dữ liệu của nhau." },
-      { label: "Durability", text: "Tính bền vững, khi giao dịch đã commit thì dữ liệu được lưu lâu dài dù database có sập." },
-    ],
-    layout: "flow",
-    tone: "db",
-  },
-  {
     section: "Comparison",
     kicker: "Hai trường phái",
     title: "SQL và NoSQL",

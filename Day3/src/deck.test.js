@@ -71,13 +71,6 @@ test("deck covers the four NoSQL families and specialized stores", () => {
   assert.match(combined, /Search/);
 });
 
-test("deck explains ACID with all four properties", () => {
-  const acidSlide = slides.find((slide) => /ACID/.test(slide.title));
-
-  assert.ok(acidSlide);
-  assert.deepEqual(acidSlide.points, ["Atomicity", "Consistency", "Isolation", "Durability"]);
-});
-
 test("deck includes basic SQL CRUD commands", () => {
   const crudSlide = slides.find((slide) => /Câu lệnh SQL/.test(slide.title));
   const combined = crudSlide.commands.map((command) => command.code).join("\n");
