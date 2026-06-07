@@ -233,27 +233,6 @@ const slideDefinitions = [
   },
   {
     section: "Thực hành",
-    kicker: "Lab trực quan",
-    title: "Lab các loại database chạy thật",
-    body:
-      "Mọi loại CSDL vừa học đều đang chạy local bằng Docker, mỗi loại chọn một công cụ tiêu biểu có giao diện trực quan để cả lớp xem trường, schema và truy vấn ngay.",
-    keyMessage:
-      "Một lệnh docker compose up là có đủ quan hệ, document, key-value, graph, vector và time-series chạy thật để minh hoạ.",
-    hideKeyMessage: true,
-    points: ["Quan hệ", "Document", "Key-Value", "Graph", "Vector"],
-    tools: [
-      { name: "PostgreSQL", type: "Quan hệ", logo: "postgresql", url: "localhost:5432", use: "Gõ SQL CRUD, xem cột và khóa qua DBeaver." },
-      { name: "MongoDB", type: "Document", logo: "mongodb", url: "localhost:27017", use: "Schema linh hoạt, phân tích trường qua Compass." },
-      { name: "Redis", type: "Key-Value / In-memory", logo: "redis", url: "localhost:6379", use: "Cặp khóa–giá trị, xem qua RedisInsight :5540." },
-      { name: "Neo4j", type: "Graph", logo: "neo4j", url: "localhost:7474", use: "Node và cạnh, có sẵn Neo4j Browser." },
-      { name: "Qdrant", type: "Vector", logo: "qdrant", url: "localhost:6333", use: "Vector search, có sẵn Dashboard /dashboard." },
-      { name: "InfluxDB", type: "Time-series", logo: "influxdb", url: "localhost:8086", use: "Chuỗi thời gian, có sẵn Data Explorer." },
-    ],
-    layout: "lab",
-    tone: "db",
-  },
-  {
-    section: "Thực hành",
     kicker: "Hướng dẫn dùng",
     title: "Truy cập và dùng lab",
     body: "",

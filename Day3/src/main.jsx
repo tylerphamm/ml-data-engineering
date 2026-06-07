@@ -361,40 +361,6 @@ function TableSlide({ slide }) {
   );
 }
 
-function LabSlide({ slide }) {
-  return (
-    <section className="slide slideLab" data-tone={slide.tone}>
-      <div className="labIntro">
-        <Eyebrow slide={slide} />
-        <h1>{slide.title}</h1>
-        {slide.body ? <p className="body">{slide.body}</p> : null}
-      </div>
-      <div className="labGrid">
-        {slide.tools.map((tool) => {
-          const Icon = iconFor(tool.name);
-          return (
-            <article className="toolCard" key={tool.name}>
-              <div className="toolHead">
-                {tool.logo ? (
-                  <img className="toolLogo" src={`/logos/${tool.logo}.svg`} alt={tool.name} />
-                ) : (
-                  <Icon aria-hidden="true" />
-                )}
-                <div className="toolName">
-                  <strong>{tool.name}</strong>
-                  <span>{tool.type}</span>
-                </div>
-              </div>
-              <code>{tool.url}</code>
-              <p>{tool.use}</p>
-            </article>
-          );
-        })}
-      </div>
-    </section>
-  );
-}
-
 function ClosingSlide({ slide }) {
   return (
     <section className="slide slideClosing" data-tone={slide.tone}>
@@ -426,7 +392,6 @@ function Slide({ slide }) {
   if (slide.layout === "comparison") return <ComparisonSlide slide={slide} />;
   if (slide.layout === "command") return <CommandSlide slide={slide} />;
   if (slide.layout === "table") return <TableSlide slide={slide} />;
-  if (slide.layout === "lab") return <LabSlide slide={slide} />;
   if (slide.layout === "closing") return <ClosingSlide slide={slide} />;
   return <ConceptSlide slide={slide} />;
 }
