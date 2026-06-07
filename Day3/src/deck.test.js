@@ -27,7 +27,7 @@ const textOf = (slide) =>
 
 test("deck is a database beginner lesson in Vietnamese", () => {
   assert.ok(slides.length >= 14);
-  assert.equal(slides[0].title, "Cơ sở dữ liệu cơ bản cho người mới");
+  assert.equal(slides[0].title, "Cơ sở dữ liệu cho ứng dụng AI");
 
   const combined = slides.map(textOf).join(" ");
   assert.match(combined, /Cơ sở dữ liệu/);
@@ -35,7 +35,6 @@ test("deck is a database beginner lesson in Vietnamese", () => {
   assert.match(combined, /DBMS/);
   assert.match(combined, /SQL/);
   assert.match(combined, /NoSQL/);
-  assert.match(combined, /ACID/);
 });
 
 test("deck explains core relational concepts", () => {
@@ -82,15 +81,6 @@ test("deck includes basic SQL CRUD commands", () => {
   assert.match(combined, /DELETE FROM SinhVien/);
 });
 
-test("deck includes a runnable SQLite practice slide", () => {
-  const sqliteSlide = slides.find((slide) => /SQLite/.test(slide.title));
-  const combined = sqliteSlide.commands.map((command) => command.code).join("\n");
-
-  assert.equal(sqliteSlide.layout, "command");
-  assert.match(combined, /sqlite3 truong\.db/);
-  assert.match(combined, /CREATE TABLE SinhVien/);
-});
-
 test("deck compares SQL versus NoSQL", () => {
   const comparisonSlides = slides.filter((slide) => slide.layout === "comparison");
   const titles = comparisonSlides.map((slide) => slide.title);
@@ -101,13 +91,6 @@ test("deck compares SQL versus NoSQL", () => {
   for (const slide of comparisonSlides) {
     assert.ok(slide.details.length >= 4, `${slide.title} needs two columns and supporting cards`);
   }
-});
-
-test("deck explains scaling, sharding and replication", () => {
-  const scaleSlide = slides.find((slide) => /Scaling/.test(slide.title));
-
-  assert.ok(scaleSlide);
-  assert.deepEqual(scaleSlide.points, ["Vertical", "Horizontal", "Sharding", "Replication"]);
 });
 
 test("deck recommends PostgreSQL as the beginner default", () => {

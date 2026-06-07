@@ -2,7 +2,7 @@ const slideDefinitions = [
   {
     section: "Khóa học",
     kicker: "Tổng quan",
-    title: "Cơ sở dữ liệu cơ bản cho người mới",
+    title: "Cơ sở dữ liệu cho ứng dụng AI",
     body: "",
     keyMessage:
       "Cơ sở dữ liệu là nơi lưu trữ dữ liệu có tổ chức, còn DBMS là phần mềm quản lý nó, hai nhóm lớn ngày nay là SQL quan hệ và NoSQL.",
@@ -110,11 +110,11 @@ const slideDefinitions = [
     body:
       "SQL dùng schema cố định và đảm bảo nhất quán mạnh cho dữ liệu có cấu trúc, NoSQL dùng schema linh hoạt và mở rộng ngang tốt cho dữ liệu thay đổi nhanh và quy mô lớn.",
     keyMessage:
-      "SQL và NoSQL không thay thế nhau mà bổ sung nhau, nhiều hệ thống dùng song song cả hai theo kiểu polyglot persistence.",
+      "SQL và NoSQL không thay thế nhau mà bổ sung nhau, nhiều hệ thống dùng song song cả hai, mỗi loại lo phần việc nó giỏi nhất.",
     points: ["Schema", "Mở rộng", "Nhất quán", "Truy vấn"],
     details: [
-      { label: "SQL", text: "Bảng và schema cố định, tuân thủ ACID, mạnh ở truy vấn phức tạp với join, mở rộng theo chiều dọc." },
-      { label: "NoSQL", text: "Schema linh hoạt dạng document, key-value, column hoặc graph, mở rộng theo chiều ngang, thường eventual consistency." },
+      { label: "SQL", text: "Bảng và schema cố định, đảm bảo dữ liệu luôn chính xác, mạnh ở truy vấn phức tạp với join, mở rộng theo chiều dọc." },
+      { label: "NoSQL", text: "Schema linh hoạt dạng document, key-value, column hoặc graph, mở rộng theo chiều ngang, nhất quán có thể trễ một chút." },
       { label: "Dùng SQL khi", text: "Dữ liệu có cấu trúc rõ ràng, cần giao dịch chính xác như ngân hàng, CRM hoặc kế toán." },
       { label: "Dùng NoSQL khi", text: "Dữ liệu phi cấu trúc, thay đổi nhanh, cần mở rộng lớn như mạng xã hội, IoT hoặc big data." },
     ],
@@ -159,25 +159,6 @@ const slideDefinitions = [
     tone: "teal",
   },
   {
-    section: "Concept",
-    kicker: "Khả năng mở rộng",
-    title: "Scaling, sharding và replication",
-    body:
-      "Khi dữ liệu và lượng truy cập tăng, ta cần mở rộng hệ thống, có thể nâng cấp một máy, thêm nhiều máy, chia nhỏ dữ liệu hoặc nhân bản dữ liệu.",
-    keyMessage:
-      "Vertical là nâng cấp một máy, horizontal là thêm máy, sharding chia dữ liệu nhiều máy, replication nhân bản dữ liệu để sẵn sàng cao.",
-    hideKeyMessage: true,
-    points: ["Vertical", "Horizontal", "Sharding", "Replication"],
-    details: [
-      { label: "Vertical", text: "Nâng cấp một máy chủ với thêm CPU và RAM, đơn giản nhưng có giới hạn, giống xây nhà cao hơn trên một mảnh đất." },
-      { label: "Horizontal", text: "Thêm nhiều máy chủ, dung lượng gần như không giới hạn, giống mua thêm nhiều mảnh đất." },
-      { label: "Sharding", text: "Chia dữ liệu thành các mảnh đặt trên nhiều máy, chọn sai shard key sẽ làm một máy quá tải." },
-      { label: "Replication", text: "Tạo bản sao trên nhiều máy để tăng sẵn sàng và khả năng đọc, thường dùng kèm sharding." },
-    ],
-    layout: "flow",
-    tone: "violet",
-  },
-  {
     section: "SQL",
     kicker: "CRUD cơ bản",
     title: "Câu lệnh SQL cơ bản",
@@ -200,32 +181,6 @@ const slideDefinitions = [
     tone: "db",
   },
   {
-    section: "SQL",
-    kicker: "Thực hành",
-    title: "Thực hành nhanh với SQLite",
-    body:
-      "SQLite là CSDL nhúng gọn nhẹ chạy trong một file, không cần server, rất hợp để chạy thử câu lệnh SQL đầu tiên ngay trên máy.",
-    keyMessage:
-      "Với SQLite bạn có thể tạo bảng, thêm dữ liệu và truy vấn chỉ bằng vài lệnh trong terminal.",
-    points: ["Mở SQLite", "Tạo bảng", "Thêm dữ liệu", "Truy vấn"],
-    details: [
-      { label: "SQLite", text: "CSDL nhúng nằm trong một file, phổ biến trên điện thoại, trình duyệt và ứng dụng nhỏ." },
-      { label: "Lưu ý", text: "Toàn bộ dữ liệu nằm trong file truong.db, xóa file là mất dữ liệu, hãy thử trong thư mục riêng." },
-    ],
-    commands: [
-      { label: "Mở database", code: "sqlite3 truong.db", result: "Tạo hoặc mở file truong.db và vào shell SQLite." },
-      {
-        label: "Tạo bảng",
-        code: "CREATE TABLE SinhVien (MaSV TEXT PRIMARY KEY, Ten TEXT, Tuoi INTEGER);",
-        result: "Tạo bảng SinhVien với khóa chính MaSV.",
-      },
-      { label: "Thêm dữ liệu", code: "INSERT INTO SinhVien VALUES ('SV01', 'An', 20);", result: "Thêm một bản ghi vào bảng SinhVien." },
-      { label: "Truy vấn", code: "SELECT * FROM SinhVien;", result: "Hiển thị toàn bộ sinh viên vừa thêm." },
-    ],
-    layout: "command",
-    tone: "teal",
-  },
-  {
     section: "Concept",
     kicker: "Quyết định thiết kế",
     title: "Chọn CSDL cho dự án",
@@ -236,12 +191,162 @@ const slideDefinitions = [
     points: ["Workload", "Cấu trúc", "Nhất quán", "Mở rộng"],
     details: [
       { label: "Workload", text: "Quan trọng nhất, xác định nghiêng về giao dịch hay phân tích, đọc nhiều hay ghi nhiều." },
-      { label: "Cấu trúc và nhất quán", text: "Có cấu trúc rõ và cần ACID thì chọn SQL, phi cấu trúc và chấp nhận eventual thì cân nhắc NoSQL." },
+      { label: "Cấu trúc và nhất quán", text: "Có cấu trúc rõ và cần dữ liệu thật chính xác thì chọn SQL, phi cấu trúc và chấp nhận nhất quán trễ một chút thì cân nhắc NoSQL." },
       { label: "Mặc định", text: "Bắt đầu với PostgreSQL vì bao phủ quan hệ, JSON, vector qua pgvector, time-series và geospatial trong một hệ." },
       { label: "Chi phí và đội ngũ", text: "Cân nhắc license, hosting, bảo trì và kỹ năng đội ngũ, tránh dùng quá nhiều loại CSDL không cần thiết." },
     ],
     layout: "concept",
     tone: "db",
+  },
+  {
+    section: "AI Data Design",
+    kicker: "Bài toán",
+    title: "RAG Chatbot cần lưu những gì",
+    body:
+      "Một chatbot RAG thật không chỉ có chunk. Nó phải lưu tài khoản, lịch sử hội thoại, tri thức để truy hồi, và dữ liệu vận hành như cache hay phản hồi của người dùng.",
+    keyMessage:
+      "RAG Chatbot có nhiều loại dữ liệu rất khác nhau, nếu nhét tất cả vào một kho thì vừa chậm vừa sai mô hình.",
+    points: ["Tài khoản", "Hội thoại", "Tri thức", "Phản hồi"],
+    details: [
+      { label: "Người dùng & phiên", text: "Tài khoản, mật khẩu đã hash, phiên đăng nhập — cần đúng tuyệt đối và bảo mật." },
+      { label: "Hội thoại & tin nhắn", text: "Lịch sử từng lượt hỏi đáp, để xem lại và đưa ngữ cảnh cho mô hình." },
+      { label: "Tri thức", text: "Tài liệu được cắt thành chunk, tạo embedding để tìm theo ngữ nghĩa." },
+      { label: "Vận hành", text: "Cache câu trả lời, rate-limit, và phản hồi 👍/👎 để đánh giá chất lượng." },
+    ],
+    layout: "concept",
+    tone: "db",
+  },
+  {
+    section: "AI Data Design",
+    kicker: "Nguyên tắc",
+    title: "Mỗi database một việc",
+    body:
+      "Chọn kho lưu theo CÁCH dữ liệu được truy cập, không theo độ hot. RAG Chatbot dùng song song ba kho, mỗi kho mạnh ở một việc.",
+    keyMessage:
+      "Postgres giữ sự thật quan hệ, Qdrant lo truy hồi ngữ nghĩa, Redis lo tốc độ và điều phối — ba việc khác nhau.",
+    points: ["Quan hệ", "Vector", "Key-value", "Theo truy cập"],
+    details: [
+      { label: "PostgreSQL — quan hệ", text: "Nguồn sự thật: dữ liệu cần JOIN, ràng buộc toàn vẹn và lưu chính xác tuyệt đối." },
+      { label: "Qdrant — vector", logo: "qdrant", text: "Truy hồi theo độ tương đồng ngữ nghĩa, có lọc theo metadata." },
+      { label: "Redis — key-value", logo: "redis", text: "Cache, phiên, rate-limit: tra cứu cực nhanh trong RAM, tự hết hạn theo TTL." },
+      { label: "Chọn theo mẫu truy cập", text: "Hỏi: cần JOIN? cần gần nghĩa? cần nhanh và tạm? Câu trả lời quyết định kho lưu." },
+    ],
+    layout: "comparison",
+    tone: "db",
+  },
+  {
+    section: "AI Data Design",
+    kicker: "PostgreSQL",
+    title: "Postgres: nguồn sự thật của chatbot",
+    body:
+      "Tài khoản, hội thoại, tin nhắn, trích dẫn và phản hồi đều là dữ liệu quan hệ: cần liên kết bằng khóa ngoại, cần toàn vẹn và cần tổng hợp để phân tích.",
+    keyMessage:
+      "Cái gì cần JOIN, cần đúng tuyệt đối hoặc cần thống kê thì thuộc về Postgres, không phải vector DB hay cache.",
+    points: ["users", "conversations", "messages", "feedback"],
+    details: [
+      { label: "Quan hệ rõ ràng", text: "users → conversations → messages → message_citations, nối bằng khóa ngoại." },
+      { label: "Toàn vẹn dữ liệu", text: "Đăng ký, đăng nhập, lưu tin nhắn phải chính xác — không chấp nhận gần đúng." },
+      { label: "Trích dẫn = JOIN", text: "message_citations nối câu trả lời về documents để hiện nguồn đã dùng." },
+      { label: "Phân tích feedback", text: "Tổng hợp 👍/👎 theo thời gian, chủ đề để cải thiện — việc của SQL, không phải cache." },
+    ],
+    layout: "flow",
+    tone: "violet",
+  },
+  {
+    section: "AI Data Design",
+    kicker: "Vector DB",
+    title: "Qdrant: không chỉ là chunk",
+    body:
+      "Vector DB lưu embedding để tìm theo ngữ nghĩa. Nhưng payload đi kèm mới là chìa khoá: nó mang các trường LỌC ĐƯỢC để giới hạn phạm vi tìm kiếm.",
+    keyMessage:
+      "Thiết kế payload có trường lọc (owner, tài liệu, ngôn ngữ, thời gian) mới là điểm khác biệt, không phải chỉ nhét text chunk.",
+    points: ["Embedding", "Payload", "Bộ lọc", "Scope"],
+    details: [
+      { label: "Vector + text", logo: "qdrant", text: "Mỗi point = 1 chunk: vector để so khớp + text để đưa vào ngữ cảnh." },
+      { label: "Payload lọc được", text: "owner_id, document_id, lang, created_at — đánh index để search có điều kiện vẫn nhanh." },
+      { label: "Đa người dùng, đa ngôn ngữ", text: "Lọc owner_id để mỗi người chỉ thấy tài liệu của mình hoặc kho dùng chung." },
+      { label: "Collection theo model", text: "Số chiều vector gắn với model embedding; đổi model là phải tạo lại và nạp lại." },
+    ],
+    layout: "concept",
+    tone: "teal",
+  },
+  {
+    section: "AI Data Design",
+    kicker: "Redis",
+    title: "Redis: cache, phiên, rate-limit",
+    body:
+      "Redis chạy trong RAM nên cực nhanh và có TTL tự hết hạn. Trong chatbot nó đảm nhiệm nhiều việc tạm thời, nhưng KHÔNG phải nguồn sự thật.",
+    keyMessage:
+      "Mất Redis thì chatbot vẫn đúng, chỉ chậm hơn — vì Redis chỉ giữ dữ liệu tạm có thể dựng lại.",
+    points: ["Cache", "Session", "Rate-limit", "Embedding"],
+    details: [
+      { label: "Cache câu trả lời", logo: "redis", text: "Câu hỏi giống nhau trả ngay, đỡ tốn LLM và embedding — key có TTL." },
+      { label: "Phiên đăng nhập", text: "session:* lưu token đang hiệu lực; đăng xuất là xoá key, tự hết hạn theo thời gian." },
+      { label: "Rate-limit", text: "Đếm số request bằng INCR nguyên tử + EXPIRE để chặn lạm dụng, bảo vệ ngân sách." },
+      { label: "Cache embedding", text: "Lưu vector của text đã tính để khỏi gọi lại model — TTL dài hơn." },
+    ],
+    layout: "flow",
+    tone: "violet",
+  },
+  {
+    section: "AI Data Design",
+    kicker: "Phân vai",
+    title: "Bảng phân vai: cái gì lưu ở đâu",
+    body:
+      "Tóm tắt thực dụng cho RAG Chatbot: với mỗi loại dữ liệu, chọn đúng kho và biết vì sao. Đây là câu trả lời cho câu hỏi nếu cái gì cũng lưu chunk thì nói làm gì.",
+    keyMessage:
+      "Mỗi loại dữ liệu có một kho phù hợp nhất; đặt đúng chỗ giúp hệ thống nhanh, đúng và dễ mở rộng.",
+    points: ["Postgres", "Qdrant", "Redis", "TTL"],
+    table: {
+      columns: ["Dữ liệu", "Lưu ở", "Vì sao"],
+      rows: [
+        ["Tài khoản, mật khẩu", "PostgreSQL", "Quan hệ + toàn vẹn dữ liệu"],
+        ["Hội thoại, tin nhắn", "PostgreSQL", "Lịch sử, truy vết, phân tích"],
+        ["Phản hồi 👍/👎", "PostgreSQL", "Dữ liệu eval, cần tổng hợp"],
+        ["Embedding + text chunk", "Qdrant", "Tìm theo ngữ nghĩa, lọc payload"],
+        ["Cache câu trả lời", "Redis", "Trả ngay, có TTL"],
+        ["Phiên / token", "Redis", "Tra nhanh, tự hết hạn"],
+        ["Rate-limit", "Redis", "Đếm nguyên tử INCR"],
+      ],
+    },
+    layout: "table",
+    tone: "db",
+  },
+  {
+    section: "AI Data Design",
+    kicker: "Luồng",
+    title: "Một câu hỏi đi qua các database",
+    body:
+      "Vòng đời một lượt chat cho thấy ba kho phối hợp ra sao: Redis chặn cửa và trả nhanh, Qdrant truy hồi, Postgres lưu lại tất cả.",
+    keyMessage:
+      "Một request chat chạm vào cả ba database theo đúng thế mạnh từng kho, không kho nào làm thay việc kho khác.",
+    points: ["Phiên", "Cache", "Truy hồi", "Sinh", "Lưu"],
+    details: [
+      { label: "Redis trước", text: "Kiểm tra phiên + rate-limit, rồi xem có cache câu trả lời chưa (HIT thì trả ngay)." },
+      { label: "Qdrant giữa", text: "Embedding câu hỏi, search top-k có lọc theo owner để lấy đoạn liên quan." },
+      { label: "Postgres sau", text: "Lưu lượt hỏi và trả lời + trích dẫn; lấy lịch sử gần nhất làm ngữ cảnh." },
+      { label: "Khép vòng", text: "Lưu cache câu trả lời vào Redis; phản hồi 👍/👎 ghi vào Postgres để cải thiện." },
+    ],
+    layout: "flow",
+    tone: "teal",
+  },
+  {
+    section: "AI Data Design",
+    kicker: "Cảnh báo",
+    title: "Anti-pattern: đừng nhét mọi thứ một chỗ",
+    body:
+      "Hầu hết lỗi thiết kế dữ liệu cho AI đến từ việc dùng sai kho cho sai mục đích. Tránh bốn lỗi phổ biến sau.",
+    keyMessage:
+      "Dùng sai kho khiến hệ thống chậm, khó mở rộng hoặc mất dữ liệu; mỗi kho có việc riêng của nó.",
+    points: ["Sai chỗ", "Thiếu lọc", "Phình to", "Lộ PII"],
+    details: [
+      { label: "Hội thoại trong vector DB", text: "Lịch sử cần JOIN và toàn vẹn nên thuộc Postgres, không phải Qdrant." },
+      { label: "Redis làm nguồn sự thật", text: "Redis là tạm và có thể bay theo TTL — đừng lưu dữ liệu gốc duy nhất ở đó." },
+      { label: "Embedding mọi thứ", text: "Không phải dữ liệu nào cũng cần vector; chỉ embed cái cần tìm theo ngữ nghĩa." },
+      { label: "Payload thiếu field lọc", text: "Thiếu owner/lang/time thì không giới hạn được phạm vi, dễ lẫn dữ liệu người khác." },
+    ],
+    layout: "concept",
+    tone: "orange",
   },
   {
     section: "Wrap-up",
@@ -255,12 +360,13 @@ const slideDefinitions = [
     points: ["Khái niệm", "Phân loại", "SQL CRUD", "Cách chọn"],
     checklist: [
       "Phân biệt được database và DBMS",
-      "Hiểu bảng, bản ghi, trường, khóa, index và ACID",
+      "Hiểu bảng, bản ghi, trường, khóa và index",
       "Phân biệt SQL với bốn loại NoSQL",
-      "Viết được câu lệnh CRUD cơ bản với SQLite",
+      "Viết được câu lệnh CRUD cơ bản (SELECT, INSERT, UPDATE, DELETE)",
       "Biết khi nào chọn quan hệ, document, key-value hay vector",
+      "Phân vai Postgres, Redis, Qdrant cho một RAG Chatbot",
     ],
-    roadmap: ["Thiết kế ER và chuẩn hóa", "Index và tối ưu truy vấn", "Transaction và CAP", "Vector DB cho AI"],
+    roadmap: ["Thiết kế quan hệ và chuẩn hóa", "Index và tối ưu truy vấn", "Mở rộng: sharding & replication", "Thiết kế DB cho RAG Chatbot"],
     layout: "closing",
     tone: "db",
   },

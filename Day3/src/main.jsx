@@ -5,13 +5,17 @@ import {
   ArrowRight,
   Boxes,
   CheckCircle2,
+  Clock,
   Columns3,
   Copy,
   Database,
   FileText,
+  Filter,
+  Gauge,
   KeyRound,
   Layers,
   Maximize2,
+  MessageSquare,
   Network,
   Rows3,
   Search,
@@ -20,6 +24,8 @@ import {
   Sparkles,
   Table,
   Terminal,
+  ThumbsUp,
+  Users,
   Zap,
 } from "lucide-react";
 
@@ -65,6 +71,24 @@ const iconMap = {
   Vector: Sparkles,
   Vertical: Server,
   Workload: Activity,
+  "Hội thoại": MessageSquare,
+  "Tin nhắn": MessageSquare,
+  "Phản hồi": ThumbsUp,
+  Feedback: ThumbsUp,
+  "Phiên": KeyRound,
+  Session: KeyRound,
+  Rate: Gauge,
+  "Người": Users,
+  "Tài khoản": Users,
+  Payload: Layers,
+  "Bộ lọc": Filter,
+  "Lọc": Filter,
+  Scope: Users,
+  Embedding: Sparkles,
+  "Tri thức": Boxes,
+  TTL: Clock,
+  "Sinh": Sparkles,
+  "Lưu": Database,
 };
 
 function iconFor(label, fallback = Database) {
@@ -439,7 +463,7 @@ function App() {
     <main className="deckShell">
       <div className="slideCanvas" key={activeIndex}>
         <div className="topBar">
-          <span>Database beginner course</span>
+          <span>Cơ sở dữ liệu cho ứng dụng AI</span>
           <span>
             {String(activeIndex + 1).padStart(2, "0")} / {String(slides.length).padStart(2, "0")}
           </span>
