@@ -194,24 +194,6 @@ const slideDefinitions = [
     layout: "concept",
     tone: "db",
   },
-  {
-    section: "AI Data Design",
-    kicker: "Nguyên tắc",
-    title: "Mỗi database một việc",
-    body:
-      "Chọn kho lưu theo CÁCH dữ liệu được truy cập, không theo độ hot. RAG Chatbot dùng song song ba kho, mỗi kho mạnh ở một việc.",
-    keyMessage:
-      "Postgres giữ sự thật quan hệ, Qdrant lo truy hồi ngữ nghĩa, Redis lo tốc độ và điều phối — ba việc khác nhau.",
-    points: ["Quan hệ", "Vector", "Key-value", "Theo truy cập"],
-    details: [
-      { label: "PostgreSQL — quan hệ", text: "Nguồn sự thật: dữ liệu cần JOIN, ràng buộc toàn vẹn và lưu chính xác tuyệt đối." },
-      { label: "Qdrant — vector", logo: "qdrant", text: "Truy hồi theo độ tương đồng ngữ nghĩa, có lọc theo metadata." },
-      { label: "Redis — key-value", logo: "redis", text: "Cache, phiên, rate-limit: tra cứu cực nhanh trong RAM, tự hết hạn theo TTL." },
-      { label: "Chọn theo mẫu truy cập", text: "Hỏi: cần JOIN? cần gần nghĩa? cần nhanh và tạm? Câu trả lời quyết định kho lưu." },
-    ],
-    layout: "comparison",
-    tone: "db",
-  },
 ];
 
 export const slides = slideDefinitions;
