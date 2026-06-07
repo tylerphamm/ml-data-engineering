@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>RAG Chatbot</title>
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <!-- ===== Màn đăng nhập / đăng ký ===== -->
+  <div id="auth-view" class="auth-view">
+    <form id="auth-form" class="auth-card">
+      <div class="brand">🤖 RAG Chatbot</div>
+      <p class="auth-sub">Trợ lý hỏi đáp tài liệu của bạn</p>
+      <div class="tabs">
+        <button type="button" id="tab-login" class="tab active">Đăng nhập</button>
+        <button type="button" id="tab-register" class="tab">Đăng ký</button>
+      </div>
+      <label>Email</label>
+      <input id="email" type="email" autocomplete="email" required placeholder="ban@example.com" />
+      <div id="name-field" hidden>
+        <label>Tên hiển thị</label>
+        <input id="display_name" type="text" placeholder="Tên của bạn" />
+      </div>
+      <label>Mật khẩu</label>
+      <input id="password" type="password" autocomplete="current-password" required minlength="6" placeholder="Ít nhất 6 ký tự" />
+      <button id="auth-submit" type="submit">Đăng nhập</button>
+      <p id="auth-error" class="error"></p>
+    </form>
+  </div>
+
+  <!-- ===== Ứng dụng chat ===== -->
+  <div id="app-view" class="app-view" hidden>
+    <aside class="sidebar">
+      <button id="new-chat" class="new-chat">＋ Cuộc trò chuyện mới</button>
+      <div id="conv-list" class="conv-list"></div>
+      <div class="sidebar-foot">
+        <button id="kb-btn" class="ghost">📚 Kho tri thức</button>
+        <div class="user-row">
+          <span id="user-label" class="user-label"></span>
+          <button id="logout" class="ghost small">Đăng xuất</button>
+        </div>
+      </div>
+    </aside>
+
+    <main class="chat-main">
+      <header class="chat-header">
+        <h2 id="chat-title">Cuộc trò chuyện</h2>
+      </header>
+
+      <div id="messages" class="messages">
+        <div class="empty-hint">Bắt đầu bằng một câu hỏi. Câu trả lời trích từ tài liệu trong kho tri thức.</div>
+      </div>
+
+      <form id="msg-form" class="composer">
+        <textarea id="msg-input" rows="1" placeholder="Nhập câu hỏi… (Enter để gửi, Shift+Enter xuống dòng)"></textarea>
+        <button type="submit" id="send-btn">Gửi</button>
+      </form>
+    </main>
+  </div>
+
+  <!-- ===== Modal kho tri thức ===== -->
+  <div id="kb-modal" class="modal" hidden>
+    <div class="modal-card">
+      <div class="modal-head">
+        <h3>📚 Kho tri thức</h3>
+        <button id="kb-close" class="ghost small">✕</button>
+      </div>
+      <p class="muted">Chatbot đã có sẵn các tài liệu dưới đây — bạn có thể hỏi ngay, không cần nạp gì.</p>
+      <div id="kb-list" class="kb-list"></div>
+      <details class="kb-add">
+        <summary>➕ Thêm tài liệu mới (tuỳ chọn)</summary>
+        <label>Tiêu đề</label>
+        <input id="kb-title" type="text" placeholder="VD: Sổ tay hướng dẫn nội bộ" />
+        <label>Nội dung</label>
+        <textarea id="kb-text" rows="4" placeholder="Dán đoạn văn bản cần nạp…"></textarea>
+        <label class="check"><input id="kb-shared" type="checkbox" checked /> Dùng chung cho mọi người</label>
+        <div class="kb-actions">
+          <button id="kb-ingest">Nạp văn bản</button>
+          <label class="file-btn">Nạp file (.pdf/.txt/.md)<input id="kb-file" type="file" accept=".pdf,.txt,.md" hidden /></label>
+        </div>
+        <p id="kb-msg" class="muted"></p>
+      </details>
+    </div>
+  </div>
+
+  <script src="/app.js"></script>
+</body>
+</html>

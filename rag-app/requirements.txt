@@ -1,0 +1,16 @@
+fastapi>=0.110
+uvicorn[standard]>=0.29
+pydantic-settings>=2.2
+email-validator>=2.1
+python-multipart>=0.0.9
+pyjwt>=2.8
+bcrypt>=4.0
+openai>=1.30
+qdrant-client>=1.9
+fastembed>=0.3
+redis>=5.0
+psycopg[binary]>=3.1
+psycopg-pool>=3.2
+pypdf>=4.2
+tiktoken>=0.7
+pytest>=8.0
