@@ -22,17 +22,11 @@ const slideDefinitions = [
     kicker: "Khái niệm nền",
     title: "Cơ sở dữ liệu là gì",
     body:
-      "Cơ sở dữ liệu là một tập hợp dữ liệu được tổ chức có hệ thống và lưu trữ điện tử, để dễ dàng truy cập, quản lý và cập nhật.",
+      "Cơ sở dữ liệu là một tập hợp dữ liệu được tổ chức và lưu trữ điện tử, có thể dễ dàng truy cập, quản lý và cập nhật.",
     keyMessage:
       "Database giúp tổ chức dữ liệu để nhiều người và nhiều chương trình cùng truy cập nhanh, chính xác và an toàn.",
     hideKeyMessage: true,
     points: ["Có tổ chức", "Lưu điện tử", "Truy cập nhanh", "Cập nhật được"],
-    details: [
-      {
-        label: "So sánh",
-        text: "Hãy tưởng tượng một thư viện, sách không vứt lung tung mà được xếp theo kệ, theo thể loại, có mã số, database chính là cái thư viện đã được sắp xếp đó.",
-      },
-    ],
     visual: "library",
     layout: "concept",
     tone: "db",
