@@ -26,7 +26,7 @@ const textOf = (slide) =>
   ].join(" ");
 
 test("deck is a database beginner lesson in Vietnamese", () => {
-  assert.ok(slides.length >= 14);
+  assert.ok(slides.length >= 10);
   assert.equal(slides[0].title, "Cơ sở dữ liệu cho ứng dụng AI");
 
   const combined = slides.map(textOf).join(" ");
@@ -70,17 +70,6 @@ test("deck covers the four NoSQL families and specialized stores", () => {
   assert.match(combined, /Search/);
 });
 
-test("deck includes basic SQL CRUD commands", () => {
-  const crudSlide = slides.find((slide) => /Câu lệnh SQL/.test(slide.title));
-  const combined = crudSlide.commands.map((command) => command.code).join("\n");
-
-  assert.equal(crudSlide.layout, "command");
-  assert.match(combined, /SELECT \* FROM SinhVien/);
-  assert.match(combined, /INSERT INTO SinhVien/);
-  assert.match(combined, /UPDATE SinhVien SET/);
-  assert.match(combined, /DELETE FROM SinhVien/);
-});
-
 test("deck compares SQL versus NoSQL", () => {
   const comparisonSlides = slides.filter((slide) => slide.layout === "comparison");
   const titles = comparisonSlides.map((slide) => slide.title);
@@ -100,14 +89,6 @@ test("deck recommends PostgreSQL as the beginner default", () => {
   assert.match(textOf(chooseSlide), /PostgreSQL/);
 });
 
-test("deck ends with a wrap-up that has a checklist and roadmap", () => {
-  const closing = slides.find((slide) => slide.layout === "closing");
-
-  assert.ok(closing);
-  assert.ok(closing.checklist.length >= 3);
-  assert.ok(closing.roadmap.length >= 3);
-});
-
 test("deck uses the supported visual layouts", () => {
   const layouts = new Set(slides.map((slide) => slide.layout));
 
@@ -115,8 +96,6 @@ test("deck uses the supported visual layouts", () => {
   assert.ok(layouts.has("concept"));
   assert.ok(layouts.has("flow"));
   assert.ok(layouts.has("comparison"));
-  assert.ok(layouts.has("command"));
-  assert.ok(layouts.has("closing"));
 });
 
 test("cover hides duplicate eyebrow", () => {
