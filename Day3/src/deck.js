@@ -159,7 +159,7 @@ const slideDefinitions = [
       { label: "Vector", logo: "qdrant", text: "Tìm theo tương đồng ngữ nghĩa, lõi của RAG. Lab chạy Qdrant, dashboard :6333." },
       { label: "Time-series", logo: "influxdb", text: "Dữ liệu gắn mốc thời gian như IoT, giám sát. Lab chạy InfluxDB, UI :8086." },
       { label: "In-memory", logo: "redis", text: "Dữ liệu trong RAM, truy cập tức thì cho cache và session. Lab chạy Redis :6379." },
-      { label: "Search", text: "Inverted index cho tìm kiếm toàn văn và log, ví dụ Elasticsearch, OpenSearch (giới thiệu)." },
+      { label: "Search", text: "Dùng inverted index cho tìm kiếm toàn văn và phân tích log trên khối lượng dữ liệu lớn." },
     ],
     layout: "concept",
     tone: "teal",
