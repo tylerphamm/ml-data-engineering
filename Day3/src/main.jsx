@@ -94,7 +94,7 @@ function Details({ details }) {
         return (
           <article key={`${detail.label}-${index}`}>
             {detail.logo ? (
-              <img className="detailLogo" src={`/logos/${detail.logo}.svg`} alt={detail.label} />
+              <img className="detailLogo" src={`${import.meta.env.BASE_URL}logos/${detail.logo}.svg`} alt={detail.label} />
             ) : (
               <Icon aria-hidden="true" />
             )}
