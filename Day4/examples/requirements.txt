@@ -1,0 +1,3 @@
+# Chỉ cần cho phần message queue (script 01-03 dùng thuần thư viện chuẩn).
+pika>=1.3
+confluent-kafka>=2.5

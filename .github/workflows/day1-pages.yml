@@ -8,6 +8,7 @@ name: Deploy Slide Decks to GitHub Pages
 # - Day1:     https://0121ient.github.io/ml-data-engineering/Day1/
 # - Day2:     https://0121ient.github.io/ml-data-engineering/Day2/
 # - Day3:     https://0121ient.github.io/ml-data-engineering/Day3/
+# - Day4:     https://0121ient.github.io/ml-data-engineering/Day4/
 # - Capstone: https://0121ient.github.io/ml-data-engineering/Capstone/
 
 on:
@@ -18,6 +19,7 @@ on:
       - "Day1/**"
       - "Day2/**"
       - "Day3/**"
+      - "Day4/**"
       - "Capstone/**"
       - ".github/workflows/day1-pages.yml"
   workflow_dispatch:
@@ -42,6 +44,7 @@ jobs:
           - Day1
           - Day2
           - Day3
+          - Day4
           - Capstone
     steps:
       - name: Checkout
@@ -82,6 +85,7 @@ jobs:
             Day1/package-lock.json
             Day2/package-lock.json
             Day3/package-lock.json
+            Day4/package-lock.json
             Capstone/package-lock.json
 
       - name: Install Day1 dependencies
@@ -114,6 +118,16 @@ jobs:
         env:
           GITHUB_PAGES: "true"
 
+      - name: Install Day4 dependencies
+        working-directory: Day4
+        run: npm ci
+
+      - name: Build Day4
+        working-directory: Day4
+        run: npm run build
+        env:
+          GITHUB_PAGES: "true"
+
       - name: Install Capstone dependencies
         working-directory: Capstone
         run: npm ci
@@ -127,10 +141,11 @@ jobs:
       - name: Assemble Pages artifact
         shell: bash
         run: |
-          mkdir -p pages/Day1 pages/Day2 pages/Day3 pages/Capstone
+          mkdir -p pages/Day1 pages/Day2 pages/Day3 pages/Day4 pages/Capstone
           cp -R Day1/dist/. pages/Day1/
           cp -R Day2/dist/. pages/Day2/
           cp -R Day3/dist/. pages/Day3/
+          cp -R Day4/dist/. pages/Day4/
           cp -R Capstone/dist/. pages/Capstone/
 
       - name: Configure Pages
