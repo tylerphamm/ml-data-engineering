@@ -19,17 +19,17 @@ const slideDefinitions = [
   },
   {
     section: "Concept",
-    kicker: "Khái niệm nền",
-    title: "Tiến trình và luồng",
+    kicker: "Khái niệm",
+    title: "Processes and Threads",
     body:
       "Tiến trình là một chương trình đang chạy với bộ nhớ riêng, còn luồng là dòng thực thi bên trong tiến trình và dùng chung bộ nhớ đó.",
     keyMessage:
       "Tiến trình cách ly bộ nhớ nên an toàn nhưng đắt, luồng chia sẻ bộ nhớ nên rẻ nhưng dễ giẫm chân nhau; concurrency là xen kẽ, parallelism là chạy song song thật.",
     hideKeyMessage: true,
-    points: ["Tiến trình", "Luồng", "Concurrency", "Parallelism"],
+    points: ["Process", "Thread", "Concurrency", "Parallelism"],
     details: [
-      { label: "Tiến trình", text: "Một chương trình đang chạy với bộ nhớ riêng, một tiến trình chết không kéo theo tiến trình khác, nhưng tạo mới và trao đổi dữ liệu tốn kém." },
-      { label: "Luồng", text: "Nhiều dòng thực thi trong cùng tiến trình, dùng chung biến nên trao đổi nhanh, đổi lại phải cẩn thận khi cùng sửa một dữ liệu." },
+      { label: "Process", text: "Một chương trình đang chạy với bộ nhớ riêng, một tiến trình chết không kéo theo tiến trình khác, nhưng tạo mới và trao đổi dữ liệu tốn kém." },
+      { label: "Thread", text: "Nhiều dòng thực thi trong cùng tiến trình, dùng chung biến nên trao đổi nhanh, đổi lại phải cẩn thận khi cùng sửa một dữ liệu." },
       { label: "Concurrency", text: "Xen kẽ nhiều việc trên một nhân, giống một đầu bếp đảo qua lại giữa ba món đang nấu." },
       { label: "Parallelism", text: "Nhiều việc chạy cùng lúc trên nhiều nhân, giống ba đầu bếp mỗi người nấu một món." },
     ],
@@ -39,7 +39,7 @@ const slideDefinitions = [
   {
     section: "Concept",
     kicker: "Đặc thù của CPython",
-    title: "GIL — khóa toàn cục của Python",
+    title: "GIL",
     body:
       "GIL (Global Interpreter Lock) là một khóa trong CPython khiến tại mỗi thời điểm chỉ một luồng được chạy bytecode Python, kể cả khi máy có nhiều nhân.",
     keyMessage:
@@ -75,7 +75,7 @@ const slideDefinitions = [
   {
     section: "Toolbox",
     kicker: "Công cụ 1 — I/O",
-    title: "Multithreading — nhiều luồng cho I/O",
+    title: "Multithreading",
     body:
       "Module threading tạo nhiều luồng trong một tiến trình; khi một luồng chờ mạng hay đĩa, luồng khác tiếp tục chạy nên tổng thời gian chờ giảm mạnh.",
     keyMessage:
@@ -94,7 +94,7 @@ const slideDefinitions = [
   {
     section: "Toolbox",
     kicker: "Công cụ 2 — CPU",
-    title: "Multiprocessing — nhiều tiến trình cho CPU",
+    title: "Multiprocessing",
     body:
       "Mỗi tiến trình con có trình thông dịch và GIL riêng, nên N tiến trình tận dụng được N nhân CPU để chạy song song thật sự.",
     keyMessage:
@@ -113,7 +113,7 @@ const slideDefinitions = [
   {
     section: "Toolbox",
     kicker: "Công cụ 3 — I/O số lượng lớn",
-    title: "Asyncio — một luồng, vạn kết nối",
+    title: "Asyncio",
     body:
       "Asyncio chạy mọi thứ trên một luồng với event loop: hàm async chủ động nhường quyền tại await, nên hàng nghìn tác vụ I/O xen kẽ nhau mà không tốn luồng.",
     keyMessage:
@@ -154,7 +154,7 @@ const slideDefinitions = [
   {
     section: "Scale out",
     kicker: "Vượt ra ngoài một máy",
-    title: "Message queue — hàng đợi tin nhắn",
+    title: "Message Queue",
     body:
       "Khi một máy không còn đủ, ta tách hệ thống thành bên gửi việc (producer) và bên xử lý (consumer), nối với nhau bằng một hàng đợi tin nhắn đứng giữa.",
     keyMessage:
@@ -173,7 +173,7 @@ const slideDefinitions = [
   {
     section: "Scale out",
     kicker: "Smart broker",
-    title: "RabbitMQ — bưu điện thông minh",
+    title: "RabbitMQ",
     body:
       "RabbitMQ là message broker truyền thống: nhận tin từ producer vào exchange, định tuyến vào đúng queue, đẩy cho consumer và xóa tin sau khi được xác nhận.",
     keyMessage:
@@ -191,7 +191,7 @@ const slideDefinitions = [
   {
     section: "Scale out",
     kicker: "Distributed log",
-    title: "Kafka — nhật ký sự kiện phân tán",
+    title: "Kafka",
     body:
       "Kafka không xóa tin sau khi đọc: sự kiện được ghi nối tiếp vào topic chia thành nhiều partition, consumer tự giữ offset và đọc theo nhịp của riêng mình.",
     keyMessage:
