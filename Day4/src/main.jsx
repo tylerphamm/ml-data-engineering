@@ -147,12 +147,12 @@ function CoverVisual() {
         <div className="dbGrid">
           <div className="miniCard">
             <Snail />
-            <strong>Tuần tự</strong>
+            <strong>Sequential</strong>
           </div>
           <ArrowRight className="arrowIcon" />
           <div className="miniCard accent">
             <Layers />
-            <strong>Đồng thời</strong>
+            <strong>Concurrent</strong>
           </div>
           <ArrowRight className="arrowIcon" />
           <div className="miniCard">
@@ -469,7 +469,7 @@ function App() {
     <main className="deckShell">
       <div className="slideCanvas" key={activeIndex}>
         <div className="topBar">
-          <span>Python hiệu năng cao &amp; Message Queue</span>
+          <span>High-Performance Python &amp; Message Queue</span>
           <span>
             {String(activeIndex + 1).padStart(2, "0")} / {String(slides.length).padStart(2, "0")}
           </span>

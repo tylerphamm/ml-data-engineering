@@ -29,7 +29,7 @@ const textOf = (slide) =>
 
 test("deck is a high performance Python lesson in Vietnamese", () => {
   assert.ok(slides.length >= 10);
-  assert.equal(slides[0].title, "Python hiệu năng cao");
+  assert.equal(slides[0].title, "High-Performance Python");
 
   const combined = slides.map(textOf).join(" ");
   assert.match(combined, /Python/);

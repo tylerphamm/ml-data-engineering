@@ -2,7 +2,7 @@ const slideDefinitions = [
   {
     section: "Khóa học",
     kicker: "Tổng quan",
-    title: "Python hiệu năng cao",
+    title: "High-Performance Python",
     body: "",
     keyMessage:
       "Python chỉ nhanh khi chọn đúng mô hình chạy đồng thời: threading cho I/O, multiprocessing cho CPU, asyncio cho hàng vạn kết nối, và message queue khi vượt ra ngoài một máy.",
