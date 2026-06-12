@@ -43,11 +43,12 @@ const slideDefinitions = [
     body:
       "GIL (Global Interpreter Lock) là một khóa trong CPython khiến tại mỗi thời điểm chỉ một luồng được chạy bytecode Python, kể cả khi máy có nhiều nhân.",
     keyMessage:
-      "Vì GIL, nhiều luồng không tăng tốc code tính toán thuần; lối thoát là multiprocessing, C extension như NumPy, hoặc bản free-threading thử nghiệm từ Python 3.13.",
+      "Vì GIL, nhiều luồng không tăng tốc code tính toán thuần; lối thoát là multiprocessing, C extension như NumPy, hoặc bản free-threading của Python — thử nghiệm từ 3.13, chính thức từ 3.14.",
     points: ["GIL", "Một luồng chạy", "Nhả khi I/O", "Lối thoát"],
     details: [
       { label: "Hệ quả", text: "Việc tính toán thuần chạy 4 luồng không nhanh hơn 1 luồng, đôi khi còn chậm hơn vì các luồng tranh nhau khóa." },
       { label: "Vẫn cứu được I/O", text: "Luồng đang chờ mạng hay đĩa sẽ nhả GIL cho luồng khác chạy, nên threading vẫn tăng tốc mạnh các việc thiên về chờ." },
+      { label: "Lối thoát", text: "Tính toán nặng thì dùng multiprocessing hoặc C extension như NumPy — vốn nhả GIL khi tính; Python còn có bản free-threading gỡ hẳn GIL, thử nghiệm từ 3.13 và chính thức từ 3.14." },
     ],
     visual: "gil",
     layout: "concept",
@@ -180,8 +181,8 @@ const slideDefinitions = [
     points: ["Exchange", "Routing", "Ack", "Task queue"],
     details: [
       { label: "Exchange và routing", logo: "rabbitmq", text: "Producer gửi vào exchange; exchange dựa trên routing key để chuyển tin tới một hay nhiều queue — kiểu direct, fanout hoặc topic." },
-      { label: "Ack và retry", text: "Consumer xử lý xong mới ack; chưa ack mà chết thì tin quay lại queue cho worker khác — không mất việc." },
-      { label: "Dùng khi", text: "Phân việc cho đội worker: gửi email, xuất báo cáo, xử lý ảnh — mỗi việc làm đúng một lần rồi biến mất khỏi queue." },
+      { label: "Ack và retry", text: "Consumer xử lý xong mới ack; chưa ack mà chết thì tin được giao lại cho worker khác — không mất việc, nhưng một việc có thể chạy hai lần (at-least-once) nên consumer phải idempotent." },
+      { label: "Dùng khi", text: "Phân việc cho đội worker: gửi email, xuất báo cáo, xử lý ảnh — xong việc và ack thì tin mới biến mất khỏi queue." },
       { label: "Hệ sinh thái", text: "Nói giao thức AMQP, thư viện pika cho Python, và là broker mặc định của Celery." },
     ],
     layout: "concept",
@@ -217,10 +218,37 @@ const slideDefinitions = [
     details: [
       { label: "RabbitMQ", logo: "rabbitmq", text: "Smart broker, dumb consumer: broker lo định tuyến, đẩy tin và xóa sau ack. Mạnh ở task queue, độ trễ thấp, routing linh hoạt." },
       { label: "Kafka", logo: "kafka", text: "Dumb broker, smart consumer: broker chỉ ghi log, consumer tự kéo theo offset. Mạnh ở throughput, replay và nhiều người cùng đọc." },
-      { label: "Chọn RabbitMQ khi", text: "Phân phối việc cho worker, mỗi việc xử lý đúng một lần: gửi mail, thanh toán, tạo embedding theo yêu cầu." },
+      { label: "Chọn RabbitMQ khi", text: "Phân phối việc cho worker, mỗi việc chỉ một worker nhận: gửi mail, thanh toán, tạo embedding theo yêu cầu." },
       { label: "Chọn Kafka khi", text: "Sự kiện sinh ra liên tục và nhiều bên cùng cần: log, metrics, clickstream, CDC, feature pipeline cho ML." },
     ],
     layout: "comparison",
+    tone: "py",
+  },
+  {
+    section: "Tổng kết",
+    kicker: "Trước khi vào lab",
+    title: "Tổng kết và thực hành",
+    body:
+      "Toàn bộ code minh họa nằm trong thư mục examples: ba script concurrency chạy ngay với Python chuẩn, hai demo broker chỉ cần Docker.",
+    keyMessage:
+      "Chẩn đoán nút nghẽn trước, chọn công cụ sau; lý thuyết chỉ đọng lại khi tự chạy ba script concurrency và hai demo broker trong thư mục examples.",
+    hideKeyMessage: true,
+    points: ["Checklist", "3 script concurrency", "2 demo broker"],
+    checklist: [
+      "Vì sao GIL khiến threading không tăng tốc được CPU-bound",
+      "Chẩn đoán I/O-bound hay CPU-bound trước khi chọn công cụ",
+      "Threading cho I/O, multiprocessing cho CPU, asyncio cho vạn kết nối",
+      "Queue tách rời hệ thống — tin có thể giao lại nên worker phải idempotent",
+      "RabbitMQ cho task queue, Kafka cho luồng sự kiện cần replay",
+    ],
+    roadmap: [
+      "01_cpu_vs_io.py — tự thấy GIL qua số đo thời gian",
+      "02_race_condition.py — mất dữ liệu thật, và Lock cứu thế nào",
+      "03_asyncio_gather.py — 20 request trong thời gian của 1",
+      "rabbitmq/ — 2 consumer chia việc, tắt một worker xem ack cứu task",
+      "kafka/ — 2 group cùng đọc một topic, replay từ offset 0",
+    ],
+    layout: "closing",
     tone: "py",
   },
 ];
