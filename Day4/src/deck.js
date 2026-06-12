@@ -28,8 +28,8 @@ const slideDefinitions = [
     hideKeyMessage: true,
     points: ["Process", "Thread", "Concurrency", "Parallelism"],
     details: [
-      { label: "Process", text: "Một chương trình đang chạy với bộ nhớ riêng, một tiến trình chết không kéo theo tiến trình khác, nhưng tạo mới và trao đổi dữ liệu tốn kém." },
-      { label: "Thread", text: "Nhiều dòng thực thi trong cùng tiến trình, dùng chung biến nên trao đổi nhanh, đổi lại phải cẩn thận khi cùng sửa một dữ liệu." },
+      { label: "Process", text: "Cách ly tốt: một tiến trình chết không kéo theo tiến trình khác, nhưng tạo mới và trao đổi dữ liệu tốn kém." },
+      { label: "Thread", text: "Dùng chung biến nên trao đổi nhanh, đổi lại phải cẩn thận khi cùng sửa một dữ liệu." },
       { label: "Concurrency", text: "Xen kẽ nhiều việc trên một nhân, giống một đầu bếp đảo qua lại giữa ba món đang nấu." },
       { label: "Parallelism", text: "Nhiều việc chạy cùng lúc trên nhiều nhân, giống ba đầu bếp mỗi người nấu một món." },
     ],
@@ -48,7 +48,7 @@ const slideDefinitions = [
     details: [
       { label: "Hệ quả", text: "Việc tính toán thuần chạy 4 luồng không nhanh hơn 1 luồng, đôi khi còn chậm hơn vì các luồng tranh nhau khóa." },
       { label: "Vẫn cứu được I/O", text: "Luồng đang chờ mạng hay đĩa sẽ nhả GIL cho luồng khác chạy, nên threading vẫn tăng tốc mạnh các việc thiên về chờ." },
-      { label: "Lối thoát", text: "Tính toán nặng thì dùng multiprocessing hoặc C extension như NumPy — vốn nhả GIL khi tính; Python còn có bản free-threading gỡ hẳn GIL, thử nghiệm từ 3.13 và chính thức từ 3.14." },
+      { label: "Lối thoát", text: "Tính toán nặng thì dùng multiprocessing hoặc C extension như NumPy (nhả GIL khi tính); bản free-threading — chính thức từ Python 3.14 — gỡ hẳn GIL." },
     ],
     visual: "gil",
     layout: "concept",
@@ -64,8 +64,8 @@ const slideDefinitions = [
       "I/O-bound là chờ mạng, đĩa, database; CPU-bound là tính toán nặng; mỗi loại có lời giải tăng tốc hoàn toàn khác nhau.",
     points: ["I/O-bound", "CPU-bound", "Nút nghẽn", "Chọn công cụ"],
     details: [
-      { label: "I/O-bound", text: "Phần lớn thời gian là chờ: gọi API, đọc ghi file, truy vấn database. CPU rảnh trong lúc chờ. Tăng tốc bằng threading hoặc asyncio." },
-      { label: "CPU-bound", text: "Phần lớn thời gian là tính: xử lý ảnh, huấn luyện mô hình, parse dữ liệu lớn. CPU chạy kịch trần. Tăng tốc bằng multiprocessing." },
+      { label: "I/O-bound", text: "Phần lớn thời gian là chờ: gọi API, đọc ghi file, truy vấn database. Tăng tốc bằng threading hoặc asyncio." },
+      { label: "CPU-bound", text: "Phần lớn thời gian là tính: xử lý ảnh, huấn luyện mô hình, parse dữ liệu lớn. Tăng tốc bằng multiprocessing." },
       { label: "Cách nhận biết", text: "Nhìn CPU khi chạy: CPU thấp mà chương trình vẫn chậm thường là I/O-bound, CPU chạm 100% là CPU-bound." },
       { label: "Ví dụ thực tế", text: "Crawl 1000 trang web là I/O-bound, resize 1000 tấm ảnh là CPU-bound, pipeline dữ liệu thường trộn cả hai." },
     ],
@@ -83,8 +83,8 @@ const slideDefinitions = [
     hideKeyMessage: true,
     points: ["Tạo pool luồng", "Nộp việc", "Chờ I/O xen kẽ", "Gom kết quả"],
     details: [
-      { label: "ThreadPoolExecutor", text: "Cách hiện đại để chạy N việc trên một pool luồng: executor.map(fetch, urls) — gọn hơn nhiều so với tự tạo từng Thread." },
-      { label: "Khi nào dùng", text: "Gọi nhiều API, tải nhiều file, truy vấn nhiều database cùng lúc — mọi thứ thiên về chờ." },
+      { label: "ThreadPoolExecutor", text: "Cách hiện đại để chạy N việc trên một pool luồng: executor.map(fetch, urls)." },
+      { label: "Khi nào dùng", text: "Gọi nhiều API, tải nhiều file, truy vấn nhiều database cùng lúc." },
       { label: "Race condition", text: "Hai luồng cùng đọc–sửa–ghi một biến sẽ giẫm kết quả của nhau; bảo vệ vùng găng bằng threading.Lock." },
       { label: "Giới hạn", text: "Không tăng tốc tính toán thuần vì GIL; quá nhiều luồng tốn RAM và thời gian chuyển ngữ cảnh." },
     ],
@@ -102,7 +102,7 @@ const slideDefinitions = [
     hideKeyMessage: true,
     points: ["Tạo pool tiến trình", "Chia việc", "Chạy song song N nhân", "Gom kết quả"],
     details: [
-      { label: "ProcessPoolExecutor", text: "API giống hệt ThreadPoolExecutor, chỉ đổi loại pool — vì vậy nên học chuẩn chung concurrent.futures." },
+      { label: "ProcessPoolExecutor", text: "API giống hệt ThreadPoolExecutor (cùng chuẩn concurrent.futures), chỉ đổi loại pool." },
       { label: "Khi nào dùng", text: "Xử lý ảnh, tính đặc trưng, nén giải nén, mô phỏng số — các việc khiến CPU chạy kịch trần." },
       { label: "Chi phí ẩn", text: "Tạo tiến trình chậm hơn tạo luồng; tham số và kết quả bị pickle để gửi qua lại, dữ liệu càng to càng tốn thời gian truyền." },
       { label: "Lưu ý Windows", text: "Code khởi chạy phải nằm trong khối if __name__ == '__main__' vì tiến trình con sẽ import lại module." },
@@ -181,8 +181,8 @@ const slideDefinitions = [
     points: ["Exchange", "Routing", "Ack", "Task queue"],
     details: [
       { label: "Exchange và routing", logo: "rabbitmq", text: "Producer gửi vào exchange; exchange dựa trên routing key để chuyển tin tới một hay nhiều queue — kiểu direct, fanout hoặc topic." },
-      { label: "Ack và retry", text: "Consumer xử lý xong mới ack; chưa ack mà chết thì tin được giao lại cho worker khác — không mất việc, nhưng một việc có thể chạy hai lần (at-least-once) nên consumer phải idempotent." },
-      { label: "Dùng khi", text: "Phân việc cho đội worker: gửi email, xuất báo cáo, xử lý ảnh — xong việc và ack thì tin mới biến mất khỏi queue." },
+      { label: "Ack và retry", text: "Consumer xử lý xong mới ack; chết trước khi ack thì tin được giao lại — một việc có thể chạy hai lần (at-least-once), nên consumer phải idempotent." },
+      { label: "Dùng khi", text: "Phân việc cho đội worker: gửi email, xuất báo cáo, xử lý ảnh." },
       { label: "Hệ sinh thái", text: "Nói giao thức AMQP, thư viện pika cho Python, và là broker mặc định của Celery." },
     ],
     layout: "concept",
@@ -199,7 +199,7 @@ const slideDefinitions = [
     points: ["Topic", "Partition", "Offset", "Consumer group"],
     details: [
       { label: "Topic và partition", logo: "kafka", text: "Topic là dòng sự kiện, chia thành nhiều partition để ghi đọc song song; thứ tự chỉ được đảm bảo trong từng partition." },
-      { label: "Offset và replay", text: "Tin không bị xóa khi đọc mà giữ theo thời hạn, ví dụ 7 ngày; consumer ghi nhớ offset và có thể tua về đọc lại từ đầu." },
+      { label: "Offset và replay", text: "Tin giữ theo thời hạn, ví dụ 7 ngày; consumer ghi nhớ offset và có thể tua về đọc lại từ đầu." },
       { label: "Consumer group", text: "Nhiều service cùng đọc một topic độc lập với nhau; trong một group, partition được chia đều cho các consumer để scale." },
       { label: "Dùng khi", text: "Thu thập log và clickstream, đồng bộ dữ liệu giữa các hệ, event sourcing, đầu vào cho xử lý realtime." },
     ],
@@ -222,33 +222,6 @@ const slideDefinitions = [
       { label: "Chọn Kafka khi", text: "Sự kiện sinh ra liên tục và nhiều bên cùng cần: log, metrics, clickstream, CDC, feature pipeline cho ML." },
     ],
     layout: "comparison",
-    tone: "py",
-  },
-  {
-    section: "Tổng kết",
-    kicker: "Trước khi vào lab",
-    title: "Tổng kết và thực hành",
-    body:
-      "Toàn bộ code minh họa nằm trong thư mục examples: ba script concurrency chạy ngay với Python chuẩn, hai demo broker chỉ cần Docker.",
-    keyMessage:
-      "Chẩn đoán nút nghẽn trước, chọn công cụ sau; lý thuyết chỉ đọng lại khi tự chạy ba script concurrency và hai demo broker trong thư mục examples.",
-    hideKeyMessage: true,
-    points: ["Checklist", "3 script concurrency", "2 demo broker"],
-    checklist: [
-      "Vì sao GIL khiến threading không tăng tốc được CPU-bound",
-      "Chẩn đoán I/O-bound hay CPU-bound trước khi chọn công cụ",
-      "Threading cho I/O, multiprocessing cho CPU, asyncio cho vạn kết nối",
-      "Queue tách rời hệ thống — tin có thể giao lại nên worker phải idempotent",
-      "RabbitMQ cho task queue, Kafka cho luồng sự kiện cần replay",
-    ],
-    roadmap: [
-      "01_cpu_vs_io.py — tự thấy GIL qua số đo thời gian",
-      "02_race_condition.py — mất dữ liệu thật, và Lock cứu thế nào",
-      "03_asyncio_gather.py — 20 request trong thời gian của 1",
-      "rabbitmq/ — 2 consumer chia việc, tắt một worker xem ack cứu task",
-      "kafka/ — 2 group cùng đọc một topic, replay từ offset 0",
-    ],
-    layout: "closing",
     tone: "py",
   },
 ];
