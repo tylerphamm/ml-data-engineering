@@ -71,17 +71,17 @@ const slideDefinitions = [
     details: [
       {
         label: "Khái niệm",
-        text: "GIL (Global Interpreter Lock) là một khóa trong Python: mỗi thời điểm chỉ cho một thread chạy bytecode Python, dù process có nhiều thread.",
+        text: "GIL là khóa toàn cục trong Python: mỗi thời điểm chỉ cho một thread chạy bytecode Python, dù process có nhiều thread đi nữa.",
       },
       {
         label: "Ảnh hưởng",
-        text: "Việc tính toán nặng chạy nhiều thread không nhanh hơn (phải xếp hàng qua GIL); nhưng khi thread chờ I/O thì nó nhả GIL, nên multithreading vẫn lợi cho việc phải chờ.",
+        text: "Việc tính toán nặng chạy nhiều thread không nhanh hơn vì các thread phải xếp hàng qua GIL; nhưng khi thread chờ I/O thì nó nhả GIL, nên multithreading vẫn lợi cho việc phải chờ.",
       },
     ],
     callout: {
       type: "insight",
       title: "Lối thoát",
-      lines: ["Muốn tính toán song song thật sự, hãy dùng nhiều process (multiprocessing) — mỗi process có GIL riêng."],
+      lines: ["Muốn tính toán song song thật sự, hãy dùng multiprocessing — mỗi process có GIL riêng."],
     },
     layout: "cards",
     tone: "orange",
@@ -154,7 +154,7 @@ const slideDefinitions = [
     details: [
       {
         label: "Khái niệm",
-        text: "Chạy mọi việc trên một thread duy nhất với một vòng điều phối (event loop); gặp chỗ phải chờ thì việc đó nhường lượt cho việc khác.",
+        text: "Chạy mọi việc trên một thread duy nhất với một vòng điều phối; gặp chỗ phải chờ thì việc đó nhường lượt cho việc khác.",
       },
       {
         label: "Khi nào dùng",
@@ -165,7 +165,7 @@ const slideDefinitions = [
     callout: {
       type: "tip",
       title: "Cạm bẫy",
-      lines: ["Một việc đồng bộ (không chịu nhường) sẽ chặn cả vòng điều phối — mọi thư viện phải hỗ trợ bất đồng bộ."],
+      lines: ["Một việc đồng bộ không chịu nhường sẽ chặn cả vòng điều phối — mọi thư viện phải hỗ trợ bất đồng bộ."],
     },
     layout: "cards",
     tone: "py",
