@@ -62,8 +62,8 @@ const slideDefinitions = [
   {
     section: "Khái niệm",
     kicker: "Đặc thù của Python",
-    title: "GIL — khóa toàn cục của Python",
-    body: "GIL (Global Interpreter Lock) là một khóa trong Python: mỗi thời điểm chỉ cho một thread chạy bytecode Python, dù process có nhiều thread đi nữa.",
+    title: "GIL",
+    body: "GIL (Global Interpreter Lock) là một khóa trong Python khiến mỗi thời điểm chỉ cho một thread chạy, dù process có nhiều thread trong đó.",
     keyMessage:
       "Mỗi process chỉ cho một thread chạy Python tại một thời điểm; vì thế thêm thread không giúp việc tính toán nặng, nhưng vẫn rất lợi cho việc phải chờ.",
     hideKeyMessage: true,
@@ -86,14 +86,14 @@ const slideDefinitions = [
       },
       {
         label: "Khi nào không sao",
-        text: "Khi thread đang chờ I/O (mạng, đĩa), nó nhả GIL cho thread khác chạy, nên multithreading vẫn rất lợi cho việc phải chờ.",
+        text: "Khi thread đang chờ các tác vụ I/O, nó nhả GIL cho thread khác chạy, nên multithreading vẫn khá có lợi khi process phải chờ.",
         example: "Trong lúc một thread chờ mạng, các thread khác vẫn tranh thủ chạy tiếp.",
       },
     ],
     callout: {
       type: "insight",
       title: "Lối thoát",
-      lines: ["Muốn tính toán song song thật sự, hãy dùng nhiều process (multiprocessing) — mỗi process có GIL riêng."],
+      lines: ["Muốn tính toán song song trong Python, chúng ta hãy dùng nhiều process (multiprocessing) vì mỗi process có GIL riêng."],
     },
     layout: "cards",
     tone: "orange",
@@ -280,7 +280,7 @@ const slideDefinitions = [
     section: "Mở rộng",
     kicker: "Vượt ra ngoài một máy",
     title: "Message Queue",
-    body: "Hàng đợi tin nhắn (message queue) là nơi trung chuyển đứng giữa: bên gửi (Producer) thả việc vào hàng đợi, bên nhận (Consumer) lấy ra xử lý dần, nên hai bên không cần biết hay chờ nhau.",
+    body: "Hàng đợi tin nhắn là nơi trung chuyển các event, trong đó bên gửi (Producer) sẽ để các task vào hàng đợi, bên nhận (Consumer) lấy ra xử lý dần các task đó.",
     keyMessage:
       "Hàng đợi tách rời hệ thống: bên gửi thả việc vào rồi đi tiếp, bên nhận lấy ra xử lý dần — nhờ vậy chịu được lúc đông, không sợ mất việc, và muốn nhanh hơn chỉ cần thêm người nhận.",
     hideKeyMessage: true,
@@ -288,16 +288,16 @@ const slideDefinitions = [
     visual: "messagequeue",
     details: [
       {
-        label: "Tách rời",
-        text: "Bên gửi không cần biết bên nhận là ai, có bao nhiêu, đang khỏe hay đang nghỉ.",
+        label: "Decouple hai bên service",
+        text: "Bên gửi không cần biết bên nhận là ai, có bao nhiêu task đang được thực thi, đang được chạy tốt hay service bên đó đã dừng.",
       },
       {
-        label: "Chịu được lúc đông",
-        text: "Lúc việc đổ về dồn dập, hàng đợi giữ lại để bên nhận xử lý từ từ chứ không bị đè sập.",
+        label: "Nâng cao khả năng chịu tải",
+        text: "Những lúc có các task được gửi về bên nhận liên tục, hàng đợi giữ lại để bên nhận xử lý từ từ để tránh bị sập hệ thống.",
       },
       {
-        label: "Không mất việc",
-        text: "Nếu bên nhận gặp sự cố giữa chừng, việc không biến mất mà quay lại hàng đợi cho người khác làm.",
+        label: "Không làm mất task chưa xử lý",
+        text: "Nếu bên nhận gặp sự cố giữa chừng, task không biến mất mà được giữ lại trong hàng đợi.",
       },
       {
         label: "Dễ mở rộng",
