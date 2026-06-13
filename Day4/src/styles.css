@@ -595,6 +595,69 @@ code {
   line-height: 1.28;
 }
 
+/* ---------- diagram layout ---------- */
+
+.slideDiagram {
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  gap: 0.9rem;
+}
+
+.diagramWrap {
+  display: grid;
+  place-items: center;
+  min-height: 0;
+  padding: 0.3rem 0;
+}
+
+.mqDiagram {
+  width: 100%;
+  height: 100%;
+  max-height: 100%;
+}
+
+.benefitCards {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.72rem;
+}
+
+.benefitCard {
+  display: grid;
+  gap: 0.3rem;
+  align-content: start;
+  padding: 0.72rem 0.78rem;
+  border: 1px solid var(--hairline);
+  border-top: 3px solid var(--accent);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.82);
+  box-shadow: 0 12px 28px rgba(15, 23, 42, 0.07);
+}
+
+.benefitHead {
+  display: flex;
+  gap: 0.46rem;
+  align-items: center;
+}
+
+.benefitHead svg {
+  width: 1.05rem;
+  height: 1.05rem;
+  color: var(--accent);
+}
+
+.benefitHead span {
+  color: var(--ink);
+  font-size: clamp(0.68rem, 0.82vw, 0.94rem);
+  font-weight: 820;
+}
+
+.benefitCard p {
+  margin: 0;
+  color: var(--muted);
+  font-size: clamp(0.6rem, 0.72vw, 0.82rem);
+  line-height: 1.34;
+}
+
 /* ---------- broker layout ---------- */
 
 .slideBroker {

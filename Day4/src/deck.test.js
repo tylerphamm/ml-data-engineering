@@ -74,8 +74,8 @@ test("deck teaches message queues with RabbitMQ and Kafka in plain language", ()
 
   assert.match(combined, /Message [Qq]ueue/);
   assert.match(combined, /[Hh]àng đợi/);
-  assert.match(combined, /Người gửi/);
-  assert.match(combined, /Người làm/);
+  assert.match(combined, /Producer/);
+  assert.match(combined, /Consumer/);
   assert.match(combined, /RabbitMQ/);
   assert.match(combined, /Kafka/);
   assert.match(combined, /cuốn sổ/i);

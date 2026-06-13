@@ -83,7 +83,9 @@ const iconMap = {
   Offset: Bookmark,
   Tách: Split,
   "Chịu tải": Gauge,
+  "Chịu được": Gauge,
   "Tin cậy": ShieldCheck,
+  "Không mất": ShieldCheck,
   "Mở rộng": Maximize2,
   Scale: Maximize2,
   "I/O": HardDrive,
@@ -474,6 +476,104 @@ function VersusSlide({ slide }) {
   );
 }
 
+function MessageQueueDiagram() {
+  return (
+    <svg
+      className="mqDiagram"
+      viewBox="0 0 760 300"
+      role="img"
+      aria-label="Nhiều Producer gửi tin vào Message Queue, Consumer lấy ra xử lý"
+    >
+      <g stroke="#1e293b" strokeWidth="2" strokeDasharray="2 7" strokeLinecap="round" fill="none" opacity="0.5">
+        <path d="M168 104 H276" />
+        <path d="M168 126 H276" />
+        <path d="M138 214 H276" />
+        <path d="M138 236 H276" />
+      </g>
+      <g fill="#312e81">
+        <circle cx="208" cy="104" r="6" />
+        <circle cx="196" cy="236" r="6" />
+      </g>
+
+      <g>
+        <rect x="55" y="78" width="110" height="60" fill="#fb7185" />
+        <ellipse cx="110" cy="138" rx="55" ry="14" fill="#f43f5e" />
+        <ellipse cx="110" cy="78" rx="55" ry="14" fill="#fda4af" />
+      </g>
+      <g>
+        <rect x="55" y="196" width="80" height="46" fill="#fb7185" />
+        <ellipse cx="95" cy="242" rx="40" ry="11" fill="#f43f5e" />
+        <ellipse cx="95" cy="196" rx="40" ry="11" fill="#fda4af" />
+      </g>
+
+      <g>
+        <ellipse cx="298" cy="155" rx="20" ry="50" fill="#2dd4bf" />
+        {[314, 332, 350, 368, 386, 404].map((x) => (
+          <ellipse key={x} cx={x} cy="155" rx="20" ry="50" fill="#fb7185" stroke="#f43f5e" strokeWidth="1.5" />
+        ))}
+        <ellipse cx="424" cy="155" rx="20" ry="50" fill="#7c3aed" />
+        <ellipse cx="442" cy="155" rx="20" ry="50" fill="#c4b5fd" />
+        <g fill="#312e81">
+          {[324, 344, 364, 384, 404].map((x) => (
+            <circle key={x} cx={x} cy="120" r="6" />
+          ))}
+        </g>
+      </g>
+
+      <path d="M474 155 H604" stroke="#1e293b" strokeWidth="2" strokeDasharray="2 7" strokeLinecap="round" fill="none" opacity="0.5" />
+      <circle cx="539" cy="155" r="6" fill="#312e81" />
+
+      <g>
+        <rect x="615" y="122" width="100" height="60" fill="#a78bfa" />
+        <ellipse cx="665" cy="182" rx="50" ry="13" fill="#7c3aed" />
+        <ellipse cx="665" cy="122" rx="50" ry="13" fill="#c4b5fd" />
+      </g>
+
+      <g fill="#1e293b" fontWeight="700" textAnchor="middle" fontSize="18" fontFamily="Inter, sans-serif">
+        <text x="105" y="290">Producers</text>
+        <text x="372" y="290">Message queue</text>
+        <text x="665" y="290">Consumer</text>
+      </g>
+    </svg>
+  );
+}
+
+function BenefitCards({ details }) {
+  return (
+    <div className="benefitCards">
+      {details.map((detail) => {
+        const Icon = iconFor(detail.label);
+
+        return (
+          <article className="benefitCard" key={detail.label}>
+            <div className="benefitHead">
+              <Icon aria-hidden="true" />
+              <span>{detail.label}</span>
+            </div>
+            <p>{detail.text}</p>
+          </article>
+        );
+      })}
+    </div>
+  );
+}
+
+function DiagramSlide({ slide }) {
+  return (
+    <section className="slide slideDiagram" data-tone={slide.tone}>
+      <div className="contentHead">
+        <Eyebrow slide={slide} />
+        <h1>{slide.title}</h1>
+        <Subtitle text={slide.body} />
+      </div>
+      <div className="diagramWrap">
+        {slide.visual === "messagequeue" ? <MessageQueueDiagram /> : null}
+      </div>
+      <BenefitCards details={slide.details} />
+    </section>
+  );
+}
+
 function Slide({ slide }) {
   if (slide.layout === "cover") return <CoverSlide slide={slide} />;
   if (slide.layout === "cards") return <CardsSlide slide={slide} />;
@@ -481,6 +581,7 @@ function Slide({ slide }) {
   if (slide.layout === "broker") return <BrokerSlide slide={slide} />;
   if (slide.layout === "table") return <TableSlide slide={slide} />;
   if (slide.layout === "versus") return <VersusSlide slide={slide} />;
+  if (slide.layout === "diagram") return <DiagramSlide slide={slide} />;
   return <CardsSlide slide={slide} />;
 }
 

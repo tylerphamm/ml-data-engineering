@@ -285,48 +285,31 @@ const slideDefinitions = [
     section: "Mở rộng",
     kicker: "Vượt ra ngoài một máy",
     title: "Message Queue",
-    body: "Khi một máy không gánh nổi nữa, ta tách bên giao việc và bên làm việc ra, nối với nhau bằng một hàng đợi ở giữa.",
+    body: "Hàng đợi tin nhắn (message queue) là nơi trung chuyển đứng giữa: bên gửi (Producer) thả việc vào hàng đợi, bên nhận (Consumer) lấy ra xử lý dần, nên hai bên không cần biết hay chờ nhau.",
     keyMessage:
-      "Hàng đợi tách rời hệ thống: bên giao việc thả việc vào rồi đi tiếp, bên làm việc lấy ra xử lý dần — nhờ vậy chịu được lúc đông, không sợ mất việc, và muốn nhanh hơn chỉ cần thêm người làm.",
+      "Hàng đợi tách rời hệ thống: bên gửi thả việc vào rồi đi tiếp, bên nhận lấy ra xử lý dần — nhờ vậy chịu được lúc đông, không sợ mất việc, và muốn nhanh hơn chỉ cần thêm người nhận.",
     hideKeyMessage: true,
-    points: ["Người gửi", "Người điều phối", "Hàng đợi", "Người làm"],
-    steps: [
-      { title: "Người gửi", sub: "phục vụ bàn — ghi phiếu việc" },
-      { title: "Người điều phối", sub: "quản lý — nhận và sắp phiếu" },
-      { title: "Hàng đợi", sub: "dây chuyền phiếu — giữ theo thứ tự" },
-      { title: "Người làm", sub: "bếp — lấy phiếu ra làm dần" },
-    ],
-    scenario: {
-      title: "Tình huống: nhà hàng và dây chuyền phiếu gọi món",
-      lines: [
-        { mark: "bad", text: "Không có dây chuyền: phục vụ chạy thẳng vào bếp, bếp đang bận thì đứng chờ, khiến khách ngoài kia đợi mãi." },
-        { mark: "good", text: "Có dây chuyền: phục vụ ghim phiếu lên dây rồi quay ra tiếp khách, bếp lấy phiếu làm dần theo thứ tự." },
-        { mark: "plain", text: "Hàng đợi tin nhắn chính là cái dây chuyền phiếu gọi món đó." },
-      ],
-    },
+    points: ["Producer", "Hàng đợi", "Consumer", "Tác dụng"],
+    visual: "messagequeue",
     details: [
       {
         label: "Tách rời",
-        text: "Bên gửi không cần biết bên làm là ai, bao nhiêu người, đang khỏe hay đang nghỉ.",
-        example: "Trang web chỉ việc thả đơn vào hàng đợi rồi đi tiếp, nên web có sập thì email xác nhận vẫn được gửi đi.",
+        text: "Bên gửi không cần biết bên nhận là ai, có bao nhiêu, đang khỏe hay đang nghỉ.",
       },
       {
         label: "Chịu được lúc đông",
-        text: "Lúc việc đổ về dồn dập, hàng đợi giữ lại để bên làm xử lý từ từ chứ không bị đè sập.",
-        example: "Đêm khuyến mãi khách dồn về rất đông, hệ thống làm không kịp nên hàng đợi giữ phần còn lại chờ tới lượt, nhờ vậy web không sập.",
+        text: "Lúc việc đổ về dồn dập, hàng đợi giữ lại để bên nhận xử lý từ từ chứ không bị đè sập.",
       },
       {
         label: "Không mất việc",
-        text: "Nếu người làm gặp sự cố giữa chừng, việc không biến mất mà quay lại hàng đợi cho người khác làm.",
-        example: "Nếu việc gửi email bị lỗi, nó sẽ quay lại hàng đợi và được thử gửi lại cho tới khi xong.",
+        text: "Nếu bên nhận gặp sự cố giữa chừng, việc không biến mất mà quay lại hàng đợi cho người khác làm.",
       },
       {
         label: "Dễ mở rộng",
-        text: "Muốn làm nhanh hơn thì thêm người làm, không phải sửa gì ở bên gửi.",
-        example: "Khi gửi email bị chậm, bạn chỉ cần thêm vài người làm nữa, còn phía web vẫn giữ nguyên.",
+        text: "Muốn làm nhanh hơn thì thêm người nhận, không phải sửa gì ở bên gửi.",
       },
     ],
-    layout: "tool",
+    layout: "diagram",
     tone: "orange",
   },
   {
