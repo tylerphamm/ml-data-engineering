@@ -30,30 +30,30 @@ const slideDefinitions = [
       {
         label: "Process",
         text: "Một chương trình đang chạy, có vùng nhớ riêng tách biệt, không dùng chung với chương trình khác.",
-        example: "Coi mỗi process như một ngôi nhà có bếp riêng: Chrome một nhà, Word một nhà, nhà này cháy không lan sang nhà kia.",
+        example: "Chrome và Word là hai process riêng, nên Chrome có treo thì Word vẫn chạy bình thường.",
       },
       {
         label: "Thread",
         text: "Một luồng thực thi bên trong process; nhiều thread trong cùng một process dùng chung vùng nhớ với nhau.",
-        example: "Coi mỗi thread như một người nấu trong nhà: nhiều người chung một bếp nên phối hợp nhanh, nhưng dễ va vào nhau.",
+        example: "Trong Chrome, một thread lo tải dữ liệu còn một thread lo vẽ giao diện, cả hai dùng chung bộ nhớ của tab đó.",
       },
       {
         label: "Concurrency",
         text: "Xử lý nhiều việc xen kẽ nhau, không nhất thiết cùng lúc, mà luân phiên đủ nhanh để các việc cùng tiến triển.",
-        example: "Một người vừa trông nồi canh vừa thái rau, canh sắp trào thì quay lại ngó nồi.",
+        example: "Điện thoại vừa tải ứng dụng vừa phát nhạc; một nhân xử lý luân phiên nhanh nên bạn thấy như chạy cùng lúc.",
       },
       {
         label: "Parallelism",
         text: "Thực sự làm nhiều việc cùng một lúc — cần nhiều nhân CPU để chạy song song thật sự.",
-        example: "Hai người cùng vào bếp, người đun canh người chiên trứng, nên hai món xong cùng lúc.",
+        example: "Máy 8 nhân chia video thành 8 phần, mỗi nhân nén một phần cùng lúc nên xong nhanh hơn hẳn.",
       },
     ],
     callout: {
       type: "insight",
       title: "Concurrency khác Parallelism",
       lines: [
-        "Một người nhảy qua lại giữa các bước nấu là concurrency. Nhiều người cùng nấu một lúc là parallelism.",
-        "Lưu ý ở Python: nhiều người chung một nhà vẫn không nấu song song được (luật một con dao ở phần sau); muốn song song thật phải thuê nhiều nhà.",
+        "Concurrency là luân phiên thật nhanh giữa nhiều việc trên một nhân; parallelism là chạy thật sự cùng lúc trên nhiều nhân.",
+        "Lưu ý ở Python: nhiều thread trong một process vẫn không chạy Python song song được (luật một con dao ở phần sau); muốn song song thật phải dùng nhiều process.",
       ],
     },
     layout: "cards",
