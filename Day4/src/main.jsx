@@ -573,6 +573,23 @@ function DiagramSlide({ slide }) {
   );
 }
 
+function ShowcaseSlide({ slide }) {
+  return (
+    <section className="slide slideShowcase" data-tone={slide.tone}>
+      <div className="contentHead">
+        <h1>{slide.title}</h1>
+        <Subtitle text={slide.body} />
+      </div>
+      <div className="showcaseMain">
+        <div className="showcaseImg">
+          <img src={`${import.meta.env.BASE_URL}images/rabbitmq-vs-kafka.jpg`} alt="So sánh RabbitMQ và Kafka" />
+        </div>
+        <ChooseGrid choose={slide.choose} />
+      </div>
+    </section>
+  );
+}
+
 function Slide({ slide }) {
   if (slide.layout === "cover") return <CoverSlide slide={slide} />;
   if (slide.layout === "cards") return <CardsSlide slide={slide} />;
@@ -581,6 +598,7 @@ function Slide({ slide }) {
   if (slide.layout === "table") return <TableSlide slide={slide} />;
   if (slide.layout === "versus") return <VersusSlide slide={slide} />;
   if (slide.layout === "diagram") return <DiagramSlide slide={slide} />;
+  if (slide.layout === "showcase") return <ShowcaseSlide slide={slide} />;
   return <CardsSlide slide={slide} />;
 }
 

@@ -83,13 +83,16 @@ test("deck teaches message queues with RabbitMQ and Kafka in plain language", ()
 });
 
 test("deck compares RabbitMQ versus Kafka", () => {
-  const versusSlide = slides.find((slide) => slide.layout === "versus");
+  const tableSlide = slides.find((slide) => /^RabbitMQ vs Kafka$/.test(slide.title));
+  const useSlide = slides.find((slide) => slide.layout === "showcase");
 
-  assert.ok(versusSlide, "deck should include a versus slide");
-  assert.match(versusSlide.title, /RabbitMQ vs Kafka/);
-  assert.ok(versusSlide.table.columns.includes("RabbitMQ"));
-  assert.ok(versusSlide.table.columns.includes("Kafka"));
-  assert.ok(versusSlide.choose.length === 2, "versus slide needs both choose columns");
+  assert.ok(tableSlide, "deck should include a RabbitMQ vs Kafka table slide");
+  assert.ok(tableSlide.table.columns.some((c) => c.includes("RabbitMQ")));
+  assert.ok(tableSlide.table.columns.some((c) => c.includes("Kafka")));
+  assert.ok(tableSlide.table.rows.length >= 6);
+
+  assert.ok(useSlide, "deck should include a when-to-use showcase slide");
+  assert.ok(useSlide.choose.length === 2, "showcase slide needs both choose columns");
 });
 
 test("deck uses the supported visual layouts", () => {
@@ -100,7 +103,8 @@ test("deck uses the supported visual layouts", () => {
   assert.ok(layouts.has("tool"));
   assert.ok(layouts.has("broker"));
   assert.ok(layouts.has("table"));
-  assert.ok(layouts.has("versus"));
+  assert.ok(layouts.has("diagram"));
+  assert.ok(layouts.has("showcase"));
 });
 
 test("cover hides duplicate eyebrow", () => {
