@@ -21,30 +21,30 @@ const slideDefinitions = [
     section: "Khái niệm",
     kicker: "Nền tảng",
     title: "Processes and Threads",
-    body: "Hình dung: một ngôi nhà là một process, mỗi người nấu trong nhà là một thread, mỗi bước nấu ăn là một việc cần làm.",
+    body: "",
     keyMessage:
-      "Mỗi ngôi nhà có bếp riêng, mỗi người trong nhà dùng chung bếp đó; một người làm xen kẽ nhiều bước là concurrency, nhiều người cùng nấu một lúc là parallelism.",
+      "Process là một chương trình đang chạy với vùng nhớ riêng; thread là luồng thực thi bên trong process và dùng chung vùng nhớ đó; concurrency là xen kẽ, parallelism là chạy thật sự cùng lúc.",
     hideKeyMessage: true,
     points: ["Process", "Thread", "Concurrency", "Parallelism"],
     details: [
       {
         label: "Process",
-        text: "Một ngôi nhà — có bếp và kho riêng, không dùng chung với nhà khác.",
-        example: "Chrome chạy ở một nhà, Word ở nhà khác, nên Chrome có sập thì Word vẫn chạy bình thường.",
+        text: "Một chương trình đang chạy, có vùng nhớ riêng tách biệt, không dùng chung với chương trình khác.",
+        example: "Coi mỗi process như một ngôi nhà có bếp riêng: Chrome một nhà, Word một nhà, nhà này cháy không lan sang nhà kia.",
       },
       {
         label: "Thread",
-        text: "Một người nấu trong nhà; nhiều người ở chung một nhà thì dùng chung bếp và kho.",
-        example: "Hai người trong cùng một nhà cùng mở một tủ lạnh thì lấy đồ nhanh nhưng dễ va vào nhau.",
+        text: "Một luồng thực thi bên trong process; nhiều thread trong cùng một process dùng chung vùng nhớ với nhau.",
+        example: "Coi mỗi thread như một người nấu trong nhà: nhiều người chung một bếp nên phối hợp nhanh, nhưng dễ va vào nhau.",
       },
       {
         label: "Concurrency",
-        text: "Một người làm nhiều bước nấu xen kẽ — không cùng lúc, mà nhảy qua lại đủ nhanh.",
+        text: "Xử lý nhiều việc xen kẽ nhau, không nhất thiết cùng lúc, mà luân phiên đủ nhanh để các việc cùng tiến triển.",
         example: "Một người vừa trông nồi canh vừa thái rau, canh sắp trào thì quay lại ngó nồi.",
       },
       {
         label: "Parallelism",
-        text: "Nhiều người cùng nấu thật sự một lúc — muốn vậy phải có đủ người.",
+        text: "Thực sự làm nhiều việc cùng một lúc — cần nhiều nhân CPU để chạy song song thật sự.",
         example: "Hai người cùng vào bếp, người đun canh người chiên trứng, nên hai món xong cùng lúc.",
       },
     ],
