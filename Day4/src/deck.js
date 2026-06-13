@@ -5,10 +5,10 @@ const slideDefinitions = [
     title: "High-Performance Python",
     body: "",
     keyMessage:
-      "Python chỉ nhanh khi chọn đúng mô hình chạy đồng thời: threading cho I/O, multiprocessing cho CPU, asyncio cho hàng vạn kết nối, và message queue khi vượt ra ngoài một máy.",
+      "Python chỉ nhanh khi chọn đúng mô hình chạy đồng thời: multithreading cho I/O, multiprocessing cho CPU, asyncio cho hàng vạn kết nối, và message queue khi vượt ra ngoài một máy.",
     hideKeyMessage: true,
     hideEyebrow: true,
-    points: ["GIL", "Threading", "Multiprocessing", "Asyncio", "Message Queue"],
+    points: ["GIL", "Multithreading", "Multiprocessing", "Asyncio", "Message Queue"],
     details: [
       { label: "Mục tiêu", text: "Hiểu vì sao Python chậm ở đâu, tăng tốc bằng công cụ nào, và khi nào phải tách hệ thống bằng hàng đợi tin nhắn." },
       { label: "Cách học", text: "Mỗi khái niệm đi kèm phép so sánh đời thường và một script chạy được trong thư mục examples." },
@@ -65,7 +65,7 @@ const slideDefinitions = [
     title: "Multithreading",
     body: "Thêm nhiều người vào cùng một nhà — khi một người đứng chờ (nồi sôi, lò nướng) thì người khác tranh thủ làm bước khác.",
     keyMessage:
-      "Threading dành cho I/O-bound: người này chờ thì người kia làm tiếp; GIL khiến nó vô dụng với việc nặng CPU.",
+      "Multithreading dành cho I/O-bound: người này chờ thì người kia làm tiếp; GIL khiến nó vô dụng với việc nặng CPU.",
     hideKeyMessage: true,
     points: ["Tạo pool", "Giao việc", "Chờ I/O xen kẽ", "Gom kết quả"],
     steps: [
@@ -78,7 +78,7 @@ const slideDefinitions = [
       title: "Tình huống: download 50 file PDF từ server",
       lines: [
         { mark: "bad", text: "Tuần tự: tải xong file 1 mới sang file 2 — 50 phút." },
-        { mark: "good", text: "Threading: 10 thread cùng tải, thread chờ network thì thread khác chạy — ~5 phút." },
+        { mark: "good", text: "Multithreading: 10 thread cùng tải, thread chờ network thì thread khác chạy — ~5 phút." },
       ],
       code: `from concurrent.futures import ThreadPoolExecutor
 
@@ -136,7 +136,7 @@ with ThreadPoolExecutor(max_workers=10) as pool:
       title: "Tình huống: resize 10.000 ảnh 4K → 1080p",
       lines: [
         { mark: "bad", text: "Tuần tự: 1 nhân xử lý hết — 100 phút." },
-        { mark: "bad", text: "Threading: GIL chặn, vẫn 1 nhân — không nhanh hơn." },
+        { mark: "bad", text: "Multithreading: GIL chặn, vẫn 1 nhân — không nhanh hơn." },
         { mark: "good", text: "Multiprocessing: 8 nhân, mỗi nhân ~1.250 ảnh — ~12 phút." },
       ],
       code: `from concurrent.futures import ProcessPoolExecutor
@@ -198,7 +198,7 @@ if __name__ == "__main__":
     scenario: {
       title: "Tình huống: crawl 10.000 trang web cùng lúc",
       lines: [
-        { mark: "bad", text: "Threading: 10.000 thread, mỗi thread một stack riêng (hàng chục GB không gian địa chỉ) và OS nghẽn vì context-switch." },
+        { mark: "bad", text: "Multithreading: 10.000 thread, mỗi thread một stack riêng (hàng chục GB không gian địa chỉ) và OS nghẽn vì context-switch." },
         { mark: "good", text: "Asyncio: 1 thread, 10.000 coroutine — chỉ vài chục MB." },
       ],
       code: `import asyncio, aiohttp
@@ -247,13 +247,13 @@ asyncio.run(main())`,
   {
     section: "Decision",
     kicker: "Bảng quyết định",
-    title: "Threading vs Multiprocessing vs Asyncio",
+    title: "Multithreading vs Multiprocessing vs Asyncio",
     body: "Không có công cụ hoàn hảo, chỉ có công cụ phù hợp.",
     keyMessage:
-      "I/O ít task chọn threading, I/O hàng nghìn task chọn asyncio, CPU nặng chọn multiprocessing.",
+      "I/O ít task chọn multithreading, I/O hàng nghìn task chọn asyncio, CPU nặng chọn multiprocessing.",
     points: ["Loại task", "Song song", "Chi phí", "Quyết định"],
     table: {
-      columns: ["Tiêu chí", "Threading", "Multiprocessing", "Asyncio"],
+      columns: ["Tiêu chí", "Multithreading", "Multiprocessing", "Asyncio"],
       rows: [
         ["Loại task", "I/O-bound", "CPU-bound", "I/O-bound số lượng lớn"],
         ["Song song thật?", "Không — GIL, chỉ xen kẽ", "Có — N process, N nhân", "Không — 1 thread xen kẽ cực nhanh"],
@@ -265,15 +265,15 @@ asyncio.run(main())`,
     },
     decision: [
       { cond: "Tính toán nặng — ảnh, ML, encode?", pick: "Multiprocessing" },
-      { cond: "Chờ I/O, ít task (< 100)?", pick: "Threading" },
+      { cond: "Chờ I/O, ít task (< 100)?", pick: "Multithreading" },
       { cond: "Chờ I/O, hàng nghìn task?", pick: "Asyncio" },
     ],
     examples: [
-      "Download 50 file PDF → Threading",
+      "Download 50 file PDF → Multithreading",
       "Resize 10.000 ảnh → Multiprocessing",
       "Crawl 10.000 trang web → Asyncio",
       "Train model ML → Multiprocessing",
-      "Gửi 5.000 email → Asyncio / Threading",
+      "Gửi 5.000 email → Asyncio / Multithreading",
     ],
     layout: "table",
     tone: "py",
