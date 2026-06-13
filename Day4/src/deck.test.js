@@ -87,25 +87,24 @@ test("deck teaches message queues with RabbitMQ and Kafka", () => {
 });
 
 test("deck compares RabbitMQ versus Kafka", () => {
-  const comparisonSlides = slides.filter((slide) => slide.layout === "comparison");
-  const titles = comparisonSlides.map((slide) => slide.title);
+  const versusSlide = slides.find((slide) => slide.layout === "versus");
 
-  assert.ok(comparisonSlides.length >= 1);
-  assert.ok(titles.some((title) => /RabbitMQ và Kafka/.test(title)));
-
-  for (const slide of comparisonSlides) {
-    assert.ok(slide.details.length >= 4, `${slide.title} needs two columns and supporting cards`);
-  }
+  assert.ok(versusSlide, "deck should include a versus slide");
+  assert.match(versusSlide.title, /RabbitMQ vs Kafka/);
+  assert.ok(versusSlide.table.columns.includes("RabbitMQ"));
+  assert.ok(versusSlide.table.columns.includes("Kafka"));
+  assert.ok(versusSlide.choose.length === 2, "versus slide needs both choose columns");
 });
 
 test("deck uses the supported visual layouts", () => {
   const layouts = new Set(slides.map((slide) => slide.layout));
 
   assert.ok(layouts.has("cover"));
-  assert.ok(layouts.has("concept"));
-  assert.ok(layouts.has("flow"));
-  assert.ok(layouts.has("comparison"));
+  assert.ok(layouts.has("cards"));
+  assert.ok(layouts.has("tool"));
+  assert.ok(layouts.has("broker"));
   assert.ok(layouts.has("table"));
+  assert.ok(layouts.has("versus"));
 });
 
 test("cover hides duplicate eyebrow", () => {

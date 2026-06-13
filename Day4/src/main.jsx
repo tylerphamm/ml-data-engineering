@@ -11,13 +11,14 @@ import {
   Clock,
   Columns3,
   Cpu,
-  DoorOpen,
   FileText,
   Filter,
   Gauge,
+  GitBranch,
   HardDrive,
   Inbox,
   Layers,
+  Lightbulb,
   ListOrdered,
   Lock,
   Maximize2,
@@ -30,67 +31,68 @@ import {
   ShieldCheck,
   Snail,
   Split,
+  Tag,
+  Target,
   Terminal,
   TriangleAlert,
   Users,
+  XCircle,
   Zap,
 } from "lucide-react";
 
 import { getSlideIndexForKey, slides } from "./deck.js";
 import "./styles.css";
 
+const pad = (n) => String(n).padStart(2, "0");
+
 const iconMap = {
-  "Song song": Maximize2,
   "Tạo pool": Layers,
-  "Consumer group": Users,
-  Chạy: Zap,
-  Chờ: Clock,
-  Chia: Split,
-  Gom: CheckCircle2,
-  Nộp: Send,
-  "Tiến trình": Boxes,
-  Luồng: Activity,
-  Thread: Activity,
-  Process: Cpu,
-  Concurrency: RefreshCw,
-  Parallelism: Columns3,
-  GIL: Lock,
-  "I/O": HardDrive,
-  CPU: Cpu,
-  Event: RefreshCw,
+  "Giao việc": Send,
+  "Chia việc": Split,
+  "Chờ I/O": Clock,
+  "Chạy song song": Columns3,
+  "Gom kết quả": CheckCircle2,
+  "Event loop": RefreshCw,
+  "async def": Terminal,
   await: Clock,
-  async: Terminal,
   gather: Layers,
   "Cú pháp": Terminal,
-  "Khi nào": CheckCircle2,
-  "Dùng khi": CheckCircle2,
-  "Cái bẫy": TriangleAlert,
-  "Lưu ý": TriangleAlert,
-  Race: TriangleAlert,
-  "Giới hạn": Lock,
-  "Lối thoát": DoorOpen,
-  "Chi phí": Gauge,
-  "Hệ quả": Gauge,
-  "Hệ sinh thái": Network,
   Producer: Send,
   Broker: Server,
   Queue: ListOrdered,
   Consumer: Inbox,
-  Exchange: ArrowLeftRight,
+  Process: Boxes,
+  Thread: Activity,
+  Concurrency: RefreshCw,
+  Parallelism: Columns3,
+  GIL: Lock,
+  ThreadPoolExecutor: Layers,
+  ProcessPoolExecutor: Cpu,
+  "Khi nào dùng": CheckCircle2,
+  "Race condition": TriangleAlert,
+  "Giới hạn": Lock,
+  "Chi phí": Gauge,
+  "Lưu ý": TriangleAlert,
+  "Cạm bẫy": TriangleAlert,
+  "Hệ sinh thái": Network,
+  "Exchange": ArrowLeftRight,
   Routing: Network,
   Ack: BadgeCheck,
   Topic: MessagesSquare,
   Partition: Columns3,
   Offset: Bookmark,
-  "Tách": Split,
+  Tách: Split,
   "Chịu tải": Gauge,
   "Tin cậy": ShieldCheck,
+  "Mở rộng": Maximize2,
   Scale: Maximize2,
-  "Nhận biết": Search,
-  "Ví dụ": FileText,
-  "Chọn": Filter,
+  "I/O": HardDrive,
+  CPU: Cpu,
   "Mục tiêu": CheckCircle2,
   "Cách học": FileText,
+  "Nhận biết": Search,
+  "Ví dụ": FileText,
+  Chọn: Filter,
 };
 
 function iconFor(label, fallback = Cpu) {
@@ -109,28 +111,227 @@ function Eyebrow({ slide }) {
   );
 }
 
-function Details({ details }) {
-  if (!details?.length) return null;
+function Subtitle({ text }) {
+  if (!text) return null;
+  return <p className="subtitle">{text}</p>;
+}
 
+function BrandLogo({ logo }) {
+  if (!logo) return null;
   return (
-    <div className={`details ${details.length === 1 ? "detailsSingle" : ""}`}>
+    <img className="titleLogo" src={`${import.meta.env.BASE_URL}logos/${logo}.svg`} alt="" aria-hidden="true" />
+  );
+}
+
+function RichCards({ details }) {
+  return (
+    <div className="richCards" style={{ "--cols": details.length }}>
       {details.map((detail, index) => {
-        const Icon = iconFor(detail.label, index % 2 === 0 ? Cpu : Layers);
+        const Icon = iconFor(detail.label);
 
         return (
-          <article key={`${detail.label}-${index}`}>
-            {detail.logo ? (
-              <img className="detailLogo" src={`${import.meta.env.BASE_URL}logos/${detail.logo}.svg`} alt={detail.label} />
-            ) : (
-              <Icon aria-hidden="true" />
-            )}
-            <div>
-              <span>{detail.label}</span>
-              <p>{detail.text}</p>
-            </div>
+          <article className="richCard" key={detail.label}>
+            <span className="cardNum">{pad(index + 1)}</span>
+            <Icon className="cardIcon" aria-hidden="true" />
+            <strong>{detail.label}</strong>
+            <p>{detail.text}</p>
+            {detail.example ? (
+              <div className="cardExample">
+                <span>Ví dụ</span>
+                <p>{detail.example}</p>
+              </div>
+            ) : null}
           </article>
         );
       })}
+    </div>
+  );
+}
+
+function CompactCards({ details }) {
+  return (
+    <div className="compactCards">
+      {details.map((detail) => {
+        const Icon = iconFor(detail.label);
+
+        return (
+          <article className="compactCard" key={detail.label}>
+            <div className="compactHead">
+              {detail.logo ? (
+                <img className="detailLogo" src={`${import.meta.env.BASE_URL}logos/${detail.logo}.svg`} alt="" aria-hidden="true" />
+              ) : (
+                <Icon aria-hidden="true" />
+              )}
+              <span>{detail.label}</span>
+            </div>
+            <p>{detail.text}</p>
+            {detail.example ? <em className="compactExample">{detail.example}</em> : null}
+          </article>
+        );
+      })}
+    </div>
+  );
+}
+
+function StepsRow({ steps }) {
+  return (
+    <div className="stepsRow">
+      {steps.map((step, index) => {
+        const Icon = iconFor(step.title);
+
+        return (
+          <React.Fragment key={step.title}>
+            <div className="stepCard">
+              <span className="stepNum">{pad(index + 1)}</span>
+              <Icon className="stepIcon" aria-hidden="true" />
+              <strong>{step.title}</strong>
+              <em>{step.sub}</em>
+            </div>
+            {index < steps.length - 1 ? <ArrowRight className="stepArrow" aria-hidden="true" /> : null}
+          </React.Fragment>
+        );
+      })}
+    </div>
+  );
+}
+
+function ScenarioLine({ line }) {
+  const marks = {
+    bad: { Icon: XCircle, cls: "lineBad" },
+    good: { Icon: CheckCircle2, cls: "lineGood" },
+    plain: { Icon: ArrowRight, cls: "linePlain" },
+  };
+  const mark = marks[line.mark] ?? marks.plain;
+  const Icon = mark.Icon;
+
+  return (
+    <div className={`scenarioLine ${mark.cls}`}>
+      <Icon aria-hidden="true" />
+      <span>{line.text}</span>
+    </div>
+  );
+}
+
+function ScenarioBox({ scenario }) {
+  return (
+    <div className="scenarioBox">
+      <div className="scenarioTitle">
+        <Target aria-hidden="true" />
+        <span>{scenario.title}</span>
+      </div>
+      <div className="scenarioLines">
+        {scenario.lines.map((line, index) => (
+          <ScenarioLine key={index} line={line} />
+        ))}
+      </div>
+      {scenario.code ? (
+        <pre className="scenarioCode">
+          <code>{scenario.code}</code>
+        </pre>
+      ) : null}
+    </div>
+  );
+}
+
+function Callout({ callout }) {
+  const icons = { insight: Target, warning: TriangleAlert, tip: Lightbulb };
+  const Icon = icons[callout.type] ?? Target;
+
+  return (
+    <div className={`callout callout-${callout.type}`}>
+      <Icon aria-hidden="true" />
+      <div>
+        <strong>{callout.title}</strong>
+        {callout.lines.map((line, index) => (
+          <p key={index}>{line}</p>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function DecisionTree({ decision }) {
+  return (
+    <div className="decisionTree">
+      <div className="decisionHead">
+        <GitBranch aria-hidden="true" />
+        <span>Task của bạn làm gì?</span>
+      </div>
+      {decision.map((item) => (
+        <div className="branchItem" key={item.cond}>
+          <span className="branchCond">{item.cond}</span>
+          <ArrowRight aria-hidden="true" />
+          <strong className="branchPick">{item.pick}</strong>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+function ExampleChips({ examples }) {
+  return (
+    <div className="exampleChips">
+      <div className="chipsHead">
+        <Filter aria-hidden="true" />
+        <span>Ví dụ thực tế</span>
+      </div>
+      {examples.map((example) => (
+        <div className="exampleChip" key={example}>
+          {example}
+        </div>
+      ))}
+    </div>
+  );
+}
+
+function ChooseGrid({ choose }) {
+  return (
+    <div className="chooseGrid">
+      {choose.map((column) => (
+        <article className="chooseCard" key={column.title}>
+          <div className="chooseHead">
+            <CheckCircle2 aria-hidden="true" />
+            <strong>{column.title}</strong>
+          </div>
+          <ul>
+            {column.items.map((item) => (
+              <li key={item}>{item}</li>
+            ))}
+          </ul>
+        </article>
+      ))}
+    </div>
+  );
+}
+
+function Tags({ tags }) {
+  return (
+    <div className="tagRow">
+      {tags.map((tag) => (
+        <span className="tagPill" key={tag}>
+          <Tag aria-hidden="true" />
+          {tag}
+        </span>
+      ))}
+    </div>
+  );
+}
+
+function CompareTable({ table }) {
+  return (
+    <div className="compareTable" style={{ "--rows": table.rows.length + 1, "--dataCols": table.columns.length - 1 }}>
+      <div className="compareRow compareHead">
+        {table.columns.map((column) => (
+          <span key={column}>{column}</span>
+        ))}
+      </div>
+      {table.rows.map((row) => (
+        <div className="compareRow" key={row[0]}>
+          {row.map((cell, index) => (
+            <span key={index}>{cell}</span>
+          ))}
+        </div>
+      ))}
     </div>
   );
 }
@@ -169,103 +370,6 @@ function CoverVisual() {
   );
 }
 
-function AnalogyVisual({ type }) {
-  const presets = {
-    gil: { icon: Lock, host: "GIL — một micro duy nhất", labels: ["Thread A chạy", "Thread B chờ", "Thread C chờ"] },
-    queue: { icon: Server, host: "Message Broker", labels: ["Producer", "Queue", "Consumer"] },
-  };
-  const preset = presets[type] ?? { icon: Cpu, host: "CPython", labels: ["Process", "Thread", "CPU"] };
-  const HostIcon = preset.icon;
-
-  return (
-    <div className="analogyVisual" aria-hidden="true">
-      <div className="visualHost">
-        <HostIcon />
-        <span>{preset.host}</span>
-      </div>
-      <div className="containerBox">
-        {preset.labels.map((label) => {
-          const Icon = iconFor(label);
-          return (
-            <div className="visualChip" key={label}>
-              <Icon />
-              <strong>{label}</strong>
-            </div>
-          );
-        })}
-      </div>
-    </div>
-  );
-}
-
-function FlowDiagram({ points }) {
-  return (
-    <div className="flowDiagram" style={{ "--cols": points.length }}>
-      {points.map((point, index) => {
-        const Icon = iconFor(point);
-        return (
-          <React.Fragment key={point}>
-            <div className="flowStep">
-              <span>{String(index + 1).padStart(2, "0")}</span>
-              <Icon aria-hidden="true" />
-              <strong>{point}</strong>
-            </div>
-            {index < points.length - 1 ? <ArrowRight className="flowArrow" aria-hidden="true" /> : null}
-          </React.Fragment>
-        );
-      })}
-    </div>
-  );
-}
-
-function CommandBlocks({ commands }) {
-  return (
-    <div className="commandStack">
-      {commands.map((command) => (
-        <article className="commandBlock" key={`${command.label}-${command.code}`}>
-          <div className="commandLabel">
-            <Terminal aria-hidden="true" />
-            <span>{command.label}</span>
-          </div>
-          <pre>
-            <code>{command.code}</code>
-          </pre>
-          <div className="expected">
-            <span>{command.resultLabel ?? "Kết quả"}</span>
-            <strong>{command.result}</strong>
-          </div>
-        </article>
-      ))}
-    </div>
-  );
-}
-
-function Checklist({ items }) {
-  return (
-    <div className="checklist">
-      {items.map((item) => (
-        <div className="checkItem" key={item}>
-          <CheckCircle2 aria-hidden="true" />
-          <span>{item}</span>
-        </div>
-      ))}
-    </div>
-  );
-}
-
-function Roadmap({ items }) {
-  return (
-    <div className="roadmap">
-      {items.map((item, index) => (
-        <div className="roadmapItem" key={item}>
-          <span>{String(index + 1).padStart(2, "0")}</span>
-          <strong>{item}</strong>
-        </div>
-      ))}
-    </div>
-  );
-}
-
 function CoverSlide({ slide }) {
   return (
     <section className="slide slideCover" data-tone={slide.tone}>
@@ -279,102 +383,57 @@ function CoverSlide({ slide }) {
   );
 }
 
-function ConceptSlide({ slide }) {
+function CardsSlide({ slide }) {
   return (
-    <section className="slide slideConcept" data-tone={slide.tone}>
-      <div className="copy">
+    <section className="slide slideCards" data-tone={slide.tone}>
+      <div className="contentHead">
         <Eyebrow slide={slide} />
         <h1>{slide.title}</h1>
-        <p className="body">{slide.body}</p>
+        <Subtitle text={slide.body} />
       </div>
-      <div className="support">
-        {slide.visual ? <AnalogyVisual type={slide.visual} /> : null}
-        <Details details={slide.details} />
-      </div>
+      <RichCards details={slide.details} />
+      {slide.callout ? <Callout callout={slide.callout} /> : null}
     </section>
   );
 }
 
-function FlowSlide({ slide }) {
+function ToolSlide({ slide }) {
   return (
-    <section className="slide slideFlow" data-tone={slide.tone}>
-      <div className="flowHeader">
+    <section className="slide slideTool" data-tone={slide.tone}>
+      <div className="contentHead">
         <Eyebrow slide={slide} />
         <h1>{slide.title}</h1>
-        <p className="body">{slide.body}</p>
+        <Subtitle text={slide.body} />
       </div>
-      <FlowDiagram points={slide.points} />
-      <div className="flowFooter flowFooterWide">
-        <Details details={slide.details} />
+      {slide.steps ? <StepsRow steps={slide.steps} /> : null}
+      <div className="toolMain">
+        {slide.scenario ? <ScenarioBox scenario={slide.scenario} /> : null}
+        <CompactCards details={slide.details} />
       </div>
+      {slide.callout ? <Callout callout={slide.callout} /> : null}
     </section>
   );
 }
 
-function ComparisonSlide({ slide }) {
-  const columns = slide.details.slice(0, 2);
-  const useCases = slide.details.slice(2);
+function BrokerSlide({ slide }) {
+  const logo = slide.details.find((detail) => detail.logo)?.logo;
 
   return (
-    <section className="slide slideComparison" data-tone={slide.tone}>
-      <div className="comparisonIntro">
+    <section className="slide slideBroker" data-tone={slide.tone}>
+      <div className="contentHead">
         <Eyebrow slide={slide} />
-        <h1>{slide.title}</h1>
-        <p className="body">{slide.body}</p>
+        <h1>
+          {slide.title}
+          <BrandLogo logo={logo} />
+        </h1>
+        <Subtitle text={slide.body} />
       </div>
-      <div className="comparisonGrid">
-        {columns.map((item) => {
-          const Icon = iconFor(item.label, Cpu);
-          return (
-            <article key={item.label}>
-              {item.logo ? (
-                <img className="detailLogo" src={`${import.meta.env.BASE_URL}logos/${item.logo}.svg`} alt={item.label} />
-              ) : (
-                <Icon aria-hidden="true" />
-              )}
-              <span>{item.label}</span>
-              <p>{item.text}</p>
-            </article>
-          );
-        })}
+      <div className="brokerMain">
+        {slide.scenario ? <ScenarioBox scenario={slide.scenario} /> : null}
+        <CompactCards details={slide.details} />
       </div>
-      <div className="comparisonBottom">
-        <Details details={useCases} />
-      </div>
+      {slide.tags ? <Tags tags={slide.tags} /> : null}
     </section>
-  );
-}
-
-function CommandSlide({ slide }) {
-  return (
-    <section className="slide slideCommand" data-tone={slide.tone}>
-      <div className="commandIntro">
-        <Eyebrow slide={slide} />
-        <h1>{slide.title}</h1>
-        {slide.body ? <p className="body">{slide.body}</p> : null}
-      </div>
-      <CommandBlocks commands={slide.commands} />
-      <Details details={slide.details} />
-    </section>
-  );
-}
-
-function CompareTable({ table }) {
-  return (
-    <div className="compareTable" style={{ "--rows": table.rows.length + 1, "--dataCols": table.columns.length - 1 }}>
-      <div className="compareRow compareHead">
-        {table.columns.map((column) => (
-          <span key={column}>{column}</span>
-        ))}
-      </div>
-      {table.rows.map((row) => (
-        <div className="compareRow" key={row[0]}>
-          {row.map((cell, index) => (
-            <span key={index}>{cell}</span>
-          ))}
-        </div>
-      ))}
-    </div>
   );
 }
 
@@ -384,46 +443,44 @@ function TableSlide({ slide }) {
       <div className="tableIntro">
         <Eyebrow slide={slide} />
         <h1>{slide.title}</h1>
-        {slide.body ? <p className="body">{slide.body}</p> : null}
+        <Subtitle text={slide.body} />
       </div>
       <CompareTable table={slide.table} />
+      {slide.decision || slide.examples ? (
+        <div className="tableExtras">
+          {slide.decision ? <DecisionTree decision={slide.decision} /> : null}
+          {slide.examples ? <ExampleChips examples={slide.examples} /> : null}
+        </div>
+      ) : null}
     </section>
   );
 }
 
-function ClosingSlide({ slide }) {
+function VersusSlide({ slide }) {
   return (
-    <section className="slide slideClosing" data-tone={slide.tone}>
-      <div className="closingIntro">
+    <section className="slide slideVersus" data-tone={slide.tone}>
+      <div className="tableIntro">
         <Eyebrow slide={slide} />
         <h1>{slide.title}</h1>
-        <p className="body">{slide.body}</p>
+        <Subtitle text={slide.body} />
       </div>
-      <div className="closingPanels">
-        <div className="labCard">
-          <div className="labHeader">
-            <CheckCircle2 aria-hidden="true" />
-            <span>Sau buổi này bạn đã biết</span>
-          </div>
-          <Checklist items={slide.checklist} />
-        </div>
-        <div className="roadmapPanel">
-          <span>Roadmap học tiếp</span>
-          <Roadmap items={slide.roadmap} />
-        </div>
+      <div className="versusMain">
+        <CompareTable table={slide.table} />
+        <ChooseGrid choose={slide.choose} />
       </div>
+      {slide.callout ? <Callout callout={slide.callout} /> : null}
     </section>
   );
 }
 
 function Slide({ slide }) {
   if (slide.layout === "cover") return <CoverSlide slide={slide} />;
-  if (slide.layout === "flow") return <FlowSlide slide={slide} />;
-  if (slide.layout === "comparison") return <ComparisonSlide slide={slide} />;
-  if (slide.layout === "command") return <CommandSlide slide={slide} />;
+  if (slide.layout === "cards") return <CardsSlide slide={slide} />;
+  if (slide.layout === "tool") return <ToolSlide slide={slide} />;
+  if (slide.layout === "broker") return <BrokerSlide slide={slide} />;
   if (slide.layout === "table") return <TableSlide slide={slide} />;
-  if (slide.layout === "closing") return <ClosingSlide slide={slide} />;
-  return <ConceptSlide slide={slide} />;
+  if (slide.layout === "versus") return <VersusSlide slide={slide} />;
+  return <CardsSlide slide={slide} />;
 }
 
 function App() {
