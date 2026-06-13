@@ -22,54 +22,18 @@ const slideDefinitions = [
     kicker: "Khái niệm",
     title: "Processes and Threads",
     body:
-      "Tiến trình là một chương trình đang chạy với bộ nhớ riêng, còn luồng là dòng thực thi bên trong tiến trình và dùng chung bộ nhớ đó.",
+      "Process là một chương trình đang chạy với bộ nhớ riêng, còn thread là dòng thực thi bên trong process và dùng chung bộ nhớ đó.",
     keyMessage:
-      "Tiến trình cách ly bộ nhớ nên an toàn nhưng đắt, luồng chia sẻ bộ nhớ nên rẻ nhưng dễ giẫm chân nhau; concurrency là xen kẽ, parallelism là chạy song song thật.",
+      "Process cách ly bộ nhớ nên an toàn nhưng đắt, thread chia sẻ bộ nhớ nên rẻ nhưng dễ giẫm chân nhau; concurrency là xen kẽ, parallelism là chạy song song thật.",
     hideKeyMessage: true,
     points: ["Process", "Thread", "Concurrency", "Parallelism"],
     details: [
-      { label: "Process", text: "Cách ly tốt: một tiến trình chết không kéo theo tiến trình khác, nhưng tạo mới và trao đổi dữ liệu tốn kém." },
-      { label: "Thread", text: "Dùng chung biến nên trao đổi nhanh, đổi lại phải cẩn thận khi cùng sửa một dữ liệu." },
-      { label: "Concurrency", text: "Xen kẽ nhiều việc trên một nhân, giống một đầu bếp đảo qua lại giữa ba món đang nấu." },
-      { label: "Parallelism", text: "Nhiều việc chạy cùng lúc trên nhiều nhân, giống ba đầu bếp mỗi người nấu một món." },
+      { label: "Process", text: "Một chương trình đang chạy, ví dụ Chrome và Word là hai process. Như hai nhà bếp riêng: nguyên liệu (bộ nhớ) riêng, bếp này cháy không lan sang bếp kia." },
+      { label: "Thread", text: "Nhiều dòng công việc chạy trong cùng một process. Như nhiều đầu bếp chung một bếp: dùng chung nguyên liệu (bộ nhớ) nên nhanh, nhưng dễ va vào nhau." },
+      { label: "Concurrency", text: "Một đầu bếp đảo qua lại giữa ba món: mỗi lúc chỉ làm một việc, xen kẽ đủ nhanh thì cả ba món cùng tiến triển — một nhân CPU xen kẽ nhiều việc." },
+      { label: "Parallelism", text: "Ba đầu bếp mỗi người nấu một món cùng lúc: song song thật sự — cần nhiều nhân CPU, mỗi nhân là một đầu bếp." },
     ],
     layout: "flow",
-    tone: "py",
-  },
-  {
-    section: "Concept",
-    kicker: "Đặc thù của CPython",
-    title: "GIL",
-    body:
-      "GIL (Global Interpreter Lock) là một khóa trong CPython khiến tại mỗi thời điểm chỉ một luồng được chạy bytecode Python, kể cả khi máy có nhiều nhân.",
-    keyMessage:
-      "Vì GIL, nhiều luồng không tăng tốc code tính toán thuần; lối thoát là multiprocessing, C extension như NumPy, hoặc bản free-threading của Python — thử nghiệm từ 3.13, chính thức từ 3.14.",
-    points: ["GIL", "Một luồng chạy", "Nhả khi I/O", "Lối thoát"],
-    details: [
-      { label: "Hệ quả", text: "Việc tính toán thuần chạy 4 luồng không nhanh hơn 1 luồng, đôi khi còn chậm hơn vì các luồng tranh nhau khóa." },
-      { label: "Vẫn cứu được I/O", text: "Luồng đang chờ mạng hay đĩa sẽ nhả GIL cho luồng khác chạy, nên threading vẫn tăng tốc mạnh các việc thiên về chờ." },
-      { label: "Lối thoát", text: "Tính toán nặng thì dùng multiprocessing hoặc C extension như NumPy (nhả GIL khi tính); bản free-threading — chính thức từ Python 3.14 — gỡ hẳn GIL." },
-    ],
-    visual: "gil",
-    layout: "concept",
-    tone: "orange",
-  },
-  {
-    section: "Comparison",
-    kicker: "Chẩn đoán trước, tối ưu sau",
-    title: "I/O-bound và CPU-bound",
-    body:
-      "Trước khi chọn công cụ, hãy xác định nút nghẽn: chương trình đang chờ thứ gì đó bên ngoài, hay đang vắt kiệt CPU để tính toán.",
-    keyMessage:
-      "I/O-bound là chờ mạng, đĩa, database; CPU-bound là tính toán nặng; mỗi loại có lời giải tăng tốc hoàn toàn khác nhau.",
-    points: ["I/O-bound", "CPU-bound", "Nút nghẽn", "Chọn công cụ"],
-    details: [
-      { label: "I/O-bound", text: "Phần lớn thời gian là chờ: gọi API, đọc ghi file, truy vấn database. Tăng tốc bằng threading hoặc asyncio." },
-      { label: "CPU-bound", text: "Phần lớn thời gian là tính: xử lý ảnh, huấn luyện mô hình, parse dữ liệu lớn. Tăng tốc bằng multiprocessing." },
-      { label: "Cách nhận biết", text: "Nhìn CPU khi chạy: CPU thấp mà chương trình vẫn chậm thường là I/O-bound, CPU chạm 100% là CPU-bound." },
-      { label: "Ví dụ thực tế", text: "Crawl 1000 trang web là I/O-bound, resize 1000 tấm ảnh là CPU-bound, pipeline dữ liệu thường trộn cả hai." },
-    ],
-    layout: "comparison",
     tone: "py",
   },
   {
@@ -77,16 +41,16 @@ const slideDefinitions = [
     kicker: "Công cụ 1 — I/O",
     title: "Multithreading",
     body:
-      "Module threading tạo nhiều luồng trong một tiến trình; khi một luồng chờ mạng hay đĩa, luồng khác tiếp tục chạy nên tổng thời gian chờ giảm mạnh.",
+      "Module threading tạo nhiều thread trong một process; khi một thread chờ mạng hay đĩa, thread khác tiếp tục chạy nên tổng thời gian chờ giảm mạnh.",
     keyMessage:
-      "Dùng ThreadPoolExecutor cho các tác vụ I/O song song; cẩn thận race condition khi nhiều luồng cùng sửa một biến — bảo vệ bằng Lock.",
+      "Dùng ThreadPoolExecutor cho các tác vụ I/O song song; cẩn thận race condition khi nhiều thread cùng sửa một biến — bảo vệ bằng Lock.",
     hideKeyMessage: true,
-    points: ["Tạo pool luồng", "Nộp việc", "Chờ I/O xen kẽ", "Gom kết quả"],
+    points: ["Tạo pool thread", "Nộp việc", "Chờ I/O xen kẽ", "Gom kết quả"],
     details: [
-      { label: "ThreadPoolExecutor", text: "Cách hiện đại để chạy N việc trên một pool luồng: executor.map(fetch, urls)." },
+      { label: "ThreadPoolExecutor", text: "Cách hiện đại để chạy N việc trên một pool thread: executor.map(fetch, urls)." },
       { label: "Khi nào dùng", text: "Gọi nhiều API, tải nhiều file, truy vấn nhiều database cùng lúc." },
-      { label: "Race condition", text: "Hai luồng cùng đọc–sửa–ghi một biến sẽ giẫm kết quả của nhau; bảo vệ vùng găng bằng threading.Lock." },
-      { label: "Giới hạn", text: "Không tăng tốc tính toán thuần vì GIL; quá nhiều luồng tốn RAM và thời gian chuyển ngữ cảnh." },
+      { label: "Race condition", text: "Hai thread cùng đọc–sửa–ghi một biến sẽ giẫm kết quả của nhau; bảo vệ vùng găng bằng threading.Lock." },
+      { label: "Giới hạn", text: "Không tăng tốc tính toán thuần vì GIL; quá nhiều thread tốn RAM và thời gian chuyển ngữ cảnh." },
     ],
     layout: "flow",
     tone: "teal",
@@ -96,16 +60,16 @@ const slideDefinitions = [
     kicker: "Công cụ 2 — CPU",
     title: "Multiprocessing",
     body:
-      "Mỗi tiến trình con có trình thông dịch và GIL riêng, nên N tiến trình tận dụng được N nhân CPU để chạy song song thật sự.",
+      "Mỗi process con có trình thông dịch và GIL riêng, nên N process tận dụng được N nhân CPU để chạy song song thật sự.",
     keyMessage:
-      "Dùng ProcessPoolExecutor cho tính toán nặng; dữ liệu trao đổi giữa các tiến trình phải pickle nên chi phí khởi tạo và truyền dữ liệu không hề rẻ.",
+      "Dùng ProcessPoolExecutor cho tính toán nặng; dữ liệu trao đổi giữa các process phải pickle nên chi phí khởi tạo và truyền dữ liệu không hề rẻ.",
     hideKeyMessage: true,
-    points: ["Tạo pool tiến trình", "Chia việc", "Chạy song song N nhân", "Gom kết quả"],
+    points: ["Tạo pool process", "Chia việc", "Chạy song song N nhân", "Gom kết quả"],
     details: [
       { label: "ProcessPoolExecutor", text: "API giống hệt ThreadPoolExecutor (cùng chuẩn concurrent.futures), chỉ đổi loại pool." },
       { label: "Khi nào dùng", text: "Xử lý ảnh, tính đặc trưng, nén giải nén, mô phỏng số — các việc khiến CPU chạy kịch trần." },
-      { label: "Chi phí ẩn", text: "Tạo tiến trình chậm hơn tạo luồng; tham số và kết quả bị pickle để gửi qua lại, dữ liệu càng to càng tốn thời gian truyền." },
-      { label: "Lưu ý Windows", text: "Code khởi chạy phải nằm trong khối if __name__ == '__main__' vì tiến trình con sẽ import lại module." },
+      { label: "Chi phí ẩn", text: "Tạo process chậm hơn tạo thread; tham số và kết quả bị pickle để gửi qua lại, dữ liệu càng to càng tốn thời gian truyền." },
+      { label: "Lưu ý Windows", text: "Code khởi chạy phải nằm trong khối if __name__ == '__main__' vì process con sẽ import lại module." },
     ],
     layout: "flow",
     tone: "violet",
@@ -115,7 +79,7 @@ const slideDefinitions = [
     kicker: "Công cụ 3 — I/O số lượng lớn",
     title: "Asyncio",
     body:
-      "Asyncio chạy mọi thứ trên một luồng với event loop: hàm async chủ động nhường quyền tại await, nên hàng nghìn tác vụ I/O xen kẽ nhau mà không tốn luồng.",
+      "Asyncio chạy mọi thứ trên một thread với event loop: hàm async chủ động nhường quyền tại await, nên hàng nghìn tác vụ I/O xen kẽ nhau mà không tốn thread.",
     keyMessage:
       "async/await là concurrency hợp tác: rẻ và mở rộng tốt nhất cho I/O, nhưng chỉ cần một dòng code blocking là cả event loop đứng hình.",
     hideKeyMessage: true,
@@ -142,8 +106,8 @@ const slideDefinitions = [
       columns: ["Tiêu chí", "Threading", "Multiprocessing", "Asyncio"],
       rows: [
         ["Hợp với", "I/O-bound", "CPU-bound", "I/O-bound số lượng lớn"],
-        ["Song song thật", "Không, vì GIL", "Có, N nhân CPU", "Không, một luồng xen kẽ"],
-        ["Chi phí mỗi tác vụ", "Trung bình, ~MB cho mỗi luồng", "Cao, tiến trình + pickle", "Rất rẻ, vài KB mỗi coroutine"],
+        ["Song song thật", "Không, vì GIL", "Có, N nhân CPU", "Không, một thread xen kẽ"],
+        ["Chi phí mỗi tác vụ", "Trung bình, ~MB cho mỗi thread", "Cao, process + pickle", "Rất rẻ, vài KB mỗi coroutine"],
         ["Số tác vụ hợp lý", "Chục đến trăm", "Bằng số nhân CPU", "Hàng nghìn trở lên"],
         ["Ví dụ", "Tải 50 file", "Resize 10k ảnh", "Crawler 10k trang, chat server"],
       ],
@@ -213,7 +177,7 @@ const slideDefinitions = [
     body:
       "Cả hai đều đứng giữa producer và consumer nhưng triết lý ngược nhau: RabbitMQ đẩy từng việc và xóa khi xong, Kafka lưu dòng sự kiện cho nhiều bên đọc lại.",
     keyMessage:
-      "Chọn RabbitMQ cho hàng đợi tác vụ cần routing và ack từng tin; chọn Kafka cho luồng sự kiện lớn cần replay; hệ thống lớn thường dùng cả hai.",
+      "Chọn RabbitMQ cho hàng đợi tác vụ cần routing và ack từng tin; chọn Kafka cho dòng sự kiện lớn cần replay; hệ thống lớn thường dùng cả hai.",
     points: ["Mô hình", "Lưu trữ", "Throughput", "Use case"],
     details: [
       { label: "RabbitMQ", logo: "rabbitmq", text: "Smart broker, dumb consumer: broker lo định tuyến, đẩy tin và xóa sau ack. Mạnh ở task queue, độ trễ thấp, routing linh hoạt." },

@@ -171,10 +171,10 @@ function CoverVisual() {
 
 function AnalogyVisual({ type }) {
   const presets = {
-    gil: { icon: Lock, host: "GIL — một micro duy nhất", labels: ["Luồng A chạy", "Luồng B chờ", "Luồng C chờ"] },
+    gil: { icon: Lock, host: "GIL — một micro duy nhất", labels: ["Thread A chạy", "Thread B chờ", "Thread C chờ"] },
     queue: { icon: Server, host: "Message Broker", labels: ["Producer", "Queue", "Consumer"] },
   };
-  const preset = presets[type] ?? { icon: Cpu, host: "CPython", labels: ["Tiến trình", "Luồng", "CPU"] };
+  const preset = presets[type] ?? { icon: Cpu, host: "CPython", labels: ["Process", "Thread", "CPU"] };
   const HostIcon = preset.icon;
 
   return (
