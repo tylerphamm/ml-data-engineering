@@ -53,7 +53,7 @@ const slideDefinitions = [
       title: "Concurrency khác Parallelism",
       lines: [
         "Một người nhảy qua lại giữa các bước nấu là concurrency. Nhiều người cùng nấu một lúc là parallelism.",
-        "Lưu ý ở Python: nhiều người chung một nhà vẫn không nấu song song được (luật một con dao ở slide sau); muốn song song thật phải thuê nhiều nhà.",
+        "Lưu ý ở Python: nhiều người chung một nhà vẫn không nấu song song được (luật một con dao ở phần sau); muốn song song thật phải thuê nhiều nhà.",
       ],
     },
     layout: "cards",
@@ -153,7 +153,7 @@ const slideDefinitions = [
       {
         label: "Lưu ý trên Windows",
         text: "Phải đặt phần khởi chạy vào một chỗ bảo vệ ở đầu chương trình, nếu không các nhà sẽ tự nhân lên.",
-        example: "Thiếu phần bảo vệ này, mỗi nhà con lại đi thuê thêm nhà, cứ thế lặp vô tận.",
+        example: "Thiếu phần bảo vệ này, mỗi nhà con lại đi thuê thêm nhà, cứ thế nhân lên mãi.",
       },
     ],
     callout: {
@@ -330,7 +330,7 @@ const slideDefinitions = [
       {
         label: "Khi nào dùng",
         text: "Hợp để giao việc cho một đội thợ, mỗi việc chỉ một người làm là xong.",
-        example: "Gửi email, xuất báo cáo, xử lý video — mỗi việc làm một lần rồi thôi.",
+        example: "Chẳng hạn bạn giao cho thợ gửi email, xuất báo cáo hay xử lý video, mỗi việc chỉ làm một lần rồi thôi.",
       },
       {
         label: "Một việc có thể chạy hai lần",
@@ -383,7 +383,7 @@ const slideDefinitions = [
       {
         label: "Khi nào dùng",
         text: "Hợp khi sự kiện sinh ra liên tục và nhiều nơi cùng cần đọc một nguồn.",
-        example: "Theo dõi lượt bấm, gom nhật ký hệ thống, hay nối dữ liệu giữa nhiều bộ phận.",
+        example: "Chẳng hạn bạn theo dõi lượt khách bấm xem, gom nhật ký hệ thống, hay nối dữ liệu giữa nhiều bộ phận.",
       },
     ],
     tags: [
