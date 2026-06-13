@@ -39,26 +39,24 @@ test("deck is a high performance Python lesson in Vietnamese", () => {
   assert.match(combined, /Message [Qq]ueue/);
 });
 
-test("deck mentions the GIL and the I/O versus CPU distinction", () => {
+test("deck explains the GIL and the wait-versus-compute distinction in plain words", () => {
   const combined = slides.map(textOf).join(" ");
 
   assert.match(combined, /GIL/);
-  assert.match(combined, /I\/O-bound/);
-  assert.match(combined, /CPU-bound/);
+  assert.match(combined, /con dao/);
+  assert.match(combined, /phải chờ/i);
+  assert.match(combined, /tính toán nặng/i);
 });
 
-test("deck covers the three concurrency tools", () => {
+test("deck covers the three concurrency tools in plain language", () => {
   const combined = slides.map(textOf).join(" ");
 
   assert.match(combined, /Multithreading/i);
-  assert.match(combined, /ThreadPoolExecutor/);
   assert.match(combined, /Multiprocessing/i);
-  assert.match(combined, /ProcessPoolExecutor/);
-  assert.match(combined, /[Aa]syncio/);
-  assert.match(combined, /async def/);
-  assert.match(combined, /await/);
-  assert.match(combined, /[Ee]vent loop/);
-  assert.match(combined, /Race condition/i);
+  assert.match(combined, /Asyncio/i);
+  assert.match(combined, /thêm người/i);
+  assert.match(combined, /thuê thêm nhà/i);
+  assert.match(combined, /điều phối/i);
 });
 
 test("deck includes a decision table comparing the three tools", () => {
@@ -71,19 +69,17 @@ test("deck includes a decision table comparing the three tools", () => {
   assert.ok(tableSlide.table.rows.length >= 4);
 });
 
-test("deck teaches message queues with RabbitMQ and Kafka", () => {
+test("deck teaches message queues with RabbitMQ and Kafka in plain language", () => {
   const combined = slides.map(textOf).join(" ");
 
-  assert.match(combined, /Producer/);
-  assert.match(combined, /Consumer/);
+  assert.match(combined, /Message [Qq]ueue/);
+  assert.match(combined, /[Hh]àng đợi/);
+  assert.match(combined, /Người gửi/);
+  assert.match(combined, /Người làm/);
   assert.match(combined, /RabbitMQ/);
-  assert.match(combined, /Exchange/i);
-  assert.match(combined, /[Aa]ck/);
   assert.match(combined, /Kafka/);
-  assert.match(combined, /[Tt]opic/);
-  assert.match(combined, /[Pp]artition/);
-  assert.match(combined, /[Oo]ffset/);
-  assert.match(combined, /Consumer group/);
+  assert.match(combined, /cuốn sổ/i);
+  assert.match(combined, /đọc lại/i);
 });
 
 test("deck compares RabbitMQ versus Kafka", () => {
