@@ -87,6 +87,12 @@ const iconMap = {
   "Tin cậy": ShieldCheck,
   "Không mất": ShieldCheck,
   "Mở rộng": Maximize2,
+  "Định tuyến": Network,
+  "Phản hồi": Zap,
+  "Dòng sự kiện": Activity,
+  "Nhiều nơi": Users,
+  "Đọc lại": RefreshCw,
+  Throughput: Gauge,
   Scale: Maximize2,
   "I/O": HardDrive,
   CPU: Cpu,
@@ -376,7 +382,6 @@ function CoverSlide({ slide }) {
   return (
     <section className="slide slideCover" data-tone={slide.tone}>
       <div className="coverContent">
-        <Eyebrow slide={slide} />
         <h1>{slide.title}</h1>
         <p className="body">{slide.body}</p>
       </div>
@@ -389,7 +394,6 @@ function CardsSlide({ slide }) {
   return (
     <section className="slide slideCards" data-tone={slide.tone}>
       <div className="contentHead">
-        <Eyebrow slide={slide} />
         <h1>{slide.title}</h1>
         <Subtitle text={slide.body} />
       </div>
@@ -403,7 +407,6 @@ function ToolSlide({ slide }) {
   return (
     <section className="slide slideTool" data-tone={slide.tone}>
       <div className="contentHead">
-        <Eyebrow slide={slide} />
         <h1>{slide.title}</h1>
         <Subtitle text={slide.body} />
       </div>
@@ -423,7 +426,6 @@ function BrokerSlide({ slide }) {
   return (
     <section className="slide slideBroker" data-tone={slide.tone}>
       <div className="contentHead">
-        <Eyebrow slide={slide} />
         <h1>
           {slide.title}
           <BrandLogo logo={logo} />
@@ -443,7 +445,6 @@ function TableSlide({ slide }) {
   return (
     <section className="slide slideTable" data-tone={slide.tone}>
       <div className="tableIntro">
-        <Eyebrow slide={slide} />
         <h1>{slide.title}</h1>
         <Subtitle text={slide.body} />
       </div>
@@ -463,7 +464,6 @@ function VersusSlide({ slide }) {
   return (
     <section className="slide slideVersus" data-tone={slide.tone}>
       <div className="tableIntro">
-        <Eyebrow slide={slide} />
         <h1>{slide.title}</h1>
         <Subtitle text={slide.body} />
       </div>
@@ -562,7 +562,6 @@ function DiagramSlide({ slide }) {
   return (
     <section className="slide slideDiagram" data-tone={slide.tone}>
       <div className="contentHead">
-        <Eyebrow slide={slide} />
         <h1>{slide.title}</h1>
         <Subtitle text={slide.body} />
       </div>

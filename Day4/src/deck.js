@@ -273,11 +273,6 @@ const slideDefinitions = [
         ["Khi nào chọn trong ML/AI?", "🌐 Gọi API LLM vừa phải (batch < 100), truy vấn DB lấy feature", "🧠 Train CPU (XGBoost, Sklearn), resize/augment ảnh, PyTorch DataLoader", "🚀 Phục vụ API (FastAPI), gọi 10K+ API LLM, crawl dữ liệu huấn luyện"],
       ],
     },
-    callout: {
-      type: "tip",
-      title: "Mẹo nhanh cho dòng cuối",
-      lines: ["Chờ mạng vừa phải thì Threading; xử lý ảnh hay tính toán nặng thì bắt buộc Multiprocessing; làm server hoặc gọi API số lượng khủng thì Asyncio."],
-    },
     layout: "table",
     tone: "py",
   },
