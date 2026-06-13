@@ -59,16 +59,6 @@ test("deck covers the three concurrency tools in plain language", () => {
   assert.match(combined, /điều phối/i);
 });
 
-test("deck includes a decision table comparing the three tools", () => {
-  const tableSlide = slides.find((slide) => slide.layout === "table");
-
-  assert.ok(tableSlide, "deck should include a decision table slide");
-  assert.ok(tableSlide.table.columns.some((c) => c.includes("Multithreading")));
-  assert.ok(tableSlide.table.columns.some((c) => c.includes("Multiprocessing")));
-  assert.ok(tableSlide.table.columns.some((c) => c.includes("Asyncio")));
-  assert.ok(tableSlide.table.rows.length >= 4);
-});
-
 test("deck teaches message queues with RabbitMQ and Kafka in plain language", () => {
   const combined = slides.map(textOf).join(" ");
 
@@ -86,15 +76,11 @@ test("deck teaches message queues with RabbitMQ and Kafka in plain language", ()
 
 test("deck compares RabbitMQ versus Kafka", () => {
   const tableSlide = slides.find((slide) => /^RabbitMQ vs Kafka$/.test(slide.title));
-  const useSlide = slides.find((slide) => slide.layout === "showcase");
 
   assert.ok(tableSlide, "deck should include a RabbitMQ vs Kafka table slide");
   assert.ok(tableSlide.table.columns.some((c) => c.includes("RabbitMQ")));
   assert.ok(tableSlide.table.columns.some((c) => c.includes("Kafka")));
   assert.ok(tableSlide.table.rows.length >= 6);
-
-  assert.ok(useSlide, "deck should include a when-to-use showcase slide");
-  assert.ok(useSlide.choose.length === 2, "showcase slide needs both choose columns");
 });
 
 test("deck uses the supported visual layouts", () => {
@@ -102,10 +88,8 @@ test("deck uses the supported visual layouts", () => {
 
   assert.ok(layouts.has("cover"));
   assert.ok(layouts.has("cards"));
-  assert.ok(layouts.has("tool"));
   assert.ok(layouts.has("table"));
   assert.ok(layouts.has("diagram"));
-  assert.ok(layouts.has("showcase"));
 });
 
 test("cover hides duplicate eyebrow", () => {

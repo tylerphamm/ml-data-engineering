@@ -628,81 +628,93 @@ function RabbitMqDiagram() {
   );
 }
 
-function KafkaPartition({ lx, bx, y, label, count, boxColor }) {
-  const font = "Inter, sans-serif";
-  return (
-    <g>
-      <text x={lx} y={y} fontSize="12" fontWeight="800" fill="#2c5282" fontFamily={font}>{label}</text>
-      {Array.from({ length: count }, (_, i) => (
-        <g key={i}>
-          <rect x={bx + i * 30} y={y - 14} width="24" height="18" rx="3" fill="#ffffff" stroke={boxColor} strokeWidth="1.5" />
-          <text x={bx + i * 30 + 12} y={y} textAnchor="middle" fontSize="12" fontWeight="800" fill="#2c5282" fontFamily={font}>{i}</text>
-        </g>
-      ))}
-    </g>
-  );
-}
-
-function KafkaSquares({ bx, y, fill, stroke }) {
-  return (
-    <g>
-      {Array.from({ length: 6 }, (_, i) => (
-        <rect key={i} x={bx + i * 18} y={y} width="14" height="12" rx="2" fill={fill} stroke={stroke} strokeWidth="1" />
-      ))}
-    </g>
-  );
-}
-
 function KafkaDiagram() {
   const font = "Inter, sans-serif";
+  const rows = [216, 299, 382];
+  const partitions = [
+    { label: "Partition 1", w: 134, letters: "a   b   c   d   e" },
+    { label: "Partition 2", w: 74, letters: "a   b" },
+    { label: "Partition 3", w: 46, letters: "a" },
+  ];
+  const brokers = [
+    { rep: ["Partition 2", "Replica 1"], name: "Broker-0 Server" },
+    { rep: ["Partition 1", "Replica 1"], name: "Broker-1 Server" },
+    { rep: ["Partition 1", "Replica 2"], name: "Broker-2 Server" },
+  ];
+  const nodes = ["Node 1", "Node 2", "Node 3"];
+
   return (
-    <svg className="mqDiagram" viewBox="0 0 880 470" role="img" aria-label="Kafka: Producer ghi vào Cluster gồm các Broker với Topic chia thành Partition, Consumer đọc theo offset">
-      <text x="440" y="28" textAnchor="middle" fontSize="22" fontWeight="800" fill="#2c5282" fontFamily={font}>APACHE KAFKA</text>
+    <svg className="mqDiagram" viewBox="0 0 1024 560" role="img" aria-label="Kiến trúc Kafka: Producer ghi vào Topic chia thành các Partition trên các Broker, Consumer group đọc, ZooKeeper điều phối">
+      <defs>
+        <marker id="kf-arrow" markerUnits="userSpaceOnUse" markerWidth="11" markerHeight="11" refX="8" refY="5.5" orient="auto">
+          <path d="M1 1 L10 5.5 L1 10 Z" fill="#7b5ea7" />
+        </marker>
+      </defs>
 
-      <rect x="24" y="150" width="140" height="42" rx="21" fill="#ffffff" stroke="#2c5282" strokeWidth="2" />
-      <text x="94" y="176" textAnchor="middle" fontSize="14" fontWeight="800" fill="#2c5282" fontFamily={font}>PRODUCER</text>
-      <line x1="170" y1="171" x2="300" y2="171" stroke="#2c5282" strokeWidth="3" />
-      <polygon points="300,164 314,171 300,178" fill="#2c5282" />
+      <g stroke="#7b5ea7" strokeWidth="2" strokeDasharray="2 5" fill="none">
+        {rows.map((cy, i) => (
+          <path key={`p${i}`} d={`M138 ${cy} L246 ${rows[i] - 5}`} markerEnd="url(#kf-arrow)" />
+        ))}
+        {rows.map((cy, i) => (
+          <path key={`c${i}`} d={`M684 ${rows[i]} L818 ${cy}`} markerEnd="url(#kf-arrow)" />
+        ))}
+      </g>
 
-      <rect x="716" y="150" width="140" height="42" rx="21" fill="#ffffff" stroke="#2c5282" strokeWidth="2" />
-      <text x="786" y="176" textAnchor="middle" fontSize="14" fontWeight="800" fill="#2c5282" fontFamily={font}>CONSUMER</text>
-      <line x1="712" y1="171" x2="580" y2="171" stroke="#2c5282" strokeWidth="3" />
-      <polygon points="580,164 566,171 580,178" fill="#2c5282" />
+      {/* Producers */}
+      <rect x="30" y="150" width="120" height="290" rx="3" fill="#cbd0d6" />
+      {rows.map((cy, i) => (
+        <g key={`pr${i}`}>
+          <rect x="45" y={cy - 21} width="90" height="42" rx="3" fill="#cfe2f3" stroke="#9fb8d4" strokeWidth="1.5" />
+          <text x="90" y={cy + 4} textAnchor="middle" fontSize="13" fontWeight="700" fill="#1f3864" fontFamily={font}>Producer</text>
+        </g>
+      ))}
 
-      <rect x="308" y="64" width="264" height="300" rx="10" fill="#eef2f7" stroke="#4a5568" strokeWidth="2" />
-      <rect x="376" y="52" width="128" height="26" rx="4" fill="#ffffff" stroke="#4a5568" strokeWidth="1.5" />
-      <text x="440" y="70" textAnchor="middle" fontSize="13" fontWeight="800" fill="#2c5282" fontFamily={font}>CLUSTER</text>
+      {/* A topic */}
+      <rect x="200" y="128" width="234" height="322" rx="3" fill="none" stroke="#3a5a93" strokeWidth="2" strokeDasharray="6 4" />
+      <text x="216" y="150" fontSize="16" fontWeight="700" fill="#1f3864" fontFamily={font}>A topic</text>
+      {partitions.map((p, i) => (
+        <g key={`pt${i}`}>
+          <text x="222" y={rows[i] - 28} fontSize="12" fontWeight="600" fill="#444" fontFamily={font}>{p.label}</text>
+          <rect x="250" y={rows[i] - 18} width={p.w} height="36" rx="3" fill="#6aa84f" stroke="#38761d" strokeWidth="1.5" />
+          <text x={250 + p.w / 2} y={rows[i] + 5} textAnchor="middle" fontSize="14" fontWeight="700" fill="#ffffff" fontFamily={font}>{p.letters}</text>
+        </g>
+      ))}
 
-      <rect x="318" y="90" width="118" height="28" fill="#2d3e5f" />
-      <text x="377" y="109" textAnchor="middle" fontSize="12" fontWeight="800" fill="#ffffff" fontFamily={font}>BROKER 1</text>
-      <rect x="320" y="126" width="112" height="24" rx="4" fill="#ffffff" stroke="#4a5568" strokeWidth="1.5" />
-      <text x="376" y="142" textAnchor="middle" fontSize="10" fontWeight="800" fill="#2c5282" fontFamily={font}>TOPIC CLICK</text>
-      <KafkaSquares bx={322} y={156} fill="#bee3f8" stroke="#4299e1" />
-      <rect x="320" y="180" width="112" height="24" rx="4" fill="#ffffff" stroke="#4a5568" strokeWidth="1.5" />
-      <text x="376" y="196" textAnchor="middle" fontSize="10" fontWeight="800" fill="#2c5282" fontFamily={font}>TOPIC UPLOAD</text>
-      <KafkaSquares bx={322} y={210} fill="#bee3f8" stroke="#4299e1" />
+      {/* Brokers: replica boxes + storage cylinders */}
+      {brokers.map((b, i) => {
+        const y = rows[i] - 20;
+        return (
+          <g key={`bk${i}`}>
+            <text x="618" y={y - 6} fontSize="11" fontWeight="600" fill="#555" fontFamily={font}>{b.name}</text>
+            <rect x="455" y={y} width="120" height="42" rx="3" fill="#3d85c6" stroke="#2a6099" strokeWidth="1.5" />
+            <text x="515" y={y + 17} textAnchor="middle" fontSize="11" fontWeight="700" fill="#ffffff" fontFamily={font}>{b.rep[0]}</text>
+            <text x="515" y={y + 32} textAnchor="middle" fontSize="11" fontWeight="700" fill="#ffffff" fontFamily={font}>{b.rep[1]}</text>
+            <rect x="640" y={y + 4} width="40" height="34" fill="#e9eef4" stroke="#9fb8d4" strokeWidth="1.5" />
+            <ellipse cx="660" cy={y + 38} rx="20" ry="6" fill="#d4dde8" stroke="#9fb8d4" strokeWidth="1.5" />
+            <ellipse cx="660" cy={y + 4} rx="20" ry="6" fill="#f3f7fb" stroke="#9fb8d4" strokeWidth="1.5" />
+          </g>
+        );
+      })}
 
-      <rect x="444" y="90" width="118" height="28" fill="#fc8181" />
-      <text x="503" y="109" textAnchor="middle" fontSize="12" fontWeight="800" fill="#ffffff" fontFamily={font}>BROKER 2</text>
-      <rect x="446" y="126" width="112" height="24" rx="4" fill="#ffffff" stroke="#4a5568" strokeWidth="1.5" />
-      <text x="502" y="142" textAnchor="middle" fontSize="10" fontWeight="800" fill="#2c5282" fontFamily={font}>TOPIC CLICK</text>
-      <KafkaSquares bx={448} y={156} fill="#fed7d7" stroke="#fc8181" />
-      <rect x="446" y="180" width="112" height="24" rx="4" fill="#ffffff" stroke="#4a5568" strokeWidth="1.5" />
-      <text x="502" y="196" textAnchor="middle" fontSize="10" fontWeight="800" fill="#2c5282" fontFamily={font}>TOPIC UPLOAD</text>
-      <KafkaSquares bx={448} y={210} fill="#fed7d7" stroke="#fc8181" />
+      {/* Consumer group */}
+      <text x="885" y="150" textAnchor="middle" fontSize="14" fontWeight="700" fill="#333333" fontFamily={font}>Consumer group</text>
+      <rect x="820" y="160" width="130" height="280" rx="3" fill="#cbd0d6" />
+      {rows.map((cy, i) => (
+        <g key={`cs${i}`}>
+          <rect x="835" y={cy - 21} width="100" height="42" rx="3" fill="#cfe2f3" stroke="#9fb8d4" strokeWidth="1.5" />
+          <text x="885" y={cy + 4} textAnchor="middle" fontSize="13" fontWeight="700" fill="#1f3864" fontFamily={font}>Consumer</text>
+        </g>
+      ))}
 
-      <line x1="377" y1="364" x2="210" y2="384" stroke="#4299e1" strokeWidth="1.5" opacity="0.5" />
-      <line x1="503" y1="364" x2="650" y2="384" stroke="#fc8181" strokeWidth="1.5" opacity="0.5" />
-
-      <rect x="24" y="384" width="400" height="80" rx="6" fill="#bee3f8" />
-      <KafkaPartition lx={38} bx={150} y={406} label="PARTITION 1" count={6} boxColor="#4299e1" />
-      <KafkaPartition lx={38} bx={150} y={432} label="PARTITION 2" count={4} boxColor="#4299e1" />
-      <KafkaPartition lx={38} bx={150} y={458} label="PARTITION 3" count={6} boxColor="#4299e1" />
-
-      <rect x="456" y="384" width="400" height="80" rx="6" fill="#fed7d7" />
-      <KafkaPartition lx={470} bx={582} y={406} label="PARTITION 1" count={6} boxColor="#fc8181" />
-      <KafkaPartition lx={470} bx={582} y={432} label="PARTITION 2" count={4} boxColor="#fc8181" />
-      <KafkaPartition lx={470} bx={582} y={458} label="PARTITION 3" count={6} boxColor="#fc8181" />
+      {/* ZooKeeper Ensemble */}
+      <rect x="200" y="470" width="610" height="70" rx="3" fill="#cbd0d6" />
+      <text x="216" y="490" fontSize="13" fontWeight="700" fill="#333333" fontFamily={font}>ZooKeeper Ensemble</text>
+      {nodes.map((n, i) => (
+        <g key={n}>
+          <rect x={235 + i * 190} y="500" width="160" height="30" rx="3" fill="#cfe2f3" stroke="#9fb8d4" strokeWidth="1.5" />
+          <text x={235 + i * 190 + 80} y="520" textAnchor="middle" fontSize="13" fontWeight="700" fill="#1f3864" fontFamily={font}>{n}</text>
+        </g>
+      ))}
     </svg>
   );
 }

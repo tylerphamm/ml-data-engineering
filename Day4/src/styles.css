@@ -764,6 +764,7 @@ code {
   color: var(--ink);
   font-size: clamp(0.6rem, 0.76vw, 0.9rem);
   line-height: 1.3;
+  white-space: pre-line;
 }
 
 .compareRow span:first-child {
