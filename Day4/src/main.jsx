@@ -452,6 +452,7 @@ function TableSlide({ slide }) {
           {slide.examples ? <ExampleChips examples={slide.examples} /> : null}
         </div>
       ) : null}
+      {slide.callout ? <Callout callout={slide.callout} /> : null}
     </section>
   );
 }

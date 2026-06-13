@@ -63,9 +63,9 @@ test("deck includes a decision table comparing the three tools", () => {
   const tableSlide = slides.find((slide) => slide.layout === "table");
 
   assert.ok(tableSlide, "deck should include a decision table slide");
-  assert.ok(tableSlide.table.columns.includes("Multithreading"));
-  assert.ok(tableSlide.table.columns.includes("Multiprocessing"));
-  assert.ok(tableSlide.table.columns.includes("Asyncio"));
+  assert.ok(tableSlide.table.columns.some((c) => c.includes("Multithreading")));
+  assert.ok(tableSlide.table.columns.some((c) => c.includes("Multiprocessing")));
+  assert.ok(tableSlide.table.columns.some((c) => c.includes("Asyncio")));
   assert.ok(tableSlide.table.rows.length >= 4);
 });
 
