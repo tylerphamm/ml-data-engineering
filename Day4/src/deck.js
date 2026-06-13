@@ -53,7 +53,7 @@ const slideDefinitions = [
       title: "Concurrency khác Parallelism",
       lines: [
         "Concurrency là chạy nhiều việc cùng lúc trên một nhân; parallelism là chạy thật sự cùng lúc trên nhiều nhân.",
-        "Lưu ý ở Python: nhiều thread trong một process vẫn không chạy Python song song được (luật một con dao ở phần sau); muốn song song thật phải dùng nhiều process.",
+        "Lưu ý ở Python: nhiều thread trong một process vẫn không chạy Python song song được; muốn song song thật phải dùng nhiều process.",
       ],
     },
     layout: "cards",
