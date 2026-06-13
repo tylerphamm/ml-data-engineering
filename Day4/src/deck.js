@@ -60,6 +60,45 @@ const slideDefinitions = [
     tone: "py",
   },
   {
+    section: "Khái niệm",
+    kicker: "Đặc thù của Python",
+    title: "GIL — một con dao mỗi nhà",
+    body: "GIL (Global Interpreter Lock) là luật của Python: trong mỗi ngôi nhà chỉ có một con dao, nên dù có bao nhiêu người, mỗi lúc cũng chỉ một người được cầm dao để nấu.",
+    keyMessage:
+      "Mỗi process chỉ cho một thread chạy Python tại một thời điểm; vì thế thêm thread không giúp việc tính toán nặng, nhưng vẫn rất lợi cho việc phải chờ.",
+    hideKeyMessage: true,
+    points: ["Một con dao", "Vì sao có luật", "Hệ quả", "Khi nào không sao"],
+    details: [
+      {
+        label: "Một con dao mỗi nhà",
+        text: "Trong mỗi ngôi nhà chỉ có đúng một con dao; ai muốn nấu cũng phải cầm con dao đó.",
+        example: "Nhà có 5 người nhưng chỉ một con dao, nên mỗi lúc chỉ một người thái được.",
+      },
+      {
+        label: "Vì sao có luật này",
+        text: "Để nhiều người dùng chung bếp mà không giẫm chân nhau, Python cho mỗi lúc chỉ một người cầm dao cho an toàn.",
+        example: "Giống một bếp nhỏ chỉ kê vừa một cái thớt, nên mọi người đành phải làm lần lượt.",
+      },
+      {
+        label: "Hệ quả",
+        text: "Vì mỗi lúc chỉ một người thái được, thêm người vào nhà không làm việc tính toán nặng nhanh hơn.",
+        example: "Bốn người cùng phải thái rau nhưng chỉ một con dao, nên vẫn lâu như một người làm.",
+      },
+      {
+        label: "Khi nào không sao",
+        text: "Nếu công việc phần lớn là đứng chờ, người đang chờ nhường dao cho người khác nên thêm người vẫn lợi.",
+        example: "Một người chờ nồi sôi liền đưa dao cho người kia thái rau, cả bếp không ai phải rảnh tay.",
+      },
+    ],
+    callout: {
+      type: "insight",
+      title: "Lối thoát",
+      lines: ["Muốn nhiều người thật sự nấu cùng một lúc, hãy thuê thêm nhà — mỗi nhà có con dao riêng, đó chính là multiprocessing."],
+    },
+    layout: "cards",
+    tone: "orange",
+  },
+  {
     section: "Công cụ",
     kicker: "Việc phải chờ",
     title: "Multithreading",
