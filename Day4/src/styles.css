@@ -651,7 +651,7 @@ code {
 
 .benefitCards {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(var(--n, 4), minmax(0, 1fr));
   gap: 0.72rem;
 }
 

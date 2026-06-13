@@ -91,8 +91,11 @@ const iconMap = {
   "Phản hồi": Zap,
   "Dòng sự kiện": Activity,
   "Nhiều nơi": Users,
+  "Nhiều nhóm": Users,
   "Đọc lại": RefreshCw,
   Throughput: Gauge,
+  "Mỗi việc": CheckCircle2,
+  "Dùng khi": CheckCircle2,
   Scale: Maximize2,
   "I/O": HardDrive,
   CPU: Cpu,
@@ -538,9 +541,175 @@ function MessageQueueDiagram() {
   );
 }
 
+function ArrowDownGray({ x, y1, y2 }) {
+  return (
+    <g>
+      <line x1={x} y1={y1} x2={x} y2={y2 - 8} stroke="#cbd5e1" strokeWidth="10" strokeLinecap="round" />
+      <polygon points={`${x - 14},${y2 - 10} ${x + 14},${y2 - 10} ${x},${y2 + 4}`} fill="#cbd5e1" />
+    </g>
+  );
+}
+
+function RabbitMqDiagram() {
+  const exchanges = [
+    { cx: 320, label: "Direct", fill: "#6ee7b7", stroke: "#10b981", ink: "#065f46", mk: "rb-green" },
+    { cx: 470, label: "Topic", fill: "#fda4af", stroke: "#f43f5e", ink: "#9f1239", mk: "rb-coral" },
+    { cx: 615, label: "Fanout", fill: "#67e8f9", stroke: "#06b6d4", ink: "#155e75", mk: "rb-cyan" },
+  ];
+  const queues = [
+    { cx: 320, w: 86, label: "Queue 1" },
+    { cx: 430, w: 86, label: "Queue 2" },
+    { cx: 505, w: 52, label: "Q3" },
+    { cx: 560, w: 52, label: "Q4" },
+    { cx: 618, w: 52, label: "Q5" },
+    { cx: 678, w: 52, label: "Q6" },
+  ];
+  const routes = [
+    { from: 320, to: 320, mk: "rb-green", c: "#10b981" },
+    { from: 470, to: 430, mk: "rb-coral", c: "#f43f5e" },
+    { from: 470, to: 505, mk: "rb-coral", c: "#f43f5e" },
+    { from: 615, to: 560, mk: "rb-cyan", c: "#06b6d4" },
+    { from: 615, to: 618, mk: "rb-cyan", c: "#06b6d4" },
+    { from: 615, to: 678, mk: "rb-cyan", c: "#06b6d4" },
+  ];
+  const font = "Inter, sans-serif";
+
+  return (
+    <svg className="mqDiagram" viewBox="0 0 760 486" role="img" aria-label="RabbitMQ: Producer gửi qua Exchange (Direct, Topic, Fanout) định tuyến tới các Queue rồi tới Consumer">
+      <defs>
+        {["rb-green:#10b981", "rb-coral:#f43f5e", "rb-cyan:#06b6d4"].map((m) => {
+          const [id, c] = m.split(":");
+          return (
+            <marker key={id} id={id} markerUnits="userSpaceOnUse" markerWidth="13" markerHeight="13" refX="6" refY="6" orient="auto">
+              <path d="M1 1 L12 6 L1 11 Z" fill={c} />
+            </marker>
+          );
+        })}
+      </defs>
+
+      <text x="336" y="40" textAnchor="end" fontSize="19" fontWeight="800" fill="#334155" fontFamily={font}>PRODUCER</text>
+      <rect x="352" y="16" width="60" height="40" rx="5" fill="#fbbf24" stroke="#f59e0b" strokeWidth="2" />
+      <polyline points="354,21 382,42 410,21" fill="none" stroke="#f59e0b" strokeWidth="2" />
+      <ArrowDownGray x={382} y1={58} y2={96} />
+
+      <rect x="20" y="100" width="720" height="300" rx="18" fill="#e8eef4" stroke="#94a3b8" strokeWidth="2" />
+      <text x="42" y="128" fontSize="16" fontWeight="800" fill="#475569" fontFamily={font}>BROKER</text>
+
+      <rect x="38" y="144" width="684" height="60" rx="10" fill="#ffffff" />
+      <text x="54" y="179" fontSize="12" fontWeight="800" fill="#334155" fontFamily={font}>EXCHANGE</text>
+      {exchanges.map((e) => (
+        <g key={e.label}>
+          <rect x={e.cx - 55} y="156" width="110" height="36" rx="9" fill={e.fill} stroke={e.stroke} strokeWidth="2" />
+          <text x={e.cx} y="179" textAnchor="middle" fontSize="15" fontWeight="800" fill={e.ink} fontFamily={font}>{e.label}</text>
+        </g>
+      ))}
+
+      <text x="54" y="266" fontSize="12" fontWeight="800" fill="#334155" fontFamily={font}>BINDINGS</text>
+      {routes.map((r, i) => (
+        <line key={i} x1={r.from} y1="196" x2={r.to} y2="312" stroke={r.c} strokeWidth="5" markerEnd={`url(#${r.mk})`} />
+      ))}
+
+      <rect x="38" y="316" width="684" height="56" rx="10" fill="#ffffff" />
+      <text x="54" y="350" fontSize="12" fontWeight="800" fill="#334155" fontFamily={font}>QUEUES</text>
+      {queues.map((q) => (
+        <g key={q.label}>
+          <rect x={q.cx - q.w / 2} y="328" width={q.w} height="34" rx="8" fill="#cffafe" stroke="#0e7490" strokeWidth="2" />
+          <text x={q.cx} y="350" textAnchor="middle" fontSize="13" fontWeight="800" fill="#155e75" fontFamily={font}>{q.label}</text>
+        </g>
+      ))}
+
+      <text x="42" y="390" fontSize="16" fontWeight="800" fill="#ea580c" fontFamily={font}>RabbitMQ</text>
+      <ArrowDownGray x={382} y1={400} y2={438} />
+
+      <text x="336" y="464" textAnchor="end" fontSize="19" fontWeight="800" fill="#334155" fontFamily={font}>CONSUMER</text>
+      <rect x="352" y="442" width="60" height="40" rx="5" fill="#ffffff" stroke="#f59e0b" strokeWidth="2" />
+      <polyline points="354,447 382,468 410,447" fill="none" stroke="#f59e0b" strokeWidth="2" />
+    </svg>
+  );
+}
+
+function KafkaPartition({ lx, bx, y, label, count, boxColor }) {
+  const font = "Inter, sans-serif";
+  return (
+    <g>
+      <text x={lx} y={y} fontSize="12" fontWeight="800" fill="#2c5282" fontFamily={font}>{label}</text>
+      {Array.from({ length: count }, (_, i) => (
+        <g key={i}>
+          <rect x={bx + i * 30} y={y - 14} width="24" height="18" rx="3" fill="#ffffff" stroke={boxColor} strokeWidth="1.5" />
+          <text x={bx + i * 30 + 12} y={y} textAnchor="middle" fontSize="12" fontWeight="800" fill="#2c5282" fontFamily={font}>{i}</text>
+        </g>
+      ))}
+    </g>
+  );
+}
+
+function KafkaSquares({ bx, y, fill, stroke }) {
+  return (
+    <g>
+      {Array.from({ length: 6 }, (_, i) => (
+        <rect key={i} x={bx + i * 18} y={y} width="14" height="12" rx="2" fill={fill} stroke={stroke} strokeWidth="1" />
+      ))}
+    </g>
+  );
+}
+
+function KafkaDiagram() {
+  const font = "Inter, sans-serif";
+  return (
+    <svg className="mqDiagram" viewBox="0 0 880 470" role="img" aria-label="Kafka: Producer ghi vào Cluster gồm các Broker với Topic chia thành Partition, Consumer đọc theo offset">
+      <text x="440" y="28" textAnchor="middle" fontSize="22" fontWeight="800" fill="#2c5282" fontFamily={font}>APACHE KAFKA</text>
+
+      <rect x="24" y="150" width="140" height="42" rx="21" fill="#ffffff" stroke="#2c5282" strokeWidth="2" />
+      <text x="94" y="176" textAnchor="middle" fontSize="14" fontWeight="800" fill="#2c5282" fontFamily={font}>PRODUCER</text>
+      <line x1="170" y1="171" x2="300" y2="171" stroke="#2c5282" strokeWidth="3" />
+      <polygon points="300,164 314,171 300,178" fill="#2c5282" />
+
+      <rect x="716" y="150" width="140" height="42" rx="21" fill="#ffffff" stroke="#2c5282" strokeWidth="2" />
+      <text x="786" y="176" textAnchor="middle" fontSize="14" fontWeight="800" fill="#2c5282" fontFamily={font}>CONSUMER</text>
+      <line x1="712" y1="171" x2="580" y2="171" stroke="#2c5282" strokeWidth="3" />
+      <polygon points="580,164 566,171 580,178" fill="#2c5282" />
+
+      <rect x="308" y="64" width="264" height="300" rx="10" fill="#eef2f7" stroke="#4a5568" strokeWidth="2" />
+      <rect x="376" y="52" width="128" height="26" rx="4" fill="#ffffff" stroke="#4a5568" strokeWidth="1.5" />
+      <text x="440" y="70" textAnchor="middle" fontSize="13" fontWeight="800" fill="#2c5282" fontFamily={font}>CLUSTER</text>
+
+      <rect x="318" y="90" width="118" height="28" fill="#2d3e5f" />
+      <text x="377" y="109" textAnchor="middle" fontSize="12" fontWeight="800" fill="#ffffff" fontFamily={font}>BROKER 1</text>
+      <rect x="320" y="126" width="112" height="24" rx="4" fill="#ffffff" stroke="#4a5568" strokeWidth="1.5" />
+      <text x="376" y="142" textAnchor="middle" fontSize="10" fontWeight="800" fill="#2c5282" fontFamily={font}>TOPIC CLICK</text>
+      <KafkaSquares bx={322} y={156} fill="#bee3f8" stroke="#4299e1" />
+      <rect x="320" y="180" width="112" height="24" rx="4" fill="#ffffff" stroke="#4a5568" strokeWidth="1.5" />
+      <text x="376" y="196" textAnchor="middle" fontSize="10" fontWeight="800" fill="#2c5282" fontFamily={font}>TOPIC UPLOAD</text>
+      <KafkaSquares bx={322} y={210} fill="#bee3f8" stroke="#4299e1" />
+
+      <rect x="444" y="90" width="118" height="28" fill="#fc8181" />
+      <text x="503" y="109" textAnchor="middle" fontSize="12" fontWeight="800" fill="#ffffff" fontFamily={font}>BROKER 2</text>
+      <rect x="446" y="126" width="112" height="24" rx="4" fill="#ffffff" stroke="#4a5568" strokeWidth="1.5" />
+      <text x="502" y="142" textAnchor="middle" fontSize="10" fontWeight="800" fill="#2c5282" fontFamily={font}>TOPIC CLICK</text>
+      <KafkaSquares bx={448} y={156} fill="#fed7d7" stroke="#fc8181" />
+      <rect x="446" y="180" width="112" height="24" rx="4" fill="#ffffff" stroke="#4a5568" strokeWidth="1.5" />
+      <text x="502" y="196" textAnchor="middle" fontSize="10" fontWeight="800" fill="#2c5282" fontFamily={font}>TOPIC UPLOAD</text>
+      <KafkaSquares bx={448} y={210} fill="#fed7d7" stroke="#fc8181" />
+
+      <line x1="377" y1="364" x2="210" y2="384" stroke="#4299e1" strokeWidth="1.5" opacity="0.5" />
+      <line x1="503" y1="364" x2="650" y2="384" stroke="#fc8181" strokeWidth="1.5" opacity="0.5" />
+
+      <rect x="24" y="384" width="400" height="80" rx="6" fill="#bee3f8" />
+      <KafkaPartition lx={38} bx={150} y={406} label="PARTITION 1" count={6} boxColor="#4299e1" />
+      <KafkaPartition lx={38} bx={150} y={432} label="PARTITION 2" count={4} boxColor="#4299e1" />
+      <KafkaPartition lx={38} bx={150} y={458} label="PARTITION 3" count={6} boxColor="#4299e1" />
+
+      <rect x="456" y="384" width="400" height="80" rx="6" fill="#fed7d7" />
+      <KafkaPartition lx={470} bx={582} y={406} label="PARTITION 1" count={6} boxColor="#fc8181" />
+      <KafkaPartition lx={470} bx={582} y={432} label="PARTITION 2" count={4} boxColor="#fc8181" />
+      <KafkaPartition lx={470} bx={582} y={458} label="PARTITION 3" count={6} boxColor="#fc8181" />
+    </svg>
+  );
+}
+
 function BenefitCards({ details }) {
   return (
-    <div className="benefitCards">
+    <div className="benefitCards" style={{ "--n": details.length }}>
       {details.map((detail) => {
         const Icon = iconFor(detail.label);
 
@@ -567,6 +736,8 @@ function DiagramSlide({ slide }) {
       </div>
       <div className="diagramWrap">
         {slide.visual === "messagequeue" ? <MessageQueueDiagram /> : null}
+        {slide.visual === "rabbitmq" ? <RabbitMqDiagram /> : null}
+        {slide.visual === "kafka" ? <KafkaDiagram /> : null}
       </div>
       <BenefitCards details={slide.details} />
     </section>

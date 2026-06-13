@@ -77,9 +77,11 @@ test("deck teaches message queues with RabbitMQ and Kafka in plain language", ()
   assert.match(combined, /Producer/);
   assert.match(combined, /Consumer/);
   assert.match(combined, /RabbitMQ/);
+  assert.match(combined, /Exchange/i);
   assert.match(combined, /Kafka/);
-  assert.match(combined, /cuốn sổ/i);
-  assert.match(combined, /đọc lại/i);
+  assert.match(combined, /[Tt]opic/);
+  assert.match(combined, /[Pp]artition/);
+  assert.match(combined, /[Oo]ffset/);
 });
 
 test("deck compares RabbitMQ versus Kafka", () => {
@@ -101,7 +103,6 @@ test("deck uses the supported visual layouts", () => {
   assert.ok(layouts.has("cover"));
   assert.ok(layouts.has("cards"));
   assert.ok(layouts.has("tool"));
-  assert.ok(layouts.has("broker"));
   assert.ok(layouts.has("table"));
   assert.ok(layouts.has("diagram"));
   assert.ok(layouts.has("showcase"));
