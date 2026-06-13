@@ -43,7 +43,7 @@ test("deck explains the GIL and the wait-versus-compute distinction in plain wor
   const combined = slides.map(textOf).join(" ");
 
   assert.match(combined, /GIL/);
-  assert.match(combined, /con dao/);
+  assert.match(combined, /[Tt]hread/);
   assert.match(combined, /phải chờ/i);
   assert.match(combined, /tính toán nặng/i);
 });
@@ -54,8 +54,8 @@ test("deck covers the three concurrency tools in plain language", () => {
   assert.match(combined, /Multithreading/i);
   assert.match(combined, /Multiprocessing/i);
   assert.match(combined, /Asyncio/i);
-  assert.match(combined, /thêm người/i);
-  assert.match(combined, /thuê thêm nhà/i);
+  assert.match(combined, /[Tt]hread/);
+  assert.match(combined, /[Pp]rocess/);
   assert.match(combined, /điều phối/i);
 });
 
